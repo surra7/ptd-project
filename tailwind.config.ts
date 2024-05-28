@@ -4,9 +4,15 @@ const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}', './src/**/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        noto: ['var(--font-noto)'],
+      },
+      colors: {
+        veryPurple: '#873DFF',
+        mediumPurple: '#BE96FF',
+        lightPurple: '#DECAFF',
+        lightGray: '#C9C9C9',
+        veryRed: '#D40000',
       },
     },
   },
