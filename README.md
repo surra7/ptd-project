@@ -34,4 +34,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
 # oz_02_main-004-FE
+
+### 폴더
+
+- stories 폴더에는 \*.stories.ts 파일만 넣어주세요
+- 컴포넌트는 components 폴더에 넣어 주세요
+- stories로 만든 스토리와 사용하고자 하는 컴포넌트 파일의 이름은 같아야 합니다
+- tailwind를 쓸 거지만 혹시라도 따로 css 파일을 만드신다면 styles 폴더에 넣어주세요
+- 컴포넌트보다 큰 단위는 containers 폴더에 넣어주세요
