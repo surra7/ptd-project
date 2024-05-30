@@ -9,7 +9,7 @@ export default function Home() {
       <Link href="/login">
         <Button label="login" />
       </Link>
-      <Link href="/login">
+      <Link href="/nick-name">
         <Button label="nick name" />
       </Link>
     </main>
