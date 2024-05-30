@@ -12,13 +12,13 @@ const page = () => {
         <main className="w-full h-auto top-[3.4375rem] relative ">
           <header className="flex flex-col items-center">
             <div className="flex w-full h-[3.1875rem] px-5 justify-between items-center border-b-[0.0313rem] border-borderGray">
-              <p className="font-bold text-[1.125rem]">이번 달 프로젝트 잘 끝내기</p>
+              <p className="font-bold text-textGray text-[1.125rem]">이번 달 프로젝트 잘 끝내기</p>
               <div className="w-[3.75rem] h-[2.375rem] text-veryPurple font-extrabold text-[1.625rem] text-center flex justify-center items-center">
                 D-32
               </div>
             </div>
             <section className="w-full h-[2.5625rem] flex border-b-[0.0313rem] border-borderGray items-center">
-              <div className="flex w-[8.8125rem] h-[2.5625rem] border-r-[0.0313rem] border-borderGray relative items-center justify-center text-[0.8125rem] font-medium">
+              <div className="flex w-[8.8125rem] h-[2.5625rem] border-r-[0.0313rem] border-borderGray relative items-center justify-center text-[0.8125rem] font-medium text-textGray">
                 2024. 05. 28
               </div>
               <div className="w-[15.5rem] h-[2.5625rem] px-[0.625rem] flex justify-between items-center">
@@ -56,42 +56,16 @@ const page = () => {
               <div className="text-[0.75rem] font-medium text-textGray">심규선 - care</div>
             </section>
           </header>
-          <section className="flex w-full h-[20rem] overflow-auto">
-            <div className="flex w-[2.8125rem] h-auto border-r-[0.0313rem] border-borderGray">
-              <div className="flex flex-col w-[2.8125rem] h-auto items-center">
-                <div className="flex items-center p-[0.765rem] h-auto">
-                  <input type="checkbox" className="w-[1.25rem] h-[1.25rem]" />
-                </div>
-                <div className="flex items-center p-[0.765rem] h-auto">
-                  <input type="checkbox" className="w-[1.25rem] h-[1.25rem]" />
-                </div>
-                <div className="flex items-center p-[0.765rem] h-auto">
-                  <input type="checkbox" className="w-[1.25rem] h-[1.25rem]" />
-                </div>
-                <div className="flex items-center p-[0.765rem] h-auto">
-                  <input type="checkbox" className="w-[1.25rem] h-[1.25rem]" />
-                </div>
-              </div>
-            </div>
-            <div className="flex w-full h-auto">
-              <div className="flex flex-col w-full h-auto items-center">
-                <div className="flex w-full h-auto p-[0.625rem] items-center justify-between">
-                  <p>잠자기</p>
-                  <BsThreeDots className="text-borderGray text-[1.25rem]" />
-                </div>
-                <div className="flex w-full h-auto p-[0.625rem] items-center justify-between">
-                  <p>아침밥 먹기</p>
-                  <BsThreeDots className="text-borderGray text-[1.25rem]" />
-                </div>
-                <div className="flex w-full h-auto p-[0.625rem] items-center justify-between">
-                  <p>샤워하기</p>
-                  <BsThreeDots className="text-borderGray text-[1.25rem]" />
-                </div>
-                <div className="flex w-full h-auto p-[0.625rem] items-center justify-between">
-                  <p>친구랑 놀기</p>
-                  <BsThreeDots className="text-borderGray text-[1.25rem]" />
-                </div>
-              </div>
+          <section className="flex flex-col w-full h-[20rem] overflow-auto">
+            <div className="border-r-[0.0313rem] border-borderGray w-[2.75rem] h-[20rem] absolute" />
+            <div className="flex items-center">
+              <label className="flex w-full h-[2.625rem] items-center py-[0.765rem] pl-[0.765rem]">
+                <input type="checkbox" name="잠자기" value={1} className="w-[1.25rem] h-[1.25rem] z-10" />
+                <span className="flex w-full h-auto pl-[1.5rem] items-center justify-between">
+                  <p className="text-Gray  font-medium">아침밥 먹기</p>
+                </span>
+              </label>
+              <BsThreeDots className="w-[50px] text-borderGray text-[1.25rem] px-[0.625rem]" />
             </div>
           </section>
           <form className="w-full h-[2.625rem] flex">
