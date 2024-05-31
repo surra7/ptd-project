@@ -13,6 +13,8 @@ const config: Config = {
         lightPurple: '#DECAFF',
         lightGray: '#C9C9C9',
         veryRed: '#D40000',
+        borderGray: '#CACACA',
+        textGray: '#3A3A3A',
       },
     },
   },
