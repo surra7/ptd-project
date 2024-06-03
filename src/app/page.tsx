@@ -10,6 +10,8 @@ export default function Home() {
         <Image src="/images/logoPurple.png" alt="Logo" width={100} height={100} />
       </div>
       <div className="flex  mt-8">
+        {' '}
+        <p>live</p>
         <Link className="mr-4" href="/login">
           <Button label="Login" />
         </Link>

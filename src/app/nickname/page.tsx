@@ -6,7 +6,7 @@ import { Button } from '@/stories/Button';
 import { nickNameAtom } from '../atoms';
 import Link from 'next/link';
 
-function Page() {
+function NickName() {
   const [nickName, setNickName] = useAtom(nickNameAtom);
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
@@ -65,4 +65,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default NickName;

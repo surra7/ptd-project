@@ -1,15 +1,15 @@
-import Link from 'next/link';
-import React from 'react';
-Link;
-function Login() {
+'use client';
+const Login = () => {
+  const handleKakaoLogin = () => {
+    const kakaoAuthUrl = `https://54.180.86.80/api/v1/users/kakao/`;
+    window.location.href = kakaoAuthUrl;
+  };
+
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Link href="/nick-name">
-        {' '}
-        <button className="bg-yellow-400 text-white border w-64 h-12 rounded">카카오로 3초만에 로그인</button>
-      </Link>
+    <div>
+      <button onClick={handleKakaoLogin}>로그인</button>
     </div>
   );
-}
+};
 
 export default Login;
