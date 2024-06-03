@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
-import '../styles/globals.css';
-import '../styles/reset.css';
+import '@/styles/reset.css';
+import '@/styles/globals.css';
 import { ReactQueryClientProvider } from '@/libs/ReactQueryClientProvider';
 
 const notoSansKR = Noto_Sans_KR({ subsets: ['latin'], variable: '--font-noto' });
@@ -17,11 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <link rel="icon" href="/PTDLogo.png" sizes="any" />
-      <body className={notoSansKR.className}>
-        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
-      </body>
-    </html>
+    <ReactQueryClientProvider>
+      <html lang="en">
+        <link rel="icon" href="/PTDLogo.png" sizes="any" />
+        <body className={notoSansKR.className}>
+          <div className="w-mobile h-mobile">{children}</div>
+        </body>
+      </html>
+    </ReactQueryClientProvider>
   );
 }

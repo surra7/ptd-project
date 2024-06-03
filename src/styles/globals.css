@@ -4,8 +4,25 @@
 
 :root {
   font-family: var(--font-noto);
+  color: #3a3a3a;
 }
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #decaff;
+}
+
+main,
+div {
+  background-color: white;
+}
+
+.container {
+  height: calc(100% - 5.875rem);
 }

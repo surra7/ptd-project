@@ -63,6 +63,22 @@ const config: Config = {
         'saturdayBlue': '#96BAFF',
         'errorRed': '#FF8181',
       },
+      width: {
+        mobile: '24.375rem',
+      },
+      height: {
+        mobile: '52.75rem',
+        navigation: '5.875rem',
+      },
+      animation: {
+        fadeInDown: '0.5s ease 0s fadeInDown',
+      },
+      keyframes: {
+        fadeInDown: {
+          '0%': { height: '0', opacity: '0' },
+          '100%': { height: 'fit', transform: 'translateY(0)', opacity: '1' },
+        },
+      },
     },
   },
   plugins: [],
