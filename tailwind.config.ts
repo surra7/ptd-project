@@ -4,24 +4,24 @@ const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}', './src/**/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     fontWeight: {
-    'extralight': '100',
-    'thin': '200',
-    'light': '300',
-    'regular': '400',
-    'medium': '500',
-    'semibold': '600',
-    'bold': '700',
-    'extrabold': '800',
-    'black': '900',
+      extralight: '100',
+      thin: '200',
+      light: '300',
+      regular: '400',
+      medium: '500',
+      semibold: '600',
+      bold: '700',
+      extrabold: '800',
+      black: '900',
     },
     fontSize: {
       '2xs': ' 0.5rem',
-      'xs': '0.625rem',
-      'sm': '0.75rem',
-      'mm': '0.875rem',
-      'base': '1rem',
-      'lg': '1.125rem',
-      'xl': '1.25rem',
+      xs: '0.625rem',
+      sm: '0.75rem',
+      mm: '0.875rem',
+      base: '1rem',
+      lg: '1.125rem',
+      xl: '1.25rem',
       '2xl': '1.375rem',
       '3xl': '1.5rem',
       '4xl': '1.625rem',
@@ -30,11 +30,8 @@ const config: Config = {
       fontFamily: {
         noto: ['var(--font-noto)'],
       },
-      fontSize:{
-
-      },
       colors: {
-        'primary': {
+        primary: {
           '50': '#f5f3ff',
           '100': '#eee8ff',
           '200': '#ded5ff',
@@ -47,7 +44,7 @@ const config: Config = {
           '900': '#501a98',
           '950': '#300e67',
         },
-        'black': {
+        black: {
           '50': '#f6f6f6',
           '100': '#e7e7e7',
           '200': '#d1d1d1',
@@ -60,8 +57,8 @@ const config: Config = {
           '900': '#3a3a3a',
           '950': '#262626',
         },
-        'saturdayBlue': '#96BAFF',
-        'errorRed': '#FF8181',
+        saturdayBlue: '#96BAFF',
+        errorRed: '#FF8181',
       },
       width: {
         mobile: '24.375rem',
@@ -71,9 +68,14 @@ const config: Config = {
         navigation: '5.875rem',
       },
       animation: {
+        fadeIn: '0.6s ease 0s fadeIn',
         fadeInDown: '0.5s ease 0s fadeInDown',
       },
       keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
         fadeInDown: {
           '0%': { height: '0', opacity: '0' },
           '100%': { height: 'fit', transform: 'translateY(0)', opacity: '1' },

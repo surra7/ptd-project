@@ -10,9 +10,9 @@ const Monthly = () => {
         <Calender />
         <div className="h-[4.0625rem]">
           <div className="font-medium">
-            <span className="text-[#8133EA]">3일</span> 연속 목표 달성!
+            <span className="text-primary-600">3일</span> 연속 목표 달성!
           </div>
-          <div className="text-xs text-[#D1D1D1] font-medium">5일 달성 시 랜덤박스 증정</div>
+          <div className="text-xs text-black-200 font-medium">5일 달성 시 랜덤박스 증정</div>
         </div>
       </section>
       <NavBottom />

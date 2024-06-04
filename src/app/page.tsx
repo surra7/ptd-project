@@ -1,7 +1,4 @@
 'use client';
-import { MyButton } from '@/components/MyButton';
-import { Button } from '@/stories/Button';
-import Image from 'next/image';
 import { atom } from 'jotai';
 
 export const nickNameAtom = atom('nick');
