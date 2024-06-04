@@ -1,11 +1,60 @@
-import React from 'react';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { BsMusicNoteList, BsSkipStartCircle, BsStopCircle, BsThreeDots } from 'react-icons/bs';
+'use client';
+import Modal from '@/components/todo/Modal';
+import Timer from '@/components/todo/Timer';
+import ToDoInsert from '@/components/todo/ToDoInsert';
+import ToDoListItem from '@/components/todo/todolistitem';
+import React, { useCallback, useRef, useState } from 'react';
 import { IoMusicalNotesOutline } from 'react-icons/io5';
-import { LuTimer } from 'react-icons/lu';
-import { TbMoodEmpty, TbMoodHappy, TbMoodSad, TbMoodSmile } from 'react-icons/tb';
+import { TbMoodEmpty, TbMoodSad, TbMoodSmile } from 'react-icons/tb';
 
-const page = () => {
+export type TodoType = {
+  id: number;
+  text: string;
+  checked: boolean;
+};
+
+function Page() {
+  const [value, setValue] = useState<string>('');
+  const [todos, setTodos] = useState<TodoType[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>();
+  const [modalIndex, setModalIndex] = useState<number>();
+
+  const nextId = useRef(0);
+  const onInsert = useCallback(
+    (text: string) => {
+      const todo = {
+        id: nextId.current,
+        text,
+        checked: false,
+      };
+      if (!text) return alert('TODO를 적어주세요!');
+      setTodos(todos.concat(todo));
+      nextId.current++;
+      console.log(todo.id);
+    },
+    [todos],
+  );
+
+  const openModal = useCallback((index: number) => {
+    setIsModalOpen(true);
+    console.log(index);
+    if (modalIndex != undefined) {
+      setModalIndex(undefined);
+    } else {
+      setModalIndex(index);
+    }
+  }, []);
+
+  const onRemove = useCallback(
+    (id?: number) => {
+      if (id != undefined) {
+        setTodos(todos.filter(todo => todo.id !== id));
+      }
+      setIsModalOpen(false);
+    },
+    [todos],
+  );
+
   return (
     <div className="flex justify-center bg-black">
       <div className="w-[23.4375rem] h-[50.75rem] bg-white">
@@ -38,15 +87,7 @@ const page = () => {
             </section>
             <section>
               <div className="flex items-center justify-around w-[23.4375rem] h-[2.5625rem] border-b-[0.0313rem] border-borderGray px-[0.625rem] gap-[0.3125rem]">
-                <div>
-                  <LuTimer className="w-[1.3125rem] h-[1.3125rem]" />
-                </div>
-                <div className="flex items-center w-[19rem] h-[2.5625rem] font-medium text-[0.875rem] text-textGray">
-                  00시간 00분 00초
-                </div>
-                <div>
-                  <BsSkipStartCircle className="w-[1.625rem] h-[1.625rem] text-borderGray" />
-                </div>
+                <Timer />
               </div>
             </section>
             <section className="flex w-full h-[2.5625rem] items-center px-[0.625rem] gap-[0.625rem] border-b-[0.0313rem] border-borderGray">
@@ -58,26 +99,10 @@ const page = () => {
           </header>
           <section className="flex flex-col w-full h-[20rem] overflow-auto">
             <div className="border-r-[0.0313rem] border-borderGray w-[2.75rem] h-[20rem] absolute" />
-            <div className="flex items-center">
-              <label className="flex w-full h-[2.625rem] items-center py-[0.765rem] pl-[0.765rem]">
-                <input type="checkbox" name="잠자기" value={1} className="w-[1.25rem] h-[1.25rem] z-10" />
-                <span className="flex w-full h-auto pl-[1.5rem] items-center justify-between">
-                  <p className="text-Gray  font-medium">아침밥 먹기</p>
-                </span>
-              </label>
-              <BsThreeDots className="w-[50px] text-borderGray text-[1.25rem] px-[0.625rem]" />
-            </div>
+            <ToDoListItem todos={todos} openModal={openModal} />
           </section>
-          <form className="w-full h-[2.625rem] flex">
-            <input
-              type="text"
-              className="border-borderGray border w-[20.8125rem] h-[2.625rem] pl-2"
-              placeholder="TODO는 이곳에 적어주세요!"
-            />
-            <span className="flex items-center justify-center w-[2.625rem] h-[2.625rem] bg-borderGray active:bg-lightPurple">
-              <AiOutlinePlus className="text-[2rem] text-white" />
-            </span>
-          </form>
+          <ToDoInsert onInsert={onInsert} value={value} setValue={setValue} />
+          {isModalOpen ? <Modal onRemove={onRemove} id={modalIndex as number} /> : <></>}
           <section>
             <p className="m-2 pb-1 border-b-borderGray border-b w-[3.0625rem] text-center">Memo</p>
             <textarea name="memo" id="memo" className="w-full h-[5rem] text-[0.875rem] px-2 resize-none"></textarea>
@@ -87,6 +112,6 @@ const page = () => {
       </div>
     </div>
   );
-};
+}
 
-export default page;
+export default Page;
