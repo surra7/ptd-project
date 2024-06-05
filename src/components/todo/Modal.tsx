@@ -4,13 +4,11 @@ interface Props {
 }
 function Modal({ onRemove, id }: Props) {
   return (
-    <div className="w-full flex items-center h-[8.5rem] bg-borderGray absolute bottom-[5.5rem] rounded-t-[0.625rem]">
-      <div className="w-full flex flex-col items-start gap-7 pl-3">
-        {/* <button className="flex font-semibold text-[1.125rem] w-full">수정</button> */}
-        <button className="flex font-semibold text-[1.125rem] w-full text-red-400" onClick={() => onRemove(id)}>
-          삭제
-        </button>
-      </div>
+    <div className="w-full flex flex-col justify-center h-[8.5rem] pl-3 gap-7 bg-[#F2F2F2] absolute bottom-[4rem] rounded-t-[0.625rem]">
+      {/* <button className="flex font-semibold text-[1.125rem] w-full">수정</button> */}
+      <button className="flex font-semibold text-[1.125rem] w-full text-errorRed" onClick={() => onRemove(id)}>
+        삭제
+      </button>
     </div>
   );
 }
