@@ -1,26 +1,30 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 interface Props {
-  onInsert: (value: string) => void;
-  value: string;
-  setValue: (text: string) => void;
+  init?: string;
+  onInsert(value?: string): void;
 }
 
-function ToDoInsert({ onInsert, value, setValue }: Props) {
+function ToDoInsert({init, onInsert}: Props) {
+  const [value, setValue] = useState<string>(init ?? "");
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-    console.log(value);
   };
+
   const onSubmit = useCallback(
     (e: React.FormEvent) => {
-      onInsert(value);
       setValue('');
       e.preventDefault();
-      console.log(value);
+      onInsert(value);
     },
-    [onInsert, value],
+    [value, onInsert],
   );
+
+  useEffect(() => {
+    setValue(init ?? "");
+  }, [init]);
 
   return (
     <form className="w-full h-[2.625rem] flex" onSubmit={onSubmit}>

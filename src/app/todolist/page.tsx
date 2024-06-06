@@ -5,7 +5,7 @@ import Mood from '@/components/todo/Mood';
 import Timer from '@/components/todo/Timer';
 import ToDoInsert from '@/components/todo/ToDoInsert';
 import ToDoListItem from '@/components/todo/ToDoListItem';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IoMusicalNotesOutline } from 'react-icons/io5';
 
 export interface TodoType {
@@ -15,37 +15,50 @@ export interface TodoType {
 }
 
 function Page() {
-  const [value, setValue] = useState<string>('');
   const [todos, setTodos] = useState<TodoType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>();
   const [modalIndex, setModalIndex] = useState<number>();
-  const [todoIndex, setTodoIndex] = useState<number>();
+  const [editString, setEditString] = useState<string>();
+  const id = useRef(1);
 
-  const nextId = useRef(0);
   const onInsert = useCallback(
-    (text: string) => {
-      const todo = {
-        id: nextId.current,
-        text,
-        checked: false,
-      };
-      if (!text) return alert('TODO를 적어주세요!');
-      setTodos(todos.concat(todo));
-      nextId.current++;
+    (text?: string) => {
       console.log(todos);
+      if (text) {
+        if (editString !== undefined && modalIndex !== undefined) {
+          const edit = todos.find((v) => v.id === modalIndex);
+          if (edit !== undefined) {
+            edit.text = text;
+            setTodos([...todos]);
+          }
+          
+          setEditString(undefined);
+          setModalIndex(undefined);
+        } else {
+          const todo = {
+            id: id.current,
+            text,
+            checked: false,
+          };
+          setTodos((prev) => prev.concat(todo));
+          ++id.current;
+        }
+      } else {
+        alert('TODO를 적어주세요!')
+      }
     },
-    [todos],
+    [todos, editString, modalIndex],
   );
 
   const openModal = useCallback((index: number) => {
-    setIsModalOpen(isModalOpen => !isModalOpen);
-    console.log(index);
-    if (modalIndex != undefined) {
-      setModalIndex(undefined);
+    setModalIndex(index);
+    setEditString(undefined);
+    if (index === modalIndex) {
+      setIsModalOpen((prev) => !prev);
     } else {
-      setModalIndex(index);
+      setIsModalOpen(true);
     }
-  }, []);
+  }, [modalIndex]);
 
   const onRemove = useCallback(
     (id?: number) => {
@@ -53,13 +66,28 @@ function Page() {
         setTodos(todos.filter(todo => todo.id !== id));
       }
       setIsModalOpen(false);
+      setModalIndex(undefined);
     },
     [todos],
   );
 
-  const checkIndex = useCallback((id: number) => {
-    setTodoIndex(id);
-  }, []);
+  const onEdit = useCallback((id?: number) => {
+    if (id != undefined) {
+      const edit = todos.find((v) => v.id === id);
+      setEditString(edit?.text);
+      setIsModalOpen(false);
+    }
+  }, [todos]);
+
+  const handleComplete = useCallback((id: number) => {
+    const checked = todos.find((v) => v.id === id);
+    if (checked !== undefined) {
+      checked.checked = !checked.checked;
+      setTodos([...todos]);
+    }
+  }, [todos]);
+
+  useEffect(() => {console.log(todos)}, [todos]);
 
   return (
     <div className="flex container justify-center w-full h-[50.75rem] bg-white">
@@ -93,19 +121,19 @@ function Page() {
         </header>
         <section className="flex flex-col w-full h-[22rem] overflow-auto">
           <div className="border-r-[0.0313rem] border-borderGray w-[2.75rem] h-[22rem] absolute" />
-          {todos.map(todo => (
+          {todos.map((todo, key) => (
             <ToDoListItem
+              key={key}
               todo={todo}
               openModal={openModal}
-              isModalOpen={isModalOpen as boolean}
-              todoIndex={todoIndex as number}
-              checkIndex={checkIndex}
-              modalIndex={modalIndex as number}
+              handleComplete={handleComplete}
+              isModalOpen={isModalOpen}
+              modalIndex={modalIndex}
             />
           ))}
         </section>
-        <ToDoInsert onInsert={onInsert} value={value} setValue={setValue} />
-        {isModalOpen ? <Modal onRemove={onRemove} id={modalIndex as number} /> : <></>}
+        <ToDoInsert onInsert={onInsert} init={editString} />
+        {isModalOpen ? <Modal onRemove={onRemove} onEdit={onEdit} id={modalIndex} /> : <></>}
         <section>
           <p className="m-2 pb-1 border-b-borderGray border-b w-[3.0625rem] text-center">Memo</p>
           <textarea
