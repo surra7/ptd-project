@@ -30,8 +30,8 @@ export default function Page() {
   return (
     <>
       <div>
-        <p>아이디: {user?.id}</p>
-        <p>이메일: {user?.계정}</p>
+        {/* <p>아이디: {user?.id}</p> */}
+        <p>안녕하세요 {user?.계정} 님</p>
       </div>
     </>
   );

@@ -15,7 +15,7 @@ export default function Home() {
         <Link className="mr-4" href="/login">
           <Button label="Login" />
         </Link>
-        <Link href="/nick-name">
+        <Link href="/nickname">
           <Button label="Nick Name" />
         </Link>
       </div>
