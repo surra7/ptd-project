@@ -14,9 +14,9 @@ function Timer() {
         setSeconds(seconds => seconds + 1);
       }, 1000);
     } else if (!isActive && seconds !== 0) {
-      clearInterval(interval!);
+      clearInterval(interval! as NodeJS.Timeout);
     }
-    return () => clearInterval(interval);
+    return () => clearInterval(interval as NodeJS.Timeout);
   }, [isActive, seconds]);
 
   const handleStartStop = (): void => {
@@ -48,19 +48,19 @@ function Timer() {
   return (
     <>
       <div>
-        <LuTimer className="w-[1.3125rem] h-[1.3125rem]" />
+        <LuTimer className="w-[1.3125rem] h-[1.3125rem] text-black-900" />
       </div>
-      <div className="flex items-center w-[19rem] h-[2.5625rem] font-medium text-[0.875rem] text-textGray">
+      <div className="flex items-center w-[19rem] h-[2rem] font-medium text-[0.875rem] text-textGray">
         {formatTime(seconds)}
       </div>
       {isActive ? (
         <button type="button" onClick={handleStartStop}>
-          <BsStopCircle className="w-[1.625rem] h-[1.625rem] text-purple-400" />
+          <BsStopCircle className="w-[1.625rem] h-[1.625rem] text-primary-400" />
         </button>
       ) : (
         <>
           <button type="button" onClick={() => setIsActive(true)}>
-            <BsSkipStartCircle className="w-[1.625rem] h-[1.625rem] text-borderGray" />
+            <BsSkipStartCircle className="w-[1.625rem] h-[1.625rem] text-black-200" />
           </button>
           {/* <button type="button" onClick={handleReset}>
             <BiReset className="w-[1.625rem] h-[1.625rem] text-red-400" />
