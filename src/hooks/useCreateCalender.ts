@@ -1,16 +1,16 @@
 // 'yyyy-mm-dd'형식 맞추고 각 달의 1일 위치 정해주기
-const getFirstDayOfMonth = (year: number, month: number) => {
+function getFirstDayOfMonth(year: number, month: number) {
   let digit = '';
   if (month < 10) digit = '0';
   return new Date(year + '-' + digit + month + '-' + '01').getDay();
-};
+}
 
-const getLastDayOfMonth = (year: number, month: number) => {
+function getLastDayOfMonth(year: number, month: number) {
   let lastDay = new Date(year, month, 0).getDate();
   return lastDay;
-};
+}
 
-const useCreateCalender = (year: number, month: number) => {
+export default function useCreateCalender(year: number, month: number) {
   let firstDay = getFirstDayOfMonth(year, month);
   let lastDay = getLastDayOfMonth(year, month);
   let arrCalender = [];
@@ -40,6 +40,4 @@ const useCreateCalender = (year: number, month: number) => {
   }
 
   return newCalender;
-};
-
-export default useCreateCalender;
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useSwipeDirection = () => {
+export default function useSwipeDirection() {
   let calender: HTMLDivElement | null = null;
   const [direction, setDirection] = useState('');
   let initialX: number | null = null;
@@ -65,6 +65,4 @@ const useSwipeDirection = () => {
   }, [initTouch, swipeTouchDirection, initClick, swipeMouseDirection]);
 
   return { direction, setDirection };
-};
-
-export default useSwipeDirection;
+}

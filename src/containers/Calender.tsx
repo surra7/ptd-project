@@ -6,7 +6,7 @@ import useCreateCalender from '@/hooks/useCreateCalender';
 import useSwipeDirection from '@/hooks/useSwipeDirection';
 import { useEffect, useState } from 'react';
 
-const CalenderList = () => {
+export default function CalenderList() {
   const today = new Date().getDate();
   const todayMonth = new Date().getMonth() + 1;
   const todayYear = new Date().getFullYear();
@@ -108,6 +108,4 @@ const CalenderList = () => {
       </div>
     </div>
   );
-};
-
-export default CalenderList;
+}

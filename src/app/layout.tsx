@@ -21,7 +21,7 @@ export default function RootLayout({
       <html lang="en">
         <link rel="icon" href="/PTDLogo.png" sizes="any" />
         <body className={notoSansKR.className}>
-          <div className="w-mobile h-mobile">{children}</div>
+          <div className="w-mobile h-mobile bg-white">{children}</div>
         </body>
       </html>
     </ReactQueryClientProvider>

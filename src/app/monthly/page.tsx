@@ -2,10 +2,10 @@
 import NavBottom from '@/components/NavBottom';
 import Calender from '@/containers/Calender';
 
-const Monthly = () => {
+export default function Monthly() {
   return (
     <main className="w-full h-full">
-      <section className="container flex flex-col justify-center items-center">
+      <section className="wrap-section flex flex-col justify-center items-center">
         <div className="text-2xl font-bold">Monthly</div>
         <Calender />
         <div className="h-[4.0625rem]">
@@ -18,6 +18,4 @@ const Monthly = () => {
       <NavBottom />
     </main>
   );
-};
-
-export default Monthly;
+}

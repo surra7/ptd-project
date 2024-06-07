@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-const useOutsideClick = (onClickOutside: () => void) => {
+export default function useOutsideClick(onClickOutside: () => void) {
   const ref = useRef<HTMLUListElement | null>(null);
 
   const handleClickOutside = useCallback(
@@ -22,6 +22,4 @@ const useOutsideClick = (onClickOutside: () => void) => {
   }, [handleClickOutside]);
 
   return ref;
-};
-
-export default useOutsideClick;
+}
