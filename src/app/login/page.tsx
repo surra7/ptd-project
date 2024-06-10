@@ -1,11 +1,24 @@
-import React from 'react';
+'use client';
+import Image from 'next/image';
+const KakaoLogin = () => {
+  const handleKakaoLogin = () => {
+    const kakaoAuthUrl = `https://api.oz-02-main-04.xyz/api/v1/users/kakao/`;
+    window.location.href = kakaoAuthUrl;
+  };
 
-function Login() {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <button className="bg-yellow-400 text-white border w-64 h-12">카카오로 3초만에 로그인</button>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      {' '}
+      <button>
+        <Image
+          onClick={handleKakaoLogin}
+          src={'/images/kakaoLogin.png'}
+          alt="kakao-login"
+          width={200}
+          height={200}></Image>
+      </button>
     </div>
   );
-}
+};
 
-export default Login;
+export default KakaoLogin;
