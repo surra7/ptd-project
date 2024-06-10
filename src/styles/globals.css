@@ -3,8 +3,41 @@
 @tailwind utilities;
 
 :root {
+  font-family: var(--font-noto);
+  color: #3a3a3a;
 }
 
 * {
   box-sizing: border-box;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #decaff;
+}
+
+.wrap-section {
+  width: 100%;
+  height: calc(100% - 5.875rem);
+}
+
+.scroll-bar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border-radius: 30px;
+  border: 1px solid #c9c9c9;
+}
+
+.scroll-bar::-webkit-scrollbar-track {
+  background: #c9c9c9;
 }
