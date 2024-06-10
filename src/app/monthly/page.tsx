@@ -8,7 +8,7 @@ export default function Monthly() {
       <section className="wrap-section flex flex-col justify-center items-center">
         <div className="text-2xl font-bold">Monthly</div>
         <Calender />
-        <div className="h-[4.0625rem]">
+        <div className="h-[4.0625rem] text-center">
           <div className="font-medium">
             <span className="text-primary-600">3일</span> 연속 목표 달성!
           </div>

@@ -1,5 +1,5 @@
 'use client';
-import ProgressBar from '@/components/ProgressBar';
+import ProgressBar from '@/components/monthly/ProgressBar';
 import SelectBox from '@/components/SelectBox';
 import { DAY_OF_WEEK, MONTH_OF_YEAR } from '@/constants';
 import useCreateCalender from '@/hooks/useCreateCalender';
