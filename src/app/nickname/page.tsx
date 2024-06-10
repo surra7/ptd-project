@@ -2,12 +2,13 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useAtom } from 'jotai';
-import { Button } from '@/stories/Button';
-import { nickNameAtom } from '../atoms';
+// import { nicknameAtom } from '../../atoms/atoms';
 import Link from 'next/link';
+import React from 'react';
 
-function NickName() {
-  const [nickName, setNickName] = useAtom(nickNameAtom);
+function Nickname() {
+  //   const [nickName, setNickName] = useAtom(nicknameAtom);
+  const [nickname, setNickname] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
 
@@ -15,31 +16,31 @@ function NickName() {
     setInputValue(e.target.value);
   };
 
-  const saveNickName = () => {
+  const saveNickname = () => {
     setError('');
 
     axios
-      .post('/api/check-nickname', { nickname: inputValue })
+      .post('https://api.oz-02-main-04.xyz/api/v1/users/myinfo', { nickname: inputValue })
       .then(response => {
         const { isDuplicate } = response.data;
         if (isDuplicate) {
           setError('이미 사용 중인 닉네임입니다.');
         } else {
-          setNickName(inputValue);
+          setNickname(inputValue);
           console.log(inputValue);
 
-          axios
-            .post('/api/save-nickname', { nickname: inputValue })
-            .then(response => {
-              setNickName(inputValue);
-            })
-            .catch(error => {
-              console.error('Error submitting nickname:', error);
-            });
+          //   axios
+          //     .post('https://api.oz-02-main-04.xyz/api/v1/users/myinfo', { nickname: inputValue })
+          //     .then(response => {
+          //       setNickName(inputValue);
+          //     })
+          //     .catch(error => {
+          //       console.error(error);
+          //     });
         }
       })
       .catch(error => {
-        console.error('Error checking nickname:', error);
+        console.error(error);
       });
   };
 
@@ -56,13 +57,14 @@ function NickName() {
         {error && <p className="text-red-500 mb-2">{error}</p>}
         <div className="flex">
           <Link href="/" className="mr-2">
-            <Button label="건너뛰기" />
+            <button>건너뛰기</button>
           </Link>
-          <Button label="완료" onClick={saveNickName} />
+
+          <button onClick={saveNickname}>완료</button>
         </div>
       </form>
     </div>
   );
 }
 
-export default NickName;
+export default Nickname;
