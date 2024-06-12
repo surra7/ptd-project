@@ -111,6 +111,8 @@ function Page() {
     const fetchTodo = async () => {
       try {
         const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/posts/todo/1');
+        // const user = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/');
+        // console.log(user);
         setTodos(response.data);
       } catch (e) {
         console.log(e);
@@ -162,7 +164,7 @@ function Page() {
               {musicTitle ? (
                 <div className="w-full flex items-center justify-between">
                   <span onClick={() => setMusicTitle('')}>{musicTitle}</span>
-                  <audio controls src={musicUrl} className="w-[11rem] h-[2.5rem]"></audio>
+                  <audio controls loop src={musicUrl} className="w-[11rem] h-[2.5rem]"></audio>
                 </div>
               ) : (
                 <MusicInput setMusicTitle={setMusicTitle} setMusicUrl={setMusicUrl} />
