@@ -1,3 +1,4 @@
+import axios, { AxiosStatic } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BiReset } from 'react-icons/bi';
 import { BsSkipStartCircle, BsStopCircle } from 'react-icons/bs';
@@ -19,11 +20,21 @@ function Timer() {
     return () => clearInterval(interval as NodeJS.Timeout);
   }, [isActive, seconds]);
 
-  const handleStartStop = (): void => {
-    setIsActive(!isActive);
+  const handleStart = async (): Promise<void> => {
+    setIsActive(prev => !prev);
+    // const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/posts/timer/1');
+
+    // if (!response.data) {
+    // await axios.post('https://api.oz-02-main-04.xyz/api/v1/posts/timer/1', { on_btn: false });
+    // }
+  };
+
+  const handleStop = async () => {
+    setIsActive(prev => !prev);
     if (!isActive) {
       const nowTimes = formatTime(seconds);
       console.log(nowTimes);
+      // await axios.patch('https://api.oz-02-main-04.xyz/api/v1/posts/timer/1'), { duration: seconds };
     }
   };
 
@@ -32,6 +43,15 @@ function Timer() {
     setSeconds(0);
     setIsActive(false);
   };
+
+  useEffect(() => {
+    const createTimer = async () => {
+      // if (seconds) {
+      //   await axios.post('https://api.oz-02-main-04.xyz/api/v1/posts/timer/1');
+      // }
+    };
+    createTimer();
+  }, []);
 
   const formatTime = (time: number) => {
     const hours: number = Math.floor(time / 3600); // 시간
@@ -45,6 +65,18 @@ function Timer() {
     return `${hoursStr}시간 ${minutesStr}분 ${secondStr}초`;
   };
 
+  // useEffect(() => {
+  //   const fetchTimer = async () => {
+  //     const res = await axios.get('https://api.oz-02-main-04.xyz/api/v1/posts/timer/1');
+  //     console.log(res.data);
+
+  //     if (res.data) {
+  //       setSeconds(res.data.duration);
+  //     }
+  //   };
+  //   fetchTimer();
+  // }, []);
+
   return (
     <>
       <div>
@@ -54,12 +86,12 @@ function Timer() {
         {formatTime(seconds)}
       </div>
       {isActive ? (
-        <button type="button" onClick={handleStartStop}>
+        <button type="button" onClick={handleStart}>
           <BsStopCircle className="w-[1.625rem] h-[1.625rem] text-primary-400" />
         </button>
       ) : (
         <>
-          <button type="button" onClick={() => setIsActive(true)}>
+          <button type="button" onClick={handleStop}>
             <BsSkipStartCircle className="w-[1.625rem] h-[1.625rem] text-black-200" />
           </button>
           {/* <button type="button" onClick={handleReset}>
