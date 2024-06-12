@@ -19,11 +19,13 @@ const Nickname = () => {
   const [newNickname, setNewNickname] = useState('');
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [userInfo] = useAtom(userAtom);
+  const [userInfo, setUserInfo] = useAtom(userAtom);
   console.log(userInfo);
   useEffect(() => {
     const csrfToken = getCookieValue('csrftoken');
     const token = getCookieValue('access_token');
+    console.log(csrfToken);
+    console.log(accessToken);
     if (token) {
       setAccessToken(token);
     }
@@ -34,6 +36,8 @@ const Nickname = () => {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
+      console.log(csrfToken);
+      console.log(accessToken);
       if (!accessToken) return;
       try {
         const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
@@ -45,6 +49,7 @@ const Nickname = () => {
           withCredentials: true,
         });
         setUser(response.data);
+        setUserInfo(response.data);
       } catch (error) {
         console.error('Failed to fetch user info:', error);
       }
