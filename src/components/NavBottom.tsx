@@ -30,8 +30,6 @@ export default function NavBottom() {
         </button>
 
         <button className="w-16 flex justify-center items-center" onClick={() => router.push('/profile')}>
-
-  
           {pathname === '/profile' ? (
             <BiSolidUser size={32} className="text-primary-600" />
           ) : (
