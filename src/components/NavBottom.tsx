@@ -29,7 +29,7 @@ export default function NavBottom() {
           {pathname === '/todolist' ? <BsListUl size={32} className="text-primary-600" /> : <BsListTask size={32} />}
         </button>
         <button className="w-16 flex justify-center items-center" onClick={() => router.push('/mypage')}>
-          {pathname === '/mypage' ? (
+          {pathname === '/profile' ? (
             <BiSolidUser size={32} className="text-primary-600" />
           ) : (
             <AiOutlineUser size={32} />
