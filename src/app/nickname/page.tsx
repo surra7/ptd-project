@@ -38,7 +38,7 @@ const Nickname = () => {
     const fetchUserInfo = async () => {
       console.log(csrfToken);
       console.log(accessToken);
-      if (!accessToken) return;
+      if (!accessToken || csrfToken) return;
       try {
         const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
           headers: {
@@ -46,12 +46,12 @@ const Nickname = () => {
             'X-CSRFToken': csrfToken,
           },
 
-          withCredentials: true,
+          withXSRFToken: true,
         });
         setUser(response.data);
         setUserInfo(response.data);
       } catch (error) {
-        console.error('Failed to fetch user info:', error);
+        console.error(error);
       }
     };
 
@@ -73,9 +73,7 @@ const Nickname = () => {
         },
         {
           headers: {
-
             'Content-Type': 'application/json',
-
 
             Authorization: `Bearer ${accessToken}`,
             'x-csrftoken': csrfToken,
