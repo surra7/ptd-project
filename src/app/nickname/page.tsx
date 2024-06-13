@@ -68,10 +68,8 @@ const Nickname = () => {
       const response = await axios.post(
         'https://api.oz-02-main-04.xyz/api/v1/users/myinfo/',
         {
-          data: {
-            action: 'change_nickname',
-            nickname: newNickname,
-          },
+          action: 'change_nickname',
+          nickname: newNickname,
         },
         {
           headers: {
@@ -80,7 +78,7 @@ const Nickname = () => {
             Authorization: `Bearer ${accessToken}`,
             // 'x-csrftoken': csrfToken,
           },
-          withCredentials: true,
+          withXSRFToken: true,
         },
       );
       if (response.status === 200) {
