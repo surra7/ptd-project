@@ -73,7 +73,9 @@ const Nickname = () => {
         },
         {
           headers: {
+
             'Content-Type': 'application/json',
+
 
             Authorization: `Bearer ${accessToken}`,
             // 'x-csrftoken': csrfToken,
