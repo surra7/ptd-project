@@ -75,10 +75,10 @@ const Nickname = () => {
         },
         {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Content-Type': 'application/json',
 
             Authorization: `Bearer ${accessToken}`,
-            'x-csrftoken': csrfToken,
+            // 'x-csrftoken': csrfToken,
           },
           withCredentials: true,
         },
