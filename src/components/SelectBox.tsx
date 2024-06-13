@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 interface SelectBoxProps {
   type: string;
-  possibleList: string[];
+  possibleList: number[];
   currentProps: number;
   setCurrentProps: (props: number) => void;
 }
@@ -30,12 +30,13 @@ export default function SelectBox({ type, possibleList, currentProps, setCurrent
             <li
               key={i}
               value={i + 1}
-              className={`h-[1.875rem] py-[2px] cursor-pointer ${item.replace(/[^0-9]/g, '') === currentProps.toString() ? '' : 'text-[#D1D1D1]'}`}
+              className={`h-[1.875rem] py-[2px] cursor-pointer ${item === currentProps ? '' : 'text-[#D1D1D1]'}`}
               onClick={() => {
-                setCurrentProps(Number(item.replace(/[^0-9]/g, '')));
+                setCurrentProps(Number(item));
                 setIsClickedSelectBox(false);
               }}>
               {item}
+              {type}
             </li>
           );
         })}

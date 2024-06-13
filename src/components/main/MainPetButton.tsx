@@ -2,11 +2,11 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 
 interface MainPetButtonProps {
-  icon: React.ReactNode; 
+  icon: React.ReactNode;
   label: string;
   link?: string;
 }
-
+  
 function MainPetButton({ icon, label, link }: MainPetButtonProps) {
   const router = useRouter();
 
@@ -21,5 +21,6 @@ function MainPetButton({ icon, label, link }: MainPetButtonProps) {
     </button>
   );
 }
+
 
 export default MainPetButton;
