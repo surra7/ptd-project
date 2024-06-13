@@ -10,34 +10,34 @@ function getLastDayOfMonth(year: number, month: number) {
   return lastDay;
 }
 
-export default function useCreateCalender(year: number, month: number) {
+export default function useCreateCalendar(year: number, month: number) {
   let firstDay = getFirstDayOfMonth(year, month);
   let lastDay = getLastDayOfMonth(year, month);
-  let arrCalender = [];
-  let newCalender = [];
+  let arrCalendar = [];
+  let newCalendar = [];
 
   // 1일 시작 전에 공백 채우기
   for (let i = 0; i < firstDay; i++) {
-    arrCalender.push('');
+    arrCalendar.push('');
   }
 
   // 날짜 넣어주기
   for (let i = 1; i <= lastDay; i++) {
-    arrCalender.push(String(i));
+    arrCalendar.push(String(i));
   }
 
   // 마지막 날짜 이후에 공백 채우기
-  let remainDay = 7 - (arrCalender.length % 7);
+  let remainDay = 7 - (arrCalendar.length % 7);
   if (remainDay < 7) {
     for (let i = 0; i < remainDay; i++) {
-      arrCalender.push('');
+      arrCalendar.push('');
     }
   }
 
   // 주 단위로 자르기
-  for (let i = 0; i < arrCalender.length; i += 7) {
-    newCalender.push(arrCalender.slice(i, i + 7));
+  for (let i = 0; i < arrCalendar.length; i += 7) {
+    newCalendar.push(arrCalendar.slice(i, i + 7));
   }
 
-  return newCalender;
+  return newCalendar;
 }

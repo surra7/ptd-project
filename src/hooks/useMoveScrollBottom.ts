@@ -1,4 +1,4 @@
-import { guestBookListType } from '@/types/guestBookListType';
+import { guestBookListType } from '@/types/guestBookType';
 import { useEffect, useRef } from 'react';
 
 export default function useMoveScrollBottom(guestBook: guestBookListType[]) {

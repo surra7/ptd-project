@@ -1,5 +1,4 @@
 'use client';
-import DeleteAlert from '@/components/guest/DeleteAlert';
 import GuestListItem from '@/components/guest/GuestListItem';
 import useGetTodayDate from '@/hooks/useGetTodayDate';
 import useMoveScrollBottom from '@/hooks/useMoveScrollBottom';
@@ -13,7 +12,6 @@ export default function Guest() {
   const [userInput, setUserInput] = useState('');
   const [guestBook, setGuestBook] = useState<guestBookListType[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [isUser, setIsUser] = useState(true);
   const scrollRef = useMoveScrollBottom(guestBook);
   const router = useRouter();
   let guestBookSampleList = [
@@ -85,25 +83,12 @@ export default function Guest() {
   return (
     <main className="w-full h-full relative">
       <div className="w-full h-full bg-saturdayBlue absolute">배경</div>
-      {modalOpen && <DeleteAlert onClose={modalHandler} />}
       <div className="w-full h-[calc(100%-2.6875rem)] absolute z-10 pt-11 px-[1.4375rem] flex flex-col">
-        {isUser && (
-          <button
-            className="h-[3.3125rem] bg-white bg-opacity-70 rounded-[0.625rem] font-semibold flex items-center ml-auto px-[0.625rem]"
-            onClick={() => router.push('/guest/friends')}>
-            친구 방명록 놀러가기
-            <span className="ml-2">
-              <FaUserFriends size={32} />
-            </span>
-          </button>
-        )}
         <div
-          className={`w-[21.5rem] ${isUser ? 'h-[34.6875rem] mt-[1.375rem]' : 'h-[39.625rem]'} rounded-[5px] bg-white border border-black-200 relative flex flex-col`}>
-          {!isUser && (
-            <div className="w-[21.5rem] h-[3.6rem] border-b-[0.5px] border-black-200 text-lg font-semibold flex justify-center items-center">
-              까피까피츄님의 방명록
-            </div>
-          )}
+          className={`w-[21.5rem] h-[39.625rem] rounded-[5px] bg-white border border-black-200 relative flex flex-col`}>
+          <div className="w-[21.5rem] h-[3.6rem] border-b-[0.5px] border-black-200 text-lg font-semibold flex justify-center items-center">
+            까피까피츄님의 방명록
+          </div>
           <div ref={scrollRef} className="w-full h-full overflow-auto scroll-bar">
             <ul className="py-2">
               {guestBook.map((item, index) => {
