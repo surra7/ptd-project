@@ -18,7 +18,7 @@ export default function Calendar() {
   const todayYear = new Date().getFullYear();
   const [currentYear, setCurrentYear] = useState(todayYear);
   const [currentMonth, setCurrentMonth] = useState(todayMonth);
-  const { data: posts, isLoading: isPostsLoading, error: isPostsError } = getPostsList(2);
+  const { data: posts, isLoading: isPostsLoading, error: isPostsError } = getPostsList();
   const [calendar, setCalendar] = useState<string[][]>([]);
   const [postsList, setPostsList] = useState<postType[]>([]);
   const [startDate, setStartDate] = useState('');

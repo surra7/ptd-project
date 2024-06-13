@@ -1,21 +1,34 @@
 'use client';
 import NickNameList from '@/components/guest/NickNameList';
+import { getSearchNickName } from '@/services/getSearchNickName';
+import { nickNameListType } from '@/types/guestBookType';
 import { useCallback, useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 
 export default function Friends() {
   const [userInput, setUserInput] = useState('');
+  const {
+    data: Nickname,
+    isLoading: isNicknameLoading,
+    error: isNicknameError,
+    refetch,
+  } = getSearchNickName(userInput);
+  const [nicknameList, setNicknameList] = useState<nickNameListType[]>([]);
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value);
   };
 
   const onSubmit = useCallback(
-    (e: React.FormEvent) => {
+    async (e: React.FormEvent) => {
       e.preventDefault();
-      console.log(userInput);
+      if (!isNicknameLoading && !isNicknameError) {
+        const { data } = await refetch();
+        setNicknameList(data);
+        console.log(data);
+      }
     },
-    [userInput],
+    [userInput, isNicknameLoading, isNicknameError, refetch],
   );
 
   return (
@@ -24,11 +37,11 @@ export default function Friends() {
       <div className="w-full h-[2.6875rem] flex items-center mt-[1.125rem]">
         <form className="w-full h-full flex" onSubmit={onSubmit}>
           <div className="w-[calc(100%-2.8125rem)] h-full border-y border-black-200 flex items-center">
-            {/* 닉네임 최대 글자 수 제한 넣기 */}
             <input
               type="text"
               placeholder="닉네임 입력"
               onChange={handleChangeInput}
+              maxLength={255}
               className="w-full mx-[0.625rem] outline-none"
             />
           </div>
@@ -40,7 +53,7 @@ export default function Friends() {
         </form>
       </div>
       <section>
-        <NickNameList />
+        <NickNameList nicknameList={nicknameList} />
       </section>
     </main>
   );

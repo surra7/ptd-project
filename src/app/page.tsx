@@ -19,23 +19,29 @@ function Main() {
   const [backgroundImageURL, setBackgroundImageURL] = useState('');
 
   useEffect(() => {
-    axios.get<petType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/1/')
-    .then(response => {
-      setPetData(response.data);
-      const backgroundImageURL = response.data.primary_background.image;
-      setBackgroundImageURL(backgroundImageURL);
-    })
-    .catch(error => {
-      console.log(error)
-    })
-  })
+    axios
+      .get<petType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/1/')
+      .then(response => {
+        setPetData(response.data);
+        const backgroundImageURL = response.data.primary_background.image;
+        setBackgroundImageURL(backgroundImageURL);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <div className="w-full h-full">
       {petData ? (
-        <div className="wrap-section bg-cover" style={{ backgroundImage: `url:(${backgroundImageURL})`}}>
+        <div className="wrap-section bg-cover" style={{ backgroundImage: `url:(${backgroundImageURL})` }}>
           <header className="h-1/6 pt-8 pb-2 bg-white">
-              <PetProfile name={petData.primary_pet.pet_name} level={petData.pet_rating} progress={petData.point} maxProgress={100} />
+            <PetProfile
+              name={petData.primary_pet.pet_name}
+              level={petData.pet_rating}
+              progress={petData.point}
+              maxProgress={100}
+            />
           </header>
 
           <main className="w-full h-5/6 ">
@@ -69,7 +75,7 @@ function Main() {
           </main>
         </div>
       ) : (
-        <div className='wrap-section'>로딩중..</div>
+        <div className="wrap-section">로딩중..</div>
       )}
       <NavBottom />
     </div>

@@ -2,9 +2,9 @@ import { AxiosError } from 'axios';
 import { calendarClient } from './instance';
 import { useQuery } from '@tanstack/react-query';
 
-const fetchPostList = async () => {
+const fetchNicknameList = async (nickname: string) => {
   try {
-    const response = await calendarClient.get(`posts/`, {
+    const response = await calendarClient.get(`guestbook/${nickname}`, {
       withXSRFToken: true,
     });
     console.log(response.data);
@@ -23,10 +23,11 @@ const fetchPostList = async () => {
   }
 };
 
-export const getPostsList = () => {
+export const getSearchNickName = (nickname: string) => {
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ['postsList'],
-    queryFn: () => fetchPostList(),
+    queryKey: ['nicknameList', nickname],
+    queryFn: () => fetchNicknameList(nickname),
+    enabled: false,
   });
   return { data, isLoading, error, refetch };
 };

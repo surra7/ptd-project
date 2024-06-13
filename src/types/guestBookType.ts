@@ -3,3 +3,8 @@ export interface guestBookListType {
   date: string;
   content: string;
 }
+
+export interface nickNameListType {
+  id: number;
+  nickname: string;
+}

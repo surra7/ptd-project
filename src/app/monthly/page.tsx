@@ -5,7 +5,7 @@ import { getStreak } from '@/services/getStreak';
 import { useEffect, useState } from 'react';
 
 export default function Monthly() {
-  const { data: streak, isLoading: isStreakLoading, error: isStreakError } = getStreak(2);
+  const { data: streak, isLoading: isStreakLoading, error: isStreakError } = getStreak();
   const [streakNumber, setStreakNumber] = useState(0);
 
   useEffect(() => {
