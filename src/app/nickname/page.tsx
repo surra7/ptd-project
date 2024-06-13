@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { userAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
+import NavBottom from '@/components/NavBottom';
 interface User {
   id?: number;
   계정?: string;
@@ -104,6 +105,7 @@ const Nickname = () => {
             placeholder="새 닉네임 입력"
           />
           <button onClick={handleNicknameChange}>닉네임 변경</button>
+          <NavBottom />
         </div>
       ) : (
         <p>로딩 중...</p>
