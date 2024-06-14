@@ -1,13 +1,5 @@
+import { GuestListItemProps } from '@/types/guestBookType';
 import { AiOutlineDelete } from 'react-icons/ai';
-
-interface GuestListItemProps {
-  item: {
-    name: string;
-    date: string;
-    content: string;
-  };
-  modalHandler: () => void;
-}
 
 export default function GuestListItem({ item, modalHandler }: GuestListItemProps) {
   return (

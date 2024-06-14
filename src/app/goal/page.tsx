@@ -1,4 +1,3 @@
-
 'use client';
 
 import axios from 'axios';
@@ -16,9 +15,9 @@ function Goal() {
     try {
       const response = await axios.post(
         `https://api.oz-02-main-04.xyz/api/v1/users/${user.id}/goal/`,
-        { goal, d_day: dDay },
+        { goal: goal, d_day: dDay },
         {
-          withCredentials: true,
+          withXSRFToken: true,
           headers: {
             'x-csrftoken': csrf,
             Authorization: `Bearer ${accessToken}`,

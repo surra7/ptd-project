@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { userAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
+import NavBottom from '@/components/NavBottom';
 interface User {
   id?: number;
   계정?: string;
@@ -38,7 +39,7 @@ const Nickname = () => {
     const fetchUserInfo = async () => {
       console.log(csrfToken);
       console.log(accessToken);
-      if (!accessToken) return;
+      if (!accessToken || csrfToken) return;
       try {
         const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
           headers: {
@@ -46,12 +47,12 @@ const Nickname = () => {
             'X-CSRFToken': csrfToken,
           },
 
-          withCredentials: true,
+          withXSRFToken: true,
         });
         setUser(response.data);
         setUserInfo(response.data);
       } catch (error) {
-        console.error('Failed to fetch user info:', error);
+        console.error(error);
       }
     };
 
@@ -73,9 +74,7 @@ const Nickname = () => {
         },
         {
           headers: {
-
             'Content-Type': 'application/json',
-
 
             Authorization: `Bearer ${accessToken}`,
             'x-csrftoken': csrfToken,
@@ -106,6 +105,7 @@ const Nickname = () => {
             placeholder="새 닉네임 입력"
           />
           <button onClick={handleNicknameChange}>닉네임 변경</button>
+          <NavBottom />
         </div>
       ) : (
         <p>로딩 중...</p>

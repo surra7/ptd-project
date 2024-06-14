@@ -1,14 +1,14 @@
-import { nickNameListType } from '@/types/guestBookType';
+import { NickNameListType } from '@/types/guestBookType';
 import { useRouter } from 'next/navigation';
 
-export default function NickNameList({ nicknameList }: { nicknameList: nickNameListType[] }) {
+export default function NickNameList({ nicknameList }: { nicknameList: NickNameListType[] }) {
   const router = useRouter();
 
   if (nicknameList === undefined) return;
 
   return (
     <ul className="w-full h-[31.25rem] border-b border-black-200 overflow-auto scroll-bar">
-      {nicknameList.map((nickname: nickNameListType, index: number) => {
+      {nicknameList.map((nickname: NickNameListType, index: number) => {
         return (
           <li
             onClick={() => router.push(`/guest/friends/${nickname.id}`)}

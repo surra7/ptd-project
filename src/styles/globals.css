@@ -41,3 +41,13 @@ body {
 .scroll-bar::-webkit-scrollbar-track {
   background: #c9c9c9;
 }
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  color: #8133ea;
+}
+
+.swiper-button-prev::after::hover,
+.swiper-button-next::after::hover {
+  color: #8133ea;
+}

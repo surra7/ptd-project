@@ -1,5 +1,4 @@
 'use client';
-import NavBottom from '@/components/NavBottom';
 import MainPetButton from '@/components/main/MainPetButton';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
