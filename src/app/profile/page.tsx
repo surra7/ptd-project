@@ -54,10 +54,11 @@ export default function Page() {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (!accessToken || !csrf) {
-        setIsLoading(false);
-        return;
-      }
+      console.log(user);
+      //   if (!accessToken || !csrf) {
+      //     setIsLoading(false);
+      //     return;
+      //   }
       console.log('get request ACCESS', accessToken);
       console.log('get request CSRF', csrf);
       try {
