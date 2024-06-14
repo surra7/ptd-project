@@ -9,10 +9,12 @@ function Goal() {
   const [goal, setGoal] = useState<string>('');
   const [dDay, setDDay] = useState<string>('');
   const [user] = useAtom(userAtom);
-  const [csrf] = useAtom(csrfTokenAtom);
   const [accessToken] = useAtom(accessTokenAtom);
-
+  console.log(goal);
+  console.log(dDay);
   const handleSetGoal = async () => {
+    console.log(goal);
+    console.log(dDay);
     const csrfToken = getCookieValue('csrftoken');
     if (!user) return;
     try {
