@@ -4,6 +4,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { userAtom, csrfTokenAtom, accessTokenAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
+import { getCookieValue } from '@/app/profile/page';
 
 function Goal() {
   const [goal, setGoal] = useState<string>('');
@@ -13,6 +14,7 @@ function Goal() {
   const [accessToken] = useAtom(accessTokenAtom);
 
   const handleSetGoal = async () => {
+    const csrfToken = getCookieValue('csrftoken');
     if (!user) return;
     try {
       const response = await axios.post(
@@ -22,7 +24,7 @@ function Goal() {
           withXSRFToken: true,
           withCredentials: true,
           headers: {
-            'x-csrftoken': csrf,
+            'x-csrftoken': csrfToken,
             Authorization: `Bearer ${accessToken}`,
           },
         },

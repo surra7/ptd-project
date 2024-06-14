@@ -13,7 +13,7 @@ interface User {
   닉네임: string;
 }
 
-const getCookieValue = (name: string) => {
+export const getCookieValue = (name: string) => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop()!.split(';').shift();
