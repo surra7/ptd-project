@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAtom } from 'jotai';
 import { userAtom, accessTokenAtom, csrfTokenAtom } from '@/atoms/atoms';
@@ -31,7 +31,7 @@ export default function Page() {
   const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
   const [csrf, setCsrf] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(user);
+
   useEffect(() => {
     const fetchTokens = async () => {
       try {
@@ -39,8 +39,8 @@ export default function Page() {
         const token = getCookieValue('access_token');
         console.log('CSRF Token from cookie:', csrfToken);
         console.log('Access Token from cookie:', token);
-        if (accessToken) {
-          setAccessToken(token!);
+        if (token) {
+          setAccessToken(token);
         }
         if (csrfToken) {
           setCsrf(csrfToken);
@@ -50,15 +50,14 @@ export default function Page() {
       }
     };
     fetchTokens();
-  }, [accessToken, csrf]);
+  }, [setAccessToken]);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      console.log(user);
-      //   if (!accessToken || !csrf) {
-      //     setIsLoading(false);
-      //     return;
-      //   }
+      if (!accessToken || !csrf) {
+        setIsLoading(false);
+        return;
+      }
       console.log('get request ACCESS', accessToken);
       console.log('get request CSRF', csrf);
       try {
@@ -66,8 +65,8 @@ export default function Page() {
           withXSRFToken: true,
           withCredentials: true,
           headers: {
-            'x-csrftoken': csrf,
-            Authorization: `${accessToken}`,
+            'x-csrftoken': csrf!,
+            Authorization: `Bearer ${accessToken}`,
           },
         });
         setUser(response.data);
@@ -80,7 +79,7 @@ export default function Page() {
     };
 
     fetchUserData();
-  }, []);
+  }, [accessToken, csrf, setUser]);
 
   const handleLogout = async () => {
     try {
@@ -92,26 +91,6 @@ export default function Page() {
       setUser(null);
       setAccessToken(null);
       setCsrf(null);
-      //   console.log(accessToken);
-      //   console.log(csrf);
-
-      //   const response = await axios.post(
-      //     'https://api.oz-02-main-04.xyz/api/v1/users/kakao/logout/',
-      //     {},
-      //     {
-      //       withCredentials: true,
-      //       headers: {
-      //         'X-CSRFToken': csrf,
-      //         Authorization: `Bearer ${accessToken}`,
-      //       },
-      //     },
-      //   );
-      //   if (response.status === 200) {
-      //     setUser(null);
-      //     window.location.href = '/login';
-      //   } else {
-      //     console.error(response.status);
-      //   }
     } catch (error) {
       console.error(error);
     }
@@ -132,60 +111,42 @@ export default function Page() {
 
   return (
     <div className="h-full">
-    {user ? (
-      <>
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-          <p className="text-2xl font-bold text-purple-600 mb-4">ayo! {user.닉네임} 님</p>
-          <hr className="border-purple-600 w-full mb-4" />
-          <ul className="space-y-4">
-            <li>
-              <Link href="/nickname">
-                <a className="text-purple-600 hover:underline">닉네임 변경하기</a>
-              </Link>
-            </li>
-            <li>
-              <button className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                목표 설정하기
-              </button>
-            </li>
-            <li>
-              <button className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                petodo 가이드 보기
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                로그아웃
-              </button>
-            </li>
-          </ul>
-          <hr className="border-purple-600 w-full my-4" />
-        </div>
-        <div className="wrap-section">
-          <NavBottom />
-        </div>
-      </>
-    ) : (
-      <>
-        <p>로그인 해주세요.</p>
-        <button>
-          <Image
-            onClick={handleKakaoLogin}
-            src="/images/kakaoLogin.png"
-            alt="kakao-login"
-            width={200}
-            height={200}
-          />
-        </button>
-        <div className="wrap-section">
-          <NavBottom />
-        </div>
-      </>
-    )}
-  </div>
-  
+      {user ? (
+        <>
+          <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+            <p className="text-2xl font-bold text-purple-600 mb-4">ayo! {user.닉네임} 님</p>
+            <hr className="border-purple-600 w-full mb-4" />
+            <ul className="space-y-4">
+              <li>
+                <Link href="/nickname">
+                  <a className="text-purple-600 hover:underline">닉네임 변경하기</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/goal">
+                  <button className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                    목표 설정하기
+                  </button>
+                </Link>
+              </li>
+              <li>
+                <button className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                  petodo 가이드 보기
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                  로그아웃
+                </button>
+              </li>
+            </ul>
+            <hr className="border-purple-600 w-full my-4" />
+          </div>
+          <div className="wrap-section">
+            <NavBottom />
+          </div>
         </>
       ) : (
         <>
@@ -195,13 +156,6 @@ export default function Page() {
               onClick={handleKakaoLogin}
               className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
               카카오 로그인
-              {/* <Image
-                onClick={handleKakaoLogin}
-                src={'/images/kakaoLogin.png'}
-                alt="kakao-login"
-                width={200}
-                height={200}
-              /> */}
             </button>
             <div className="wrap-section mt-4">
               <NavBottom />
