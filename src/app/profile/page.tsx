@@ -64,6 +64,7 @@ export default function Page() {
       try {
         const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
           withXSRFToken: true,
+          withCredentials: true,
           headers: {
             'x-csrftoken': csrf,
             Authorization: `${accessToken}`,
