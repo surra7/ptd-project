@@ -114,7 +114,7 @@ export default function Page() {
       {user ? (
         <>
           <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-            <p className="text-2xl font-bold text-purple-600 mb-4">ayo! {user.닉네임} 님</p>
+            <p className="text-2xl font-bold text-purple-600 mb-4">안녕하세요! {user.닉네임} 님</p>
             <hr className="border-purple-600 w-full mb-4" />
             <ul className="space-y-4">
               <li>
@@ -124,20 +124,14 @@ export default function Page() {
               </li>
               <li>
                 <Link href="/goal">
-                  <a className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                    목표 설정하기
-                  </a>
+                  <a className="text-purple-600 hover:underline">목표 설정하기</a>
                 </Link>
               </li>
               <li>
-                <a className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                  petodo 가이드 보기
-                </a>
+                <a className="text-purple-600 hover:underline">petodo 가이드 보기</a>
               </li>
               <li>
-                <a
-                  onClick={handleLogout}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                <a onClick={handleLogout} className="text-purple-600 hover:underline">
                   로그아웃
                 </a>
               </li>
