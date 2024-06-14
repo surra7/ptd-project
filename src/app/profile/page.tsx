@@ -50,7 +50,7 @@ export default function Page() {
       }
     };
     fetchTokens();
-  }, [csrf, accessToken]);
+  }, [accessToken, csrf]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -78,7 +78,7 @@ export default function Page() {
     };
 
     fetchUserData();
-  }, [accessToken, csrf]);
+  }, []);
 
   const handleLogout = async () => {
     try {
