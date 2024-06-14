@@ -15,7 +15,9 @@ function Goal() {
   const handleSetGoal = async () => {
     console.log(goal);
     console.log(dDay);
+
     const csrfToken = getCookieValue('csrftoken');
+    console.log(csrfToken);
     if (!user) return;
     try {
       const response = await axios.post(
