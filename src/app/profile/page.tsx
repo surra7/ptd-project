@@ -124,22 +124,22 @@ export default function Page() {
               </li>
               <li>
                 <Link href="/goal">
-                  <button className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                  <a className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                     목표 설정하기
-                  </button>
+                  </a>
                 </Link>
               </li>
               <li>
-                <button className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                <a className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                   petodo 가이드 보기
-                </button>
+                </a>
               </li>
               <li>
-                <button
+                <a
                   onClick={handleLogout}
                   className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                   로그아웃
-                </button>
+                </a>
               </li>
             </ul>
             <hr className="border-purple-600 w-full my-4" />
