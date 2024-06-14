@@ -2,15 +2,15 @@
 import ProgressBar from '@/components/monthly/ProgressBar';
 import SelectBox from '@/components/SelectBox';
 import { DAY_OF_WEEK } from '@/constants';
-import useCreateCalendar from '@/hooks/useCreateCalendar';
 import useSwipeDirection from '@/hooks/useSwipeDirection';
 import { useEffect, useRef, useState } from 'react';
-import { getPostsList } from '../services/getPostsList';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '@/atoms/atoms';
-import { postType } from '@/types/PostType';
 import useSetOptions from '@/hooks/useSetOptions';
 import { useRouter } from 'next/navigation';
+import { useGetPostsList } from '@/services/getPostsList';
+import { PostType } from '@/types/calendarType';
+import createCalendar from '@/libs/createCalendar';
 
 export default function Calendar() {
   const today = new Date().getDate();
@@ -18,9 +18,9 @@ export default function Calendar() {
   const todayYear = new Date().getFullYear();
   const [currentYear, setCurrentYear] = useState(todayYear);
   const [currentMonth, setCurrentMonth] = useState(todayMonth);
-  const { data: posts, isLoading: isPostsLoading, error: isPostsError } = getPostsList(2);
+  const { data: posts, isLoading: isPostsLoading, error: isPostsError } = useGetPostsList();
   const [calendar, setCalendar] = useState<string[][]>([]);
-  const [postsList, setPostsList] = useState<postType[]>([]);
+  const [postsList, setPostsList] = useState<PostType[]>([]);
   const [startDate, setStartDate] = useState('');
   const [lastDate, setLastDate] = useState('');
   const calendarRef = useRef<HTMLDivElement | null>(null);
@@ -38,14 +38,14 @@ export default function Calendar() {
   useEffect(() => {
     if (posts !== undefined) {
       setPostsList(posts);
-      const dateList = posts.map((res: postType) => res.todo_date.replace(/[^0-9]/g, ''));
+      const dateList = posts.map((res: PostType) => res.todo_date.replace(/[^0-9]/g, ''));
       setStartDate(Math.min(...dateList).toString());
       setLastDate(Math.max(...dateList).toString());
     } else {
       setStartDate(todayYear.toString() + todayMonth.toString().padStart(2, '0'));
       setLastDate(todayYear.toString() + todayMonth.toString().padStart(2, '0'));
     }
-  }, [posts]);
+  }, [posts, todayMonth, todayYear]);
 
   useEffect(() => {
     if (direction === 'left') {
@@ -60,7 +60,7 @@ export default function Calendar() {
       else setCurrentMonth(prev => prev - 1);
     }
     setDirection('');
-  }, [direction]);
+  }, [direction, currentMonth, currentYear, monthOptions, yearOptions, setDirection]);
 
   useEffect(() => {
     if (currentMonth < 1) {
@@ -70,7 +70,7 @@ export default function Calendar() {
       setCurrentYear(prev => prev + 1);
       setCurrentMonth(1);
     }
-    setCalendar(() => useCreateCalendar(currentYear, currentMonth));
+    setCalendar(() => createCalendar(currentYear, currentMonth));
   }, [currentYear, currentMonth]);
 
   if (isPostsLoading) {

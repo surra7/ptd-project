@@ -1,23 +1,23 @@
-import { MutableRefObject, useEffect, useState } from 'react';
+import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 export default function useSwipeDirection(calendar: MutableRefObject<HTMLDivElement | null>) {
   const [direction, setDirection] = useState('');
-  let initialX: number | null = null;
+  const initialX = useRef<number | null>(null);
 
-  function initTouch(e: TouchEvent) {
-    initialX = e.changedTouches[0].pageX;
-  }
+  const initTouch = useCallback((e: TouchEvent) => {
+    initialX.current = e.changedTouches[0].pageX;
+  }, []);
 
-  function initClick(e: MouseEvent) {
-    initialX = e.pageX;
-  }
+  const initClick = useCallback((e: MouseEvent) => {
+    initialX.current = e.pageX;
+  }, []);
 
-  function swipeTouchDirection(e: TouchEvent) {
-    if (initialX !== null) {
+  const swipeTouchDirection = useCallback((e: TouchEvent) => {
+    if (initialX.current !== null) {
       const currentX = e.changedTouches[0].pageX;
 
-      const diffX = initialX - currentX;
-      initialX = null;
+      const diffX = initialX.current - currentX;
+      initialX.current = null;
 
       if (diffX < -10) {
         setDirection('right');
@@ -27,14 +27,14 @@ export default function useSwipeDirection(calendar: MutableRefObject<HTMLDivElem
         setDirection('');
       }
     }
-  }
+  }, []);
 
-  function swipeMouseDirection(e: MouseEvent) {
-    if (initialX !== null) {
+  const swipeMouseDirection = useCallback((e: MouseEvent) => {
+    if (initialX.current !== null) {
       const currentX = e.pageX;
 
-      let diffX = initialX - currentX;
-      initialX = null;
+      let diffX = initialX.current - currentX;
+      initialX.current = null;
 
       if (diffX < -10) {
         setDirection('right');
@@ -44,20 +44,22 @@ export default function useSwipeDirection(calendar: MutableRefObject<HTMLDivElem
         setDirection('');
       }
     }
-  }
+  }, []);
 
   useEffect(() => {
+    let calendarRefCurrent = calendar.current;
     calendar.current?.addEventListener('touchstart', initTouch);
     calendar.current?.addEventListener('touchend', swipeTouchDirection);
     calendar.current?.addEventListener('mousedown', initClick);
     calendar.current?.addEventListener('mouseup', swipeMouseDirection);
     return () => {
-      calendar.current?.removeEventListener('touchstart', initTouch);
-      calendar.current?.removeEventListener('touchend', swipeTouchDirection);
-      calendar.current?.removeEventListener('mousedown', initClick);
-      calendar.current?.removeEventListener('mouseup', swipeMouseDirection);
+      calendarRefCurrent?.removeEventListener('touchstart', initTouch);
+      calendarRefCurrent?.removeEventListener('touchend', swipeTouchDirection);
+      calendarRefCurrent?.removeEventListener('mousedown', initClick);
+      calendarRefCurrent?.removeEventListener('mouseup', swipeMouseDirection);
+      calendarRefCurrent = null;
     };
-  }, [initTouch, swipeTouchDirection, initClick, swipeMouseDirection]);
+  }, [calendar, initTouch, swipeTouchDirection, initClick, swipeMouseDirection]);
 
   return { direction, setDirection };
 }

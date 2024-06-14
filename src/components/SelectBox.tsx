@@ -1,12 +1,6 @@
 import useOutsideClick from '@/hooks/useOutsideClick';
+import { SelectBoxProps } from '@/types/calendarType';
 import { useState } from 'react';
-
-interface SelectBoxProps {
-  type: string;
-  possibleList: number[];
-  currentProps: number;
-  setCurrentProps: (props: number) => void;
-}
 
 export default function SelectBox({ type, possibleList, currentProps, setCurrentProps }: SelectBoxProps) {
   const [isClickedSelectBox, setIsClickedSelectBox] = useState(false);
