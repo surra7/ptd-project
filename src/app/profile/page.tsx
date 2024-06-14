@@ -31,7 +31,7 @@ export default function Page() {
   const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
   const [csrf, setCsrf] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  console.log(user);
   useEffect(() => {
     const fetchTokens = async () => {
       try {
