@@ -6,18 +6,13 @@ import { userAtom, accessTokenAtom, csrfTokenAtom } from '@/atoms/atoms';
 import Image from 'next/image';
 import NavBottom from '@/components/NavBottom';
 import Link from 'next/link';
+import { getCookieValue } from '@/libs/getCookieValue';
 
 interface User {
   id: number;
   계정: string;
   닉네임: string;
 }
-
-export const getCookieValue = (name: string) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop()!.split(';').shift();
-};
 
 function deleteCookie(name: any, path: any, domain: any) {
   if (getCookieValue(name)) {

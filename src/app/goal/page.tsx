@@ -4,8 +4,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { userAtom, csrfTokenAtom, accessTokenAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
-import { getCookieValue } from '@/app/profile/page';
-
+import { getCookieValue } from '@/libs/getCookieValue';
 function Goal() {
   const [goal, setGoal] = useState<string>('');
   const [dDay, setDDay] = useState<string>('');
