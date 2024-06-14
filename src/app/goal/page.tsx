@@ -10,7 +10,7 @@ function Goal() {
   const [dDay, setDDay] = useState<string>('');
   const [user] = useAtom(userAtom);
   const [accessToken] = useAtom(accessTokenAtom);
-  console.log(goal);
+  console.log(user);
   console.log(dDay);
   const handleSetGoal = async () => {
     console.log(goal);
@@ -19,7 +19,7 @@ function Goal() {
     if (!user) return;
     try {
       const response = await axios.post(
-        `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
+        `https://api.oz-02-main-04.xyz/api/v1/posts/goal/${user.id}`,
         { data: { goal: goal, d_day: dDay } },
         {
           withXSRFToken: true,
