@@ -21,7 +21,7 @@ const Nickname = () => {
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useAtom(userAtom);
-  console.log(userInfo);
+
   useEffect(() => {
     const csrfToken = getCookieValue('csrftoken');
     const token = getCookieValue('access_token');
@@ -39,6 +39,7 @@ const Nickname = () => {
     const fetchUserInfo = async () => {
       console.log(csrfToken);
       console.log(accessToken);
+
       if (!accessToken || csrfToken) return;
       try {
         const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
@@ -51,6 +52,7 @@ const Nickname = () => {
         });
         setUser(response.data);
         setUserInfo(response.data);
+        console.log(user);
       } catch (error) {
         console.error(error);
       }
@@ -60,7 +62,7 @@ const Nickname = () => {
   }, [accessToken, csrfToken]);
 
   const handleNicknameChange = async () => {
-    console.log(newNickname);
+    console.log(user);
     if (!newNickname) {
       alert('닉네임을 입력해주세요.');
       return;
@@ -90,7 +92,7 @@ const Nickname = () => {
       console.error(error);
     }
   };
-  console.log(newNickname);
+
   return (
     <div className="profile-container">
       {user ? (
