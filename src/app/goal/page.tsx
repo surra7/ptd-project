@@ -20,6 +20,7 @@ function Goal() {
         { goal: goal, d_day: dDay },
         {
           withXSRFToken: true,
+          withCredentials: true,
           headers: {
             'x-csrftoken': csrf,
             Authorization: `Bearer ${accessToken}`,
