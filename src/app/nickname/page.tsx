@@ -40,7 +40,7 @@ const Nickname = () => {
       console.log(csrfToken);
       console.log(accessToken);
 
-      if (!accessToken || csrfToken) return;
+      if (!accessToken || !csrfToken) return;
       try {
         const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
           headers: {

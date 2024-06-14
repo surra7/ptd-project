@@ -28,7 +28,7 @@ function deleteCookie(name: any, path: any, domain: any) {
 
 export default function Page() {
   const [user, setUser] = useAtom<User | null>(userAtom);
-  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
+  const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
   const [csrf, setCsrf] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -37,10 +37,10 @@ export default function Page() {
       try {
         const csrfToken = getCookieValue('csrftoken');
         const token = getCookieValue('access_token');
-        console.log('CSRF Token:', csrfToken);
-        console.log('Access Token:', accessToken);
+        console.log('CSRF Token from cookie:', csrfToken);
+        console.log('Access Token from cookie:', token);
         if (accessToken) {
-          setAccessToken(accessToken);
+          setAccessToken(token!);
         }
         if (csrfToken) {
           setCsrf(csrfToken);
