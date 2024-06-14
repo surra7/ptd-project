@@ -132,33 +132,60 @@ export default function Page() {
 
   return (
     <div className="h-full">
-      {user ? (
-        <>
-          <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-            <p className="text-2xl font-bold text-purple-600 mb-4">ayo! {user.닉네임} 님 </p>
-            <hr className="border-purple-600 w-full mb-4" />
-            <Link href="/nickname">
-              <a className="text-purple-600 hover:underline">닉네임 변경하기</a>
-            </Link>
-            <hr className="border-purple-600 w-full my-4" />
-            <button className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-              목표 설정하기
-            </button>
-            <hr className="border-purple-600 w-full my-4" />
-            <button className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-              petodo 가이드 보기
-            </button>
-            <hr className="border-purple-600 w-full my-4" />
-            <button
-              onClick={handleLogout}
-              className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-              로그아웃
-            </button>
-            <hr className="border-purple-600 w-full my-4" />
-          </div>
-          <div className="wrap-section">
-            <NavBottom />
-          </div>
+    {user ? (
+      <>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+          <p className="text-2xl font-bold text-purple-600 mb-4">ayo! {user.닉네임} 님</p>
+          <hr className="border-purple-600 w-full mb-4" />
+          <ul className="space-y-4">
+            <li>
+              <Link href="/nickname">
+                <a className="text-purple-600 hover:underline">닉네임 변경하기</a>
+              </Link>
+            </li>
+            <li>
+              <button className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                목표 설정하기
+              </button>
+            </li>
+            <li>
+              <button className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                petodo 가이드 보기
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                로그아웃
+              </button>
+            </li>
+          </ul>
+          <hr className="border-purple-600 w-full my-4" />
+        </div>
+        <div className="wrap-section">
+          <NavBottom />
+        </div>
+      </>
+    ) : (
+      <>
+        <p>로그인 해주세요.</p>
+        <button>
+          <Image
+            onClick={handleKakaoLogin}
+            src="/images/kakaoLogin.png"
+            alt="kakao-login"
+            width={200}
+            height={200}
+          />
+        </button>
+        <div className="wrap-section">
+          <NavBottom />
+        </div>
+      </>
+    )}
+  </div>
+  
         </>
       ) : (
         <>
