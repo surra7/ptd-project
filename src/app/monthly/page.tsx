@@ -1,11 +1,11 @@
 'use client';
 import NavBottom from '@/components/NavBottom';
 import Calendar from '@/containers/Calendar';
-import { getStreak } from '@/services/getStreak';
+import { useGetStreak } from '@/services/getStreak';
 import { useEffect, useState } from 'react';
 
 export default function Monthly() {
-  const { data: streak, isLoading: isStreakLoading, error: isStreakError } = getStreak();
+  const { data: streak, isLoading: isStreakLoading, error: isStreakError } = useGetStreak();
   const [streakNumber, setStreakNumber] = useState(0);
 
   useEffect(() => {

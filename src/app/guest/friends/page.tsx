@@ -1,7 +1,7 @@
 'use client';
 import NickNameList from '@/components/guest/NickNameList';
-import { getSearchNickName } from '@/services/getSearchNickName';
-import { nickNameListType } from '@/types/guestBookType';
+import { useGetSearchNickName } from '@/services/getSearchNickName';
+import { NickNameListType } from '@/types/guestBookType';
 import { useCallback, useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 
@@ -12,8 +12,8 @@ export default function Friends() {
     isLoading: isNicknameLoading,
     error: isNicknameError,
     refetch,
-  } = getSearchNickName(userInput);
-  const [nicknameList, setNicknameList] = useState<nickNameListType[]>([]);
+  } = useGetSearchNickName(userInput);
+  const [nicknameList, setNicknameList] = useState<NickNameListType[]>([]);
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value);
@@ -28,7 +28,7 @@ export default function Friends() {
         console.log(data);
       }
     },
-    [userInput, isNicknameLoading, isNicknameError, refetch],
+    [isNicknameLoading, isNicknameError, refetch],
   );
 
   return (

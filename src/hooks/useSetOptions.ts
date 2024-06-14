@@ -1,12 +1,5 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
-
-interface SetOptionsProps {
-  startDate: string;
-  lastDate: string;
-  currentYear: number;
-  currentMonth: number;
-  setCurrentMonth: Dispatch<SetStateAction<number>>;
-}
+import { SetOptionsProps } from '@/types/calendarType';
+import { useEffect } from 'react';
 
 export default function useSetOptions({
   startDate,
@@ -41,7 +34,7 @@ export default function useSetOptions({
     } else if (currentMonth >= monthOptions[monthOptions.length - 1]) {
       setCurrentMonth(monthOptions[monthOptions.length - 1]);
     }
-  }, [monthOptions]);
+  }, [monthOptions, currentMonth, setCurrentMonth]);
 
   return { yearOptions, monthOptions };
 }

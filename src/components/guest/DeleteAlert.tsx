@@ -1,9 +1,5 @@
+import { DeleteAlertProps } from '@/types/guestBookType';
 import ModalWrapper from '../ModalWrapper';
-
-interface DeleteAlertProps {
-  onClose: () => void;
-  bgColor?: string;
-}
 
 export default function DeleteAlert({ onClose }: DeleteAlertProps) {
   return (
