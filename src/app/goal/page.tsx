@@ -18,7 +18,7 @@ function Goal() {
     try {
       const response = await axios.post(
         `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
-        { goal: goal, d_day: dDay },
+        { data: { goal: goal, d_day: dDay } },
         {
           withXSRFToken: true,
           withCredentials: true,
