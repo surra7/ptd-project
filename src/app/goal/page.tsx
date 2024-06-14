@@ -30,6 +30,7 @@ function Goal() {
           },
         },
       );
+      alert(`완료되었습니다! ${response.data}`);
       console.log(response.data);
     } catch (error) {
       console.error(error);
