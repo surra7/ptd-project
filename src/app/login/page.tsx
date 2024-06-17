@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { userAtom } from '@/atoms/atoms';
+import { userAtom, accessTokenAtom, refreshTokenAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -8,6 +8,8 @@ import { useRouter } from 'next/navigation';
 const KakaoLogin = () => {
   const router = useRouter();
   const [user] = useAtom(userAtom);
+  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
+  const [refreshToken] = useAtom(refreshTokenAtom);
 
   useEffect(() => {
     console.log(user);
