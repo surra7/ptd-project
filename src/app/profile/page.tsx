@@ -123,7 +123,10 @@ export default function Page() {
                 </Link>
               </li>
               <li>
-                <a className="text-purple-600 hover:underline">petodo 가이드 보기</a>
+                {' '}
+                <Link href="/introduce">
+                  <a className="text-purple-600 hover:underline">petodo 가이드 보기</a>
+                </Link>{' '}
               </li>
               <li>
                 <a onClick={handleLogout} className="text-purple-600 hover:underline">
