@@ -8,8 +8,8 @@ import { getCookieValue } from '@/libs/getCookieValue';
 import NavBottom from '@/components/NavBottom';
 
 function Goal() {
-  const [goal, setGoal] = useState<string | null>('');
-  const [dDay, setDDay] = useState<string | null>('');
+  const [goal, setGoal] = useState<string | null>(null);
+  const [dDay, setDDay] = useState<string | null>(null);
   const [user] = useAtom(userAtom);
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [refreshToken] = useAtom(refreshTokenAtom);

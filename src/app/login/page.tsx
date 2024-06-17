@@ -10,6 +10,7 @@ const KakaoLogin = () => {
   const [user] = useAtom(userAtom);
 
   useEffect(() => {
+    console.log(user);
     if (user) {
       router.push('/');
     }
