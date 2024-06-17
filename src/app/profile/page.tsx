@@ -104,7 +104,7 @@ export default function Page() {
     <div className="h-full">
       {user ? (
         <>
-          <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+          <div className="wrap-section flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
             <p className="text-2xl font-bold text-purple-600 mb-4">안녕하세요! {user.닉네임} 님</p>
             <hr className="border-purple-600 w-full mb-4" />
             <ul className="space-y-4">
@@ -131,23 +131,20 @@ export default function Page() {
               </li>
             </ul>
             <hr className="border-purple-600 w-full my-4" />
-          </div>
-          <div className="wrap-section">
-            <NavBottom />
+            <NavBottom />{' '}
           </div>
         </>
       ) : (
         <>
-          <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+          <div className="wrap-section flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
             <p className="text-2xl font-bold text-purple-600 mb-4">로그인 해주세요.</p>
             <button
               onClick={handleKakaoLogin}
               className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
               카카오 로그인
             </button>
-            <div className="wrap-section mt-4">
-              <NavBottom />
-            </div>
+
+            <NavBottom />
           </div>
         </>
       )}

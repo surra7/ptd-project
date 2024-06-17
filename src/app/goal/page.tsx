@@ -87,7 +87,7 @@ function Goal() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="wrap-section flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <h1 className="text-2xl font-bold text-purple-600 mb-4">목표/디데이 설정</h1>
       <div className="w-full max-w-xs">
         <label htmlFor="goal" className="block text-sm font-medium text-gray-700">
