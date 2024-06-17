@@ -22,7 +22,7 @@ function Goal() {
       setAccessToken(newAccessToken);
       return newAccessToken;
     } catch (error) {
-      console.error('Failed to refresh access token:', error);
+      console.error('refresh access token:', error);
       return null;
     }
   };
@@ -38,7 +38,7 @@ function Goal() {
     try {
       const response = await axios.post(
         `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
-        { goal, d_day: dDay, days_by_deadline: '' },
+        { goal, d_day: dDay },
         {
           withCredentials: true,
           headers: {
@@ -56,7 +56,7 @@ function Goal() {
           try {
             const retryResponse = await axios.post(
               `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
-              { goal, d_day: dDay, days_by_deadline: '' },
+              { goal, d_day: dDay },
               {
                 withCredentials: true,
                 headers: {
@@ -68,10 +68,10 @@ function Goal() {
             alert(`완료되었습니다! ${retryResponse.data}`);
             console.log(retryResponse.data);
           } catch (retryError) {
-            console.error('Retry request failed:', retryError);
+            console.error('Retry request', retryError);
           }
         } else {
-          console.error('Failed to refresh access token');
+          console.error('refresh access token');
         }
       } else {
         console.error('Error:', error);
