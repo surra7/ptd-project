@@ -39,6 +39,7 @@ function Goal() {
 
     const csrfToken = getCookieValue('csrftoken');
     console.log('CSRF Token:', csrfToken);
+    console.log(user);
     if (!user) return;
 
     try {
