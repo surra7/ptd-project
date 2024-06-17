@@ -32,8 +32,6 @@ export default function Page() {
       try {
         const csrfToken = getCookieValue('csrftoken');
         const token = getCookieValue('access_token');
-        console.log('CSRF Token from cookie:', csrfToken);
-        console.log('Access Token from cookie:', token);
         if (token) {
           setAccessToken(token);
         }
@@ -53,8 +51,6 @@ export default function Page() {
         setIsLoading(false);
         return;
       }
-      console.log('get request ACCESS', accessToken);
-      console.log('get request CSRF', csrf);
       try {
         const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
           withXSRFToken: true,
