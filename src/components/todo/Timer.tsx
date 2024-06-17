@@ -10,6 +10,7 @@ function Timer() {
 
   useEffect(() => {
     let interval: NodeJS.Timer;
+
     if (isActive) {
       interval = setInterval(() => {
         setSeconds(seconds => seconds + 1);
@@ -22,20 +23,25 @@ function Timer() {
 
   const handleStart = async (): Promise<void> => {
     setIsActive(prev => !prev);
-    // const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/posts/timer/1');
-
-    // if (!response.data) {
-    // await axios.post('https://api.oz-02-main-04.xyz/api/v1/posts/timer/1', { on_btn: false });
-    // }
+    try {
+      const res = await axios.get('https://api.oz-02-main-04.xyz/api/v1/posts/timer/3');
+      console.log(res.data);
+      setSeconds(res.data.duration);
+      if (res) {
+        await axios.patch('https://api.oz-02-main-04.xyz/api/v1/posts/timer/3', { action: 'restart' });
+      }
+    } catch {
+      await axios.post('https://api.oz-02-main-04.xyz/api/v1/posts/timer/3');
+    }
   };
 
   const handleStop = async () => {
     setIsActive(prev => !prev);
-    if (!isActive) {
-      const nowTimes = formatTime(seconds);
-      console.log(nowTimes);
-      // await axios.patch('https://api.oz-02-main-04.xyz/api/v1/posts/timer/1'), { duration: seconds };
-    }
+    // if (!isActive) {
+    //   const nowTimes = formatTime(seconds);
+    //   console.log(nowTimes);
+    // }
+    await axios.patch('https://api.oz-02-main-04.xyz/api/v1/posts/timer/3', { action: 'pause' });
   };
 
   // 리셋
@@ -43,15 +49,6 @@ function Timer() {
     setSeconds(0);
     setIsActive(false);
   };
-
-  useEffect(() => {
-    const createTimer = async () => {
-      // if (seconds) {
-      //   await axios.post('https://api.oz-02-main-04.xyz/api/v1/posts/timer/1');
-      // }
-    };
-    createTimer();
-  }, []);
 
   const formatTime = (time: number) => {
     const hours: number = Math.floor(time / 3600); // 시간
@@ -65,33 +62,31 @@ function Timer() {
     return `${hoursStr}시간 ${minutesStr}분 ${secondStr}초`;
   };
 
-  // useEffect(() => {
-  //   const fetchTimer = async () => {
-  //     const res = await axios.get('https://api.oz-02-main-04.xyz/api/v1/posts/timer/1');
-  //     console.log(res.data);
-
-  //     if (res.data) {
-  //       setSeconds(res.data.duration);
-  //     }
-  //   };
-  //   fetchTimer();
-  // }, []);
+  useEffect(() => {
+    const getTime = async () => {
+      const res = await axios.get('posts/timer/3');
+      try {
+        setSeconds(res.data.duration);
+      } catch {
+        return;
+      }
+    };
+    getTime();
+  }, []);
 
   return (
     <>
       <div>
         <LuTimer className="w-[1.3125rem] h-[1.3125rem] text-black-900" />
       </div>
-      <div className="flex items-center w-[19rem] h-[2rem] font-medium text-[0.875rem] text-textGray">
-        {formatTime(seconds)}
-      </div>
+      <div className="flex items-center w-[19rem] h-[2rem] font-medium text-[0.875rem] text-textGray">{seconds}</div>
       {isActive ? (
-        <button type="button" onClick={handleStart}>
+        <button type="button" onClick={handleStop}>
           <BsStopCircle className="w-[1.625rem] h-[1.625rem] text-primary-400" />
         </button>
       ) : (
         <>
-          <button type="button" onClick={handleStop}>
+          <button type="button" onClick={handleStart}>
             <BsSkipStartCircle className="w-[1.625rem] h-[1.625rem] text-black-200" />
           </button>
           {/* <button type="button" onClick={handleReset}>
