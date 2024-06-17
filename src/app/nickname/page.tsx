@@ -99,7 +99,7 @@ const Nickname = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       {user ? (
         <div className="w-full max-w-xs">
-          <h1 className="text-2xl font-bold text-purple-600 mb-4">내 정보</h1>
+          <h1 className="text-2xl font-bold text-purple-600 mb-4">닉네임 변경하기</h1>
           <div className="mb-4">
             <p className="text-sm font-medium text-gray-700">계정: {user?.계정}</p>
             <p className="text-sm font-medium text-gray-700">닉네임: {user?.닉네임}</p>
@@ -114,7 +114,7 @@ const Nickname = () => {
           <button
             onClick={handleNicknameChange}
             className="mt-4 w-full px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-            닉네임 변경
+            완료
           </button>
           <NavBottom />
         </div>

@@ -5,10 +5,11 @@ import React, { useState } from 'react';
 import { userAtom, accessTokenAtom, refreshTokenAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
 import { getCookieValue } from '@/libs/getCookieValue';
+import NavBottom from '@/components/NavBottom';
 
 function Goal() {
-  const [goal, setGoal] = useState<string>('');
-  const [dDay, setDDay] = useState<string>('');
+  const [goal, setGoal] = useState<string | null>(null);
+  const [dDay, setDDay] = useState<string | null>(null);
   const [user] = useAtom(userAtom);
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [refreshToken] = useAtom(refreshTokenAtom);
@@ -28,6 +29,11 @@ function Goal() {
   };
 
   const handleSetGoal = async () => {
+    if (!goal || !dDay) {
+      alert('목표와 D-Day를 모두 입력해주세요.');
+      return;
+    }
+
     console.log('Goal:', goal);
     console.log('D-Day:', dDay);
 
@@ -89,7 +95,7 @@ function Goal() {
         <input
           id="goal"
           type="text"
-          value={goal}
+          value={goal || ''}
           onChange={e => setGoal(e.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
           placeholder="목표 입력"
@@ -102,7 +108,7 @@ function Goal() {
         <input
           id="dDay"
           type="date"
-          value={dDay}
+          value={dDay || ''}
           onChange={e => setDDay(e.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
         />
@@ -112,6 +118,7 @@ function Goal() {
         className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
         완료
       </button>
+      <NavBottom />
     </div>
   );
 }
