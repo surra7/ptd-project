@@ -2,80 +2,39 @@
 
 import axios from 'axios';
 import React, { useState } from 'react';
-import { userAtom, accessTokenAtom, refreshTokenAtom } from '@/atoms/atoms';
+import { userAtom, csrfTokenAtom, accessTokenAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
 import { getCookieValue } from '@/libs/getCookieValue';
-
 function Goal() {
   const [goal, setGoal] = useState<string>('');
   const [dDay, setDDay] = useState<string>('');
   const [user] = useAtom(userAtom);
-  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
-  const [refreshToken] = useAtom(refreshTokenAtom);
-
-  const refreshAccessToken = async () => {
-    try {
-      const response = await axios.post('https://api.oz-02-main-04.xyz/api/token/refresh/', {
-        refresh: refreshToken,
-      });
-      const newAccessToken = response.data.access;
-      setAccessToken(newAccessToken);
-      return newAccessToken;
-    } catch (error) {
-      console.error('Failed to refresh access token:', error);
-      return null;
-    }
-  };
+  const [accessToken] = useAtom(accessTokenAtom);
 
   const handleSetGoal = async () => {
-    console.log('Goal:', goal);
-    console.log('D-Day:', dDay);
+    console.log(goal);
+    console.log(dDay);
 
     const csrfToken = getCookieValue('csrftoken');
-    console.log('CSRF Token:', csrfToken);
+    console.log(csrfToken);
     if (!user) return;
-
     try {
       const response = await axios.post(
         `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
-        { goal, d_day: dDay, days_by_deadline: '' },
+        { goal: goal, d_day: dDay, days_by_deadline: '' },
         {
+          withXSRFToken: true,
           withCredentials: true,
           headers: {
-            'X-CSRFToken': csrfToken,
+            'x-csrftoken': csrfToken,
             Authorization: `Bearer ${accessToken}`,
           },
         },
       );
       alert(`완료되었습니다! ${response.data}`);
       console.log(response.data);
-    } catch (error: any) {
-      if (error.response && error.response.status === 401) {
-        const newAccessToken = await refreshAccessToken();
-        if (newAccessToken) {
-          try {
-            const retryResponse = await axios.post(
-              `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
-              { goal, d_day: dDay, days_by_deadline: '' },
-              {
-                withCredentials: true,
-                headers: {
-                  'X-CSRFToken': csrfToken,
-                  Authorization: `Bearer ${newAccessToken}`,
-                },
-              },
-            );
-            alert(`완료되었습니다! ${retryResponse.data}`);
-            console.log(retryResponse.data);
-          } catch (retryError) {
-            console.error('Retry request failed:', retryError);
-          }
-        } else {
-          console.error('Failed to refresh access token');
-        }
-      } else {
-        console.error('Error:', error);
-      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
