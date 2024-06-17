@@ -101,7 +101,7 @@ export default function Page() {
   }
 
   return (
-    <div className="h-full">
+    <div className="h-full wrap-section">
       {user ? (
         <>
           <div className="wrap-section flex flex-col items-center justify-center min-h-screen p-4">
