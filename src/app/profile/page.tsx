@@ -104,7 +104,7 @@ export default function Page() {
     <div className="h-full">
       {user ? (
         <>
-          <div className="wrap-section flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+          <div className="wrap-section flex flex-col items-center justify-center min-h-screen p-4">
             <p className="text-2xl font-bold text-purple-600 mb-4">안녕하세요! {user.닉네임} 님</p>
             <hr className="border-purple-600 w-full mb-4" />
             <ul className="space-y-4">
