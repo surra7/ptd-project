@@ -44,7 +44,7 @@ function Goal() {
     try {
       const response = await axios.post(
         `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
-        { goal, d_day: dDay },
+        { goal, d_day: dDay, days_by_deadline: '' },
         {
           withCredentials: true,
           headers: {
@@ -62,7 +62,7 @@ function Goal() {
           try {
             const retryResponse = await axios.post(
               `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
-              { goal, d_day: dDay },
+              { goal, d_day: dDay, days_by_deadline: '' },
               {
                 withCredentials: true,
                 headers: {
