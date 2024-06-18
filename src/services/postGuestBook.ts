@@ -12,8 +12,7 @@ const fetchPostGuestBook = async (new_comment: postGuestBookProps) => {
 export const usePostGuestBook = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ user_id, content, guestbook_user }: postGuestBookProps) =>
-      fetchPostGuestBook({ user_id, content, guestbook_user }),
+    mutationFn: ({ content, guestbook_user }: postGuestBookProps) => fetchPostGuestBook({ content, guestbook_user }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['guestBook'] });
     },

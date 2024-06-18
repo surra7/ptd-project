@@ -2,15 +2,15 @@ import { GuestBookListType } from '@/types/guestBookType';
 import { axios } from './instance';
 import { useQuery } from '@tanstack/react-query';
 
-const fetchGuestBook = async (user_id: number | undefined) => {
-  const response = await axios.get<GuestBookListType[]>(`guestbook/comments/${user_id}`);
+const fetchGuestBook = async () => {
+  const response = await axios.get<GuestBookListType[]>(`guestbook/`);
   console.log(response.data);
   return response.data;
 };
 
-export const useGetGuestBook = (user_id: number | undefined) => {
+export const useGetGuestBook = () => {
   return useQuery({
-    queryKey: ['guestBook', user_id],
-    queryFn: () => fetchGuestBook(user_id),
+    queryKey: ['guestBook'],
+    queryFn: () => fetchGuestBook(),
   });
 };

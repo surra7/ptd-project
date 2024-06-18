@@ -3,7 +3,7 @@ import { selectedUserAtom, userAtom } from '@/atoms/atoms';
 import DeleteAlert from '@/components/guest/DeleteAlert';
 import GuestListItem from '@/components/guest/GuestListItem';
 import useMoveScrollBottom from '@/hooks/useMoveScrollBottom';
-import { useGetGuestBook } from '@/services/getGuestBook';
+import { useGetFriendGuestBook } from '@/services/getFriendGuestBook';
 import { usePostGuestBook } from '@/services/postGuestBook';
 import { useAtomValue } from 'jotai';
 import { useCallback, useRef, useState } from 'react';
@@ -12,12 +12,15 @@ import { AiOutlinePlus } from 'react-icons/ai';
 export default function FriendGuestBook() {
   const [userInput, setUserInput] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
-  const user = useAtomValue(userAtom);
-  const { data: guestBook, isLoading: isGuestBookLoading, error: isGuestBookError } = useGetGuestBook(user?.id);
+  const selectedUser = useAtomValue(selectedUserAtom);
+  const {
+    data: guestBook,
+    isLoading: isGuestBookLoading,
+    error: isGuestBookError,
+  } = useGetFriendGuestBook(selectedUser?.id);
   const guestBookList = guestBook ?? [];
   const { mutateAsync: postGuestBook } = usePostGuestBook();
   const scrollRef = useMoveScrollBottom(guestBookList);
-  const selectedUser = useAtomValue(selectedUserAtom);
   const itemId = useRef(0);
 
   const modalHandler = () => {
@@ -32,9 +35,9 @@ export default function FriendGuestBook() {
     (e: React.FormEvent) => {
       setUserInput('');
       e.preventDefault();
-      postGuestBook({ user_id: 1, content: userInput, guestbook_user: 1 });
+      postGuestBook({ content: userInput, guestbook_user: selectedUser?.id });
     },
-    [userInput, postGuestBook],
+    [userInput, postGuestBook, selectedUser?.id],
   );
 
   return (
