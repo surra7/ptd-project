@@ -18,7 +18,7 @@ export const axios = _axios.create({
   baseURL: 'https://api.oz-02-main-04.xyz/api/v1/',
   timeout: 0,
   withXSRFToken: true,
-  // withCredentials: true,
+  withCredentials: true,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
