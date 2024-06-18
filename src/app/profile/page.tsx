@@ -14,13 +14,6 @@ export interface User {
   닉네임: string;
 }
 
-export function deleteCookie(name: any, path: any, domain: any) {
-  if (getCookieValue(name)) {
-    document.cookie =
-      name + '=; Max-Age=-99999999;' + (path ? '; path=' + path : '') + (domain ? '; domain=' + domain : '');
-  }
-}
-
 export function Page() {
   const [user, setUser] = useAtom<User | null>(userAtom);
   const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
