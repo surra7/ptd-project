@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const fetchPostGuestBook = async (new_comment: postGuestBookProps) => {
   const commentData = JSON.stringify(new_comment);
-  const response = await axios.post(`guestbook/comments/a-test/`, commentData);
+  const response = await axios.post(`guestbook/comments/a-create/`, commentData);
   console.log(response.data);
   return response.data;
 };
