@@ -7,6 +7,7 @@ import Image from 'next/image';
 import NavBottom from '@/components/NavBottom';
 import Link from 'next/link';
 import { getCookieValue } from '@/libs/getCookieValue';
+import { deleteCookie } from '@/libs/deleteCookieValue';
 
 export interface User {
   id: number;
