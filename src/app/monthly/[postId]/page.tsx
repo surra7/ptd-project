@@ -11,9 +11,12 @@ import React, { MutableRefObject, useCallback, useEffect, useRef, useState } fro
 import { IoMusicalNotesOutline } from 'react-icons/io5';
 
 export interface TodoType {
+  id: number;
+  created_at: string;
+  updated_at: string;
   todo_item: string;
-  id: number | undefined;
   done: boolean;
+  post: 3;
 }
 
 function Page() {
