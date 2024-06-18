@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 import { getCookieValue } from '@/libs/getCookieValue';
 import { useAtom } from 'jotai';
 import { User, userAtom, accessTokenAtom, csrfTokenAtom } from '@/atoms/atoms';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 function Main() {
   const [petData, setPetData] = useState<PetType>();
