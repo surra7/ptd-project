@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAtom } from 'jotai';
-import { userAtom, accessTokenAtom, csrfTokenAtom } from '@/atoms/atoms';
+import { userAtom, accessTokenAtom, csrfTokenAtom, nicknameAtom } from '@/atoms/atoms';
 import Image from 'next/image';
 import NavBottom from '@/components/NavBottom';
 import Link from 'next/link';
@@ -26,7 +26,7 @@ export default function Page() {
   const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [nickname, setNickname] = useAtom(nicknameAtom);
   useEffect(() => {
     const fetchTokens = async () => {
       try {
@@ -102,6 +102,8 @@ export default function Page() {
 
   return (
     <div className="h-full wrap-section">
+      {' '}
+      {nickname}
       {user ? (
         <>
           <div className="wrap-section flex flex-col items-center justify-center min-h-screen p-4">

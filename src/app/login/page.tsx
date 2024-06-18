@@ -10,7 +10,7 @@ const KakaoLogin = () => {
   const [user, setUser] = useAtom(userAtom);
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
-  const [nickname] = useAtom(nicknameAtom);
+  const [nickname, setNickname] = useAtom(nicknameAtom);
   useEffect(() => {
     console.log(user);
     if (!user === null) {
@@ -19,6 +19,7 @@ const KakaoLogin = () => {
   }, [user, router]);
 
   const handleKakaoLogin = () => {
+    setNickname('nickname changed');
     const kakaoAuthUrl = `https://api.oz-02-main-04.xyz/api/v1/users/kakao/`;
     window.location.href = kakaoAuthUrl;
   };
