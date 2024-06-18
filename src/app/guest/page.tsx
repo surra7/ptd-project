@@ -1,5 +1,5 @@
 'use client';
-import { accessTokenAtom } from '@/atoms/atoms';
+import { accessTokenAtom, userAtom } from '@/atoms/atoms';
 import DeleteAlert from '@/components/guest/DeleteAlert';
 import GuestListItem from '@/components/guest/GuestListItem';
 import useMoveScrollBottom from '@/hooks/useMoveScrollBottom';
@@ -14,7 +14,8 @@ import { FaUserFriends } from 'react-icons/fa';
 export default function Guest() {
   const [userInput, setUserInput] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
-  const { data: guestBook, isLoading: isGuestBookLoading, error: isGuestBookError } = useGetGuestBook(1);
+  const user = useAtomValue(userAtom);
+  const { data: guestBook, isLoading: isGuestBookLoading, error: isGuestBookError } = useGetGuestBook(user?.id);
   const guestBookList = guestBook ?? [];
   const { mutateAsync: postGuestBook } = usePostGuestBook();
   const scrollRef = useMoveScrollBottom(guestBookList);
