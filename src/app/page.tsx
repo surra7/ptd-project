@@ -1,11 +1,12 @@
 'use client';
-
 import NavBottom from '@/components/NavBottom';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { BiCloset, BiBowlRice, BiDonateHeart } from 'react-icons/bi';
+import { BiCloset } from 'react-icons/bi';
 import { BsBox2Heart } from 'react-icons/bs';
+import { BiBowlRice } from 'react-icons/bi';
 import { LuIceCream } from 'react-icons/lu';
+import { BiDonateHeart } from 'react-icons/bi';
 import { RiContactsBook2Line } from 'react-icons/ri';
 import MainPetButton from '@/components/main/MainPetButton';
 import PetStateMessage from '@/components/main/PetStateMessage';
@@ -16,22 +17,22 @@ import { useRouter } from 'next/navigation';
 import { getCookieValue } from '@/libs/getCookieValue';
 import { useAtom } from 'jotai';
 import { User, userAtom, accessTokenAtom, csrfTokenAtom } from '@/atoms/atoms';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 function Main() {
   const [petData, setPetData] = useState<PetType>();
   const [backgroundImageURL, setBackgroundImageURL] = useState('');
-  const [activePetImageURL, setActivePetImageURL] = useState('');
+  const [acivePetImageURL, setActivePetImageURL] = useState('');
   const [riceCount, setRiceCount] = useState(0);
   const [snackCount, setSnackCount] = useState(0);
   const [boxCount, setBoxCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [level, setLevel] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [experience, setExperience] = useState(0);
   const router = useRouter();
   const [user, setUser] = useAtom<User | null>(userAtom);
   const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
-
-  const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchTokens = async () => {
@@ -49,92 +50,112 @@ function Main() {
       }
     };
     fetchTokens();
-  }, [setAccessToken, setCsrf]);
+  }, [setAccessToken]);
 
-  const { data: userData, isLoading: userLoading } = useQuery(
-    'user',
-    async () => {
+  useEffect(() => {
+    const fetchUserData = async () => {
       if (!accessToken || !csrf) {
         setIsLoading(false);
         return;
       }
-      const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
-        withXSRFToken: true,
-        withCredentials: true,
-        headers: {
-          'X-CSRFToken': csrf!,
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      return response.data;
-    },
-    {
-      enabled: !!accessToken && !!csrf,
-      onSuccess: data => {
-        setUser(data);
-        setIsLoading(false);
-      },
-      onError: error => {
+      try {
+        const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
+          withXSRFToken: true,
+          withCredentials: true,
+          headers: {
+            'x-csrftoken': csrf!,
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setUser(response.data);
+        console.log(response.data);
+      } catch (error) {
         console.error(error);
+      } finally {
         setIsLoading(false);
-      },
-    },
-  );
+      }
+    };
 
-  const { data: petInfo } = useQuery(
-    'pet',
-    async () => {
-      const response = await axios.get<PetType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/');
-      return response.data;
-    },
-    {
-      enabled: !!userData,
-      onSuccess: data => {
-        setPetData(data);
-        setBackgroundImageURL(data.primary_background.image);
-        setActivePetImageURL(data.active_pet.image);
-        setBoxCount(data.random_boxes);
-        setRiceCount(data.rice_quantity);
-        setSnackCount(data.snack_quantity);
-      },
-    },
-  );
+    fetchUserData();
+  }, [accessToken, csrf, setUser]);
 
-  const feedRiceMutation = useMutation(
-    async () => {
-      await axios.post('https://api.oz-02-main-04.xyz/api/v1/pets/feed-rice/');
-    },
-    {
-      onSuccess: () => {
-        setRiceCount(prev => prev - 1);
-        queryClient.invalidateQueries('pet');
-      },
-    },
-  );
+  // 배포 (axios 변경)
+  //   useEffect(() => {
+  //     axios
+  //       .get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/')
+  //       .then(response => {
+  //         if (response.status === 200) {
+  //           console.log('유저잇습니다!! 200 회신');
+  //           axios
+  //             .get<PetType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/')
+  //             .then(response => {
+  //               setPetData(response.data);
+  //               console.log('유저정보가져오고난 후 펫타입리스폰', response.data);
+  //               setBackgroundImageURL(response.data.primary_background.image);
+  //               setActivePetImageURL(response.data.active_pet.image);
+  //               setBoxCount(response.data.random_boxes);
+  //               setRiceCount(response.data.rice_quantity);
+  //               setSnackCount(response.data.snack_quantity);
+  //             })
+  //             .catch(error => {
+  //               console.log('펫타입에러', error);
+  //             });
+  //         }
+  //       })
+  //       .catch(error => {
+  //         console.log('유저유무 에러', error);
+  //         alert('로그인이 필요합니다.');
+  //         router.push('/introduce');
+  //       });
+  //   }, [router]);
 
-  const feedSnackMutation = useMutation(
-    async () => {
-      await axios.post('https://api.oz-02-main-04.xyz/api/v1/pets/feed-snack/');
-    },
-    {
-      onSuccess: () => {
-        setSnackCount(prev => prev - 1);
-        queryClient.invalidateQueries('pet');
-      },
-    },
-  );
+  // 로컬테스트
+  // useEffect(() => {
+  //   axios
+  //     .get<PetType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/1')
+  //     .then(response => {
+  //       setPetData(response.data);
+  //       console.log(response.data);
+  //       setBackgroundImageURL(response.data.primary_background.image);
+  //       setActivePetImageURL(response.data.active_pet.image);
+  //       setBoxCount(response.data.random_boxes);
+  //       setRiceCount(response.data.rice_quantity);
+  //       setSnackCount(response.data.snack_quantity);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
+  //밥주기
   const handleFeedRice = () => {
-    if (petData && petData.rice_quantity > 0) {
-      feedRiceMutation.mutate();
+    if (petData && petData?.rice_quantity > 0) {
+      axios
+        .post('https://api.oz-02-main-04.xyz/api/v1/pets/feed-rice/')
+        .then(response => {
+          setRiceCount(riceCount - 1);
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     } else {
       alert('밥이 없습니다!');
     }
   };
 
+  //간식주기
   const handleFeedSnack = () => {
     if (petData && petData.snack_quantity > 0) {
-      feedSnackMutation.mutate();
+      axios
+        .post('https://api.oz-02-main-04.xyz/api/v1/pets/feed-snack/')
+        .then(response => {
+          setSnackCount(snackCount - 1);
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     } else {
       alert('간식이 없습니다!');
     }
@@ -142,19 +163,15 @@ function Main() {
 
   return (
     <div className="w-full h-full">
-      {isLoading || userLoading ? (
-        <div className="wrap-section">로딩중..</div>
-      ) : (
-        <div className="wrap-section bg-cover" style={{ backgroundImage: `url(${backgroundImageURL})` }}>
+      {petData ? (
+        <div className="wrap-section bg-cover" style={{ backgroundImage: `url:(${backgroundImageURL})` }}>
           <header className="h-1/6 pt-8 pb-2 bg-white">
-            {petData && (
-              <PetProfile
-                name={petData.active_pet.pet_name}
-                level={petData.pet_rating.level}
-                progress={petData.point}
-                maxProgress={petData.pet_rating.point}
-              />
-            )}
+            <PetProfile
+              name={petData.active_pet.pet_name}
+              level={petData.pet_rating.level}
+              progress={petData.point}
+              maxProgress={petData.pet_rating.point}
+            />
           </header>
 
           <main className="w-full h-5/6 ">
@@ -164,9 +181,7 @@ function Main() {
             </section>
 
             <section className="h-1/3 flex items-center">
-              {activePetImageURL && (
-                <Image src={activePetImageURL} alt="pet" width={130} height={130} className="my-0 mx-auto" />
-              )}
+              <Image src={acivePetImageURL} alt="pet" width={130} height={130} className="my-0 mx-auto" />
             </section>
 
             <section className="h-1/3 p-3 text-center">
@@ -176,13 +191,13 @@ function Main() {
                   icon={<BiBowlRice size="30" />}
                   label="밥주기"
                   count={riceCount}
-                  handle={handleFeedRice}
+                  handle={() => handleFeedRice()}
                 />
                 <MainPetButton
                   icon={<LuIceCream size="30" />}
                   label="간식주기"
                   count={snackCount}
-                  handle={handleFeedSnack}
+                  handle={() => handleFeedSnack()}
                 />
                 <MainPetButton icon={<BiDonateHeart size="30" />} label="쓰다듬기" count={-1} />
                 <MainPetButton icon={<RiContactsBook2Line size="30" />} label="방명록" link="/guest" count={-1} />
@@ -190,6 +205,8 @@ function Main() {
             </section>
           </main>
         </div>
+      ) : (
+        <div className="wrap-section">로딩중..</div>
       )}
       <NavBottom />
     </div>
