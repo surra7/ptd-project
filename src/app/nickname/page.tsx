@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { userAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
 import NavBottom from '@/components/NavBottom';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 interface User {
   id?: number;

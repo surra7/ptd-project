@@ -6,7 +6,7 @@ import { userAtom, accessTokenAtom, refreshTokenAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
 import { getCookieValue } from '@/libs/getCookieValue';
 import NavBottom from '@/components/NavBottom';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 function Goal() {
   const [goal, setGoal] = useState<string | null>(null);
