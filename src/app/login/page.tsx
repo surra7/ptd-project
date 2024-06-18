@@ -11,12 +11,12 @@ const KakaoLogin = () => {
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
   const [nickname, setNickname] = useAtom(nicknameAtom);
-  useEffect(() => {
-    console.log(user);
-    if (!user === null) {
-      router.push('/');
-    }
-  }, [user, router]);
+  //   useEffect(() => {
+  //     console.log(user);
+  //     if (!user === null) {
+  //       router.push('/');
+  //     }
+  //   }, [user, router]);
 
   const handleKakaoLogin = () => {
     setNickname('nickname changed');
