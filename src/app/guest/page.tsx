@@ -14,17 +14,13 @@ import { FaUserFriends } from 'react-icons/fa';
 export default function Guest() {
   const [userInput, setUserInput] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
-  const user = useAtomValue(userAtom);
-  const { data: guestBook, isLoading: isGuestBookLoading, error: isGuestBookError } = useGetGuestBook(user?.id);
+  const { data: guestBook, isLoading: isGuestBookLoading, error: isGuestBookError } = useGetGuestBook();
   const guestBookList = guestBook ?? [];
   const { mutateAsync: postGuestBook } = usePostGuestBook();
   const scrollRef = useMoveScrollBottom(guestBookList);
+  const user = useAtomValue(userAtom);
   const router = useRouter();
   const itemId = useRef(0);
-
-  useEffect(() => {
-    console.log('user', user);
-  }, [user]);
 
   const modalHandler = () => {
     setModalOpen(!modalOpen);
@@ -38,9 +34,9 @@ export default function Guest() {
     (e: React.FormEvent) => {
       setUserInput('');
       e.preventDefault();
-      postGuestBook({ user_id: 1, content: userInput, guestbook_user: 1 });
+      postGuestBook({ content: userInput, guestbook_user: user?.id });
     },
-    [userInput, postGuestBook],
+    [userInput, postGuestBook, user?.id],
   );
 
   return (
