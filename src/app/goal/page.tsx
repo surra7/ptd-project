@@ -35,7 +35,10 @@ function Goal() {
       alert('목표와 D-Day를 모두 입력해주세요.');
       return;
     }
-
+    if (!user) {
+      alert('로그인 해주세요!');
+      router.push('/login');
+    }
     const today = new Date().toISOString().split('T')[0];
     if (dDay <= today) {
       alert('디데이는 오늘 이후의 날짜여야 합니다.');
