@@ -15,7 +15,7 @@ export interface User {
   닉네임: string;
 }
 
-export function Page() {
+export default function Page() {
   const [user, setUser] = useAtom<User | null>(userAtom);
   const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
