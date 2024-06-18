@@ -65,9 +65,9 @@ function Goal() {
           },
         },
       );
-      alert(`1차 완료되었습니다! ${response.data}`);
+      alert(`1 완료되었습니다! ${response.data}`);
       console.log(response.data);
-      router.push('/profile');
+      router.push('/todolist');
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
         const newAccessToken = await refreshAccessToken();
