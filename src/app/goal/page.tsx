@@ -6,6 +6,7 @@ import { userAtom, accessTokenAtom, refreshTokenAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
 import { getCookieValue } from '@/libs/getCookieValue';
 import NavBottom from '@/components/NavBottom';
+import { useRouter } from 'next/router';
 
 function Goal() {
   const [goal, setGoal] = useState<string | null>(null);
@@ -13,6 +14,7 @@ function Goal() {
   const [user] = useAtom(userAtom);
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [refreshToken] = useAtom(refreshTokenAtom);
+  const router = useRouter();
 
   const refreshAccessToken = async () => {
     try {
@@ -31,6 +33,12 @@ function Goal() {
   const handleSetGoal = async () => {
     if (!goal || !dDay) {
       alert('목표와 D-Day를 모두 입력해주세요.');
+      return;
+    }
+
+    const today = new Date().toISOString().split('T')[0];
+    if (dDay <= today) {
+      alert('디데이는 오늘 이후의 날짜여야 합니다.');
       return;
     }
 
@@ -54,8 +62,9 @@ function Goal() {
           },
         },
       );
-      alert(`완료되었습니다! ${response.data}`);
+      alert(`1차 완료되었습니다! ${response.data}`);
       console.log(response.data);
+      router.push('/profile');
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
         const newAccessToken = await refreshAccessToken();
@@ -72,7 +81,7 @@ function Goal() {
                 },
               },
             );
-            alert(`완료되었습니다! ${retryResponse.data}`);
+            alert(`2차시도 완료되었습니다! ${retryResponse.data}`);
             console.log(retryResponse.data);
           } catch (retryError) {
             console.error('Retry request', retryError);
@@ -86,8 +95,10 @@ function Goal() {
     }
   };
 
+  const today = new Date().toISOString().split('T')[0];
+
   return (
-    <div className="wrap-section flex flex-col items-center justify-center min-h-screen  p-4">
+    <div className="wrap-section flex flex-col items-center justify-center min-h-screen p-4">
       <h1 className="text-2xl font-bold text-purple-600 mb-4">목표/디데이 설정</h1>
       <div className="w-full max-w-xs">
         <label htmlFor="goal" className="block text-sm font-medium text-gray-700">
@@ -110,6 +121,7 @@ function Goal() {
           id="dDay"
           type="date"
           value={dDay || ''}
+          min={today}
           onChange={e => setDDay(e.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
         />

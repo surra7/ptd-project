@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { userAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
 import NavBottom from '@/components/NavBottom';
+import { useRouter } from 'next/router';
 
 interface User {
   id?: number;
@@ -23,7 +24,7 @@ const Nickname = () => {
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useAtom(userAtom);
-
+  const router = useRouter();
   useEffect(() => {
     const csrfToken = getCookieValue('csrftoken');
     const token = getCookieValue('access_token');
@@ -90,6 +91,7 @@ const Nickname = () => {
         alert('닉네임이 변경되었습니다.');
         setUser({ ...user, 닉네임: newNickname });
       }
+      router.push('/profile');
     } catch (error) {
       console.error(error);
     }
