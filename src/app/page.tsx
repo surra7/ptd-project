@@ -50,7 +50,7 @@ function Main() {
       }
     };
     fetchTokens();
-  }, [setAccessToken]);
+  }, [setAccessToken, setCsrf]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -61,7 +61,6 @@ function Main() {
       try {
         const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
           withXSRFToken: true,
-          withCredentials: true,
           headers: {
             'x-csrftoken': csrf!,
             Authorization: `Bearer ${accessToken}`,
@@ -70,7 +69,13 @@ function Main() {
         setUser(response.data);
 
         axios
-          .get<PetType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/')
+          .get<PetType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/', {
+            withXSRFToken: true,
+            headers: {
+              'x-csrftoken': csrf!,
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
           .then(response => {
             setPetData(response.data);
             setBackgroundImageURL(response.data.primary_background.image);
@@ -92,25 +97,25 @@ function Main() {
       }
     };
     fetchUserData();
-  }, [accessToken, csrf, setUser]);
+  }, [accessToken, csrf, setUser, petData, router]);
 
   //   배포 (axios 변경)
-  useEffect(() => {
-    axios
-      .get<PetType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/')
-      .then(response => {
-        setPetData(response.data);
-        console.log('유저정보가져오고난 후 펫타입리스폰', response.data);
-        setBackgroundImageURL(response.data.primary_background.image);
-        setActivePetImageURL(response.data.active_pet.image);
-        setBoxCount(response.data.random_boxes);
-        setRiceCount(response.data.rice_quantity);
-        setSnackCount(response.data.snack_quantity);
-      })
-      .catch(error => {
-        console.log('펫타입에러', error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get<PetType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/')
+  //     .then(response => {
+  //       setPetData(response.data);
+  //       console.log('유저정보가져오고난 후 펫타입리스폰', response.data);
+  //       setBackgroundImageURL(response.data.primary_background.image);
+  //       setActivePetImageURL(response.data.active_pet.image);
+  //       setBoxCount(response.data.random_boxes);
+  //       setRiceCount(response.data.rice_quantity);
+  //       setSnackCount(response.data.snack_quantity);
+  //     })
+  //     .catch(error => {
+  //       console.log('펫타입에러', error);
+  //     });
+  // }, []);
 
   //   로컬테스트
   //   useEffect(() => {
