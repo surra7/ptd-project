@@ -1,5 +1,5 @@
 'use client';
-import { accessTokenAtom, userAtom } from '@/atoms/atoms';
+import { userAtom } from '@/atoms/atoms';
 import DeleteAlert from '@/components/guest/DeleteAlert';
 import GuestListItem from '@/components/guest/GuestListItem';
 import useMoveScrollBottom from '@/hooks/useMoveScrollBottom';
@@ -20,12 +20,11 @@ export default function Guest() {
   const { mutateAsync: postGuestBook } = usePostGuestBook();
   const scrollRef = useMoveScrollBottom(guestBookList);
   const router = useRouter();
-  const accessToken = useAtomValue(accessTokenAtom);
   const itemId = useRef(0);
 
   useEffect(() => {
-    console.log('accessToken', accessToken);
-  }, [accessToken]);
+    console.log('user', user);
+  }, [user]);
 
   const modalHandler = () => {
     setModalOpen(!modalOpen);
