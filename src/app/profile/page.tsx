@@ -100,32 +100,35 @@ export default function Page() {
       {user ? (
         <>
           <div className="wrap-section flex flex-col items-center justify-center min-h-screen p-4">
-            <p className="text-2xl font-bold text-purple-600 mb-4">안녕하세요! {user.닉네임} 님</p>
-            <hr className="border-purple-600 w-full mb-4" />
-            <ul className="space-y-4">
-              <li>
-                <Link href="/nickname">
-                  <a className="text-purple-600 hover:underline">닉네임 변경하기</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/goal">
-                  <a className="text-purple-600 hover:underline">목표 설정하기</a>
-                </Link>
-              </li>
-              <li>
-                {' '}
-                <Link href="/introduce">
-                  <a className="text-purple-600 hover:underline">petodo 가이드 보기</a>
-                </Link>{' '}
-              </li>
-              <li>
-                <a onClick={handleLogout} className="text-purple-600 hover:underline">
-                  로그아웃
-                </a>
-              </li>
-            </ul>
-            <hr className="border-purple-600 w-full my-4" />
+            <section className="wrap-section">
+              {' '}
+              <p className="text-2xl font-bold text-purple-600 mb-4">안녕하세요! {user.닉네임} 님</p>
+              <hr className="border-purple-600 w-full mb-4" />
+              <ul className="space-y-4">
+                <li>
+                  <Link href="/nickname">
+                    <a className="text-purple-600 hover:underline">닉네임 변경하기</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/goal">
+                    <a className="text-purple-600 hover:underline">목표 설정하기</a>
+                  </Link>
+                </li>
+                <li>
+                  {' '}
+                  <Link href="/introduce">
+                    <a className="text-purple-600 hover:underline">petodo 가이드 보기</a>
+                  </Link>{' '}
+                </li>
+                <li>
+                  <a onClick={handleLogout} className="text-purple-600 hover:underline">
+                    로그아웃
+                  </a>
+                </li>
+              </ul>
+              <hr className="border-purple-600 w-full my-4" />
+            </section>
             <NavBottom />{' '}
           </div>
         </>
