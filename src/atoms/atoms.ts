@@ -1,3 +1,4 @@
+import { SelectedUser } from '@/types/guestBookType';
 import { atom } from 'jotai';
 
 export interface User {
@@ -12,3 +13,4 @@ export const accessTokenAtom = atom<string | null>(null);
 
 export const refreshTokenAtom = atom<string | null>(null);
 export const csrfTokenAtom = atom<string | null>(null);
+export const selectedUserAtom = atom<SelectedUser | null>(null);
