@@ -8,13 +8,13 @@ import NavBottom from '@/components/NavBottom';
 import Link from 'next/link';
 import { getCookieValue } from '@/libs/getCookieValue';
 
-interface User {
+export interface User {
   id: number;
   계정: string;
   닉네임: string;
 }
 
-function deleteCookie(name: any, path: any, domain: any) {
+export function deleteCookie(name: any, path: any, domain: any) {
   if (getCookieValue(name)) {
     document.cookie =
       name + '=; Max-Age=-99999999;' + (path ? '; path=' + path : '') + (domain ? '; domain=' + domain : '');
