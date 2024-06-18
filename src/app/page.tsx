@@ -68,7 +68,7 @@ function Main() {
           },
         });
         setUser(response.data);
-        console.log(response.data);
+
         axios
           .get<PetType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/')
           .then(response => {
