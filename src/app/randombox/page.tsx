@@ -1,29 +1,46 @@
 'use client';
 import NavBottom from '@/components/NavBottom';
+import { RandomItem } from '@/types/petType';
+import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function RandomBox() {
   const router = useRouter();
   const [isBoxClicked, setIsBoxClicked] = useState(false);
   const [randomImage, setRandomImage] = useState('/randombox/box.png');
-  const [boxCount, setBoxCount] = useState(1);
+  const [randomItem, setRandomItem] = useState<RandomItem>();
+// 로컬테스트
+  // const handleboxClick = () => {
+  //   axios
+  //   .post('https://api.oz-02-main-04.xyz/api/v1/pets/open-random-box/1/')
+  //   .then(response => {
+  //     setIsBoxClicked(true);
+  //     setRandomItem(response.data);
+  //     console.log('randomitem 결과', response.data);
+  //   }) .catch(error => {
+  //     alert('보유한 랜덤박스가 없습니다.');
+  //     console.log(error);
+  //   })
+  // };
+
 
   const handleboxClick = () => {
-    if (boxCount !== 0) {
+    axios
+    .post('https://api.oz-02-main-04.xyz/api/v1/pets/open-random-box/')
+    .then(response => {
       setIsBoxClicked(true);
-      setBoxCount(boxCount - 1);
-    } else {
+      setRandomItem(response.data);
+      console.log('randomitem 결과', response.data);
+    }) .catch(error => {
       alert('보유한 랜덤박스가 없습니다.');
-    }
+      console.log(error);
+    })
   };
+
   const handleRetryClick = () => {
-    if (boxCount !== 0) {
-      setIsBoxClicked(false);
-    } else {
-      alert('보유한 랜덤박스가 없습니다.');
-    }
+    setIsBoxClicked(false);
   };
 
   return (
@@ -37,7 +54,7 @@ function RandomBox() {
                 <div
                   className="text-center text-white text-4xl font-bold p-1
                   bg-primary-500">
-                  카피바라
+                  {randomItem?.output_item.name}
                 </div>
                 <div className="flex justify-center">
                   <button className="p-4" onClick={handleRetryClick}>

@@ -4,11 +4,11 @@ interface PetHeaderProps {
   name: string;
   level: number;
   progress: number;
-  maxProgress: 100;
+  maxProgress: number;
 }
 
 function PetProfile({ name, level, progress, maxProgress }: PetHeaderProps) {
-  const progressBarWidth = (progress / 100) * 100 + '%';
+  const progressBarWidth = (progress / maxProgress) * 100 + '%';
 
   return (
     <div>
