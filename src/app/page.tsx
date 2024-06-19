@@ -32,6 +32,9 @@ function Main() {
   const [petName, setPetName] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
   const [tempSaveMessage, setTempSaveMessage] = useState('');
+  const [isTouchPet, setIsTouchPet] = useState(false);
+  const [isLevelUp, setIsLevelUp] = useState(false);
+  const [prevPetLevel, setPrevPetLevel] = useState(level);
   const router = useRouter();
 
   const [user, setUser] = useAtom<User | null>(userAtom);
@@ -94,16 +97,39 @@ function Main() {
       })
   }, [accessToken, csrf]);
 
+  // // 상태메시지 바뀔 때
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setStatusMessage(tempSaveMessage);
+  //     console.log('timeout', statusMessage, tempSaveMessage);
+  //   }, 3000);
+  //   return () => {
+  //     clearTimeout(timeout);
+  //   }
+  // },[tempSaveMessage])
+
+    // 상태메시지 바뀔 때
+    useEffect(() => {
+      setTimeout(() => {
+        setStatusMessage(tempSaveMessage);
+        console.log('timeout', statusMessage, tempSaveMessage);
+      }, 3000);
+    },[tempSaveMessage])
+
+  // 알 깨질떄
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setStatusMessage(tempSaveMessage);
-      console.log('timeout', statusMessage, tempSaveMessage);
-    }, 3000);
-    return () => {
-      clearTimeout(timeout);
-      
+    if(prevPetLevel == 1 && level == 2) {
+      setIsLevelUp(true);
+      setTempSaveMessage(statusMessage);
+      setStatusMessage('알이 깨지고 있습니다!');
+      setTimeout(() => {
+        setStatusMessage(statusMessage);
+      }, 3000);
+    setPrevPetLevel(level);
+    } else if(level == 2 && experience == maxProgress) {
+      alert('축하합니다! 펫이 모두 성장하였습니다. 새로운 알이 지급되었습니다.')
     }
-  },[tempSaveMessage])
+  }, [level, experience])
 
   //밥주기
   const handleFeedRice = () => {
@@ -117,6 +143,7 @@ function Main() {
           setLevel(response.data.pet.pet_rating.level);
           setExperience(response.data.pet.point);
           setMaxProgress(response.data.pet.pet_rating.point);
+          setActivePetImageURL(response.data.pet.active_pet.image);
           console.log('밥주기', statusMessage, tempSaveMessage);
         })
         .catch(error => {
@@ -140,6 +167,7 @@ function Main() {
           setLevel(response.data.pet.pet_rating.level);
           setExperience(response.data.pet.point);
           setMaxProgress(response.data.pet.pet_rating.point);
+          setActivePetImageURL(response.data.pet.active_pet.image);
           console.log('간식주기', statusMessage, tempSaveMessage);
         })
         .catch(error => {
@@ -155,11 +183,15 @@ function Main() {
     setTempSaveMessage(statusMessage);
     setStatusMessage('당신은 복슬복슬한 느낌에 기분이 좋아집니다!');
     console.log('쓰다듬기', statusMessage, tempSaveMessage);
-  }
+    setIsTouchPet(true);
+    setTimeout(() => {
+      setIsTouchPet(false);
+    }, 1000);
+  };
 
   return (
     <div className="w-full h-full ">
-      {petData ? (
+      {/* {petData ? ( */}
         <div
           className="wrap-section bg-cover animate-fadeIn"
           style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${backgroundImageURL})` }}>
@@ -184,13 +216,32 @@ function Main() {
                 />
               </div>
               <div className='flex w-full h-3/5 p-1 justify-center items-center'>
+                {isTouchPet && (
+                  <Image
+                    src={'/pet/heart.png'}
+                    alt="heart"
+                    width={40}
+                    height={40}
+                    className='absolute animate-touchPetHeart'
+                  />
+                )}
+                {isLevelUp ? (
+                  <Image
+                  src={'/pet/crackEgg.png'}
+                  alt="pet"
+                  width={80}
+                  height={80}
+                  className="h-full object-contain"
+                />   
+                ):(
                 <Image
                   src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
                   alt="pet"
-                  width={110}
-                  height={110}
+                  width={80}
+                  height={80}
                   className="h-full object-contain"
-                />                
+                />   
+                )}
               </div>
             </section>
 
@@ -216,11 +267,11 @@ function Main() {
             </section>
           </main>
         </div>
-      ) : (
+      {/* ) : (
          <div className="wrap-section text-center flex">
            <div className="m-auto text-primary-500">Loding...</div>
          </div>
-       )}
+       )} */}
       <NavBottom />
     </div>
   );
