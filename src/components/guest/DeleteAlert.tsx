@@ -6,7 +6,7 @@ export default function DeleteAlert({ onClose, itemId }: DeleteAlertProps) {
   const { mutateAsync: deleteGuestBook } = useDeleteGuestBook();
 
   const handleDeleteItem = () => {
-    deleteGuestBook(itemId.current);
+    deleteGuestBook({ comment_id: itemId.current });
     onClose();
   };
 
