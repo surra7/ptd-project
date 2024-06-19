@@ -1,7 +1,8 @@
 'use client';
 import NavBottom from '@/components/NavBottom';
+import { axios } from '@/services/instance';
 import { RandomItem } from '@/types/petType';
-import axios from 'axios';
+
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -11,24 +12,10 @@ function RandomBox() {
   const [isBoxClicked, setIsBoxClicked] = useState(false);
   const [randomImage, setRandomImage] = useState('/randombox/box.png');
   const [randomItem, setRandomItem] = useState<RandomItem>();
-// 로컬테스트
-  // const handleboxClick = () => {
-  //   axios
-  //   .post('https://api.oz-02-main-04.xyz/api/v1/pets/open-random-box/1/')
-  //   .then(response => {
-  //     setIsBoxClicked(true);
-  //     setRandomItem(response.data);
-  //     console.log('randomitem 결과', response.data);
-  //   }) .catch(error => {
-  //     alert('보유한 랜덤박스가 없습니다.');
-  //     console.log(error);
-  //   })
-  // };
-
 
   const handleboxClick = () => {
     axios
-    .post('https://api.oz-02-main-04.xyz/api/v1/pets/open-random-box/')
+    .post('pets/open-random-box/')
     .then(response => {
       setIsBoxClicked(true);
       setRandomItem(response.data);
@@ -50,7 +37,7 @@ function RandomBox() {
           <div className="m-auto">
             {isBoxClicked ? (
               <div>
-                <Image src={randomImage} alt="randomImage" width={300} height={300} className="pb-8 animate-boxopen" />
+                <Image src={`https://api.oz-02-main-04.xyz${randomImage}`} alt="randomImage" width={300} height={300} className="pb-8 animate-boxopen" />
                 <div
                   className="text-center text-white text-4xl font-bold p-1
                   bg-primary-500">
