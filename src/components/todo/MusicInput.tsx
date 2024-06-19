@@ -4,7 +4,7 @@ import SearchModal from './SearchModal';
 interface Props {
   setMusicTitle: React.Dispatch<React.SetStateAction<string | undefined>>;
   setMusicUrl: React.Dispatch<React.SetStateAction<string>>;
-  postId: number;
+  postId: number | undefined;
 }
 
 function MusicInput({ setMusicTitle, setMusicUrl, postId }: Props) {
