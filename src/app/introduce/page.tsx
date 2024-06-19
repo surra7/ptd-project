@@ -38,7 +38,7 @@ function page() {
             SKIP
           </Link>
         </div>
-        <Carousel />
+        <Carousel accessToken={accessToken} />
       </div>
     </main>
   );
