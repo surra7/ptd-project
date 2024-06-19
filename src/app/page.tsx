@@ -127,9 +127,9 @@ function Main() {
       // setTimeout(() => {
       //   setStatusMessage(tempSaveMessage);
       // }, 3000);
-      alert('1-2 test')
+      alert('펫이 부화합니다!')
     } else if(prevPetLevel == 2 && level == 1) {
-      alert('축하합니다! 펫이 모두 성장하였습니다. 새로운 알이 지급되었습니다.')
+      alert('축하합니다! 펫이 모두 성장하였습니다. 새로운 알이 지급됩니다.')
       console.log('알 실행2')
     }
   }, [level])
