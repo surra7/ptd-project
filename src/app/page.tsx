@@ -79,6 +79,7 @@ function Main() {
             setPetName(response.data.active_pet.pet_name);
             setStatusMessage(response.data.hunger_degree_status);
             console.log(petData);
+            console.log('처음',statusMessage, tempSaveMessage);
           })
           .catch(error => {
             console.error('펫에러', error);
@@ -96,9 +97,11 @@ function Main() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setStatusMessage(tempSaveMessage);
+      console.log('timeout', statusMessage, tempSaveMessage);
     }, 3000);
     return () => {
       clearTimeout(timeout);
+      
     }
   },[tempSaveMessage])
 
@@ -114,7 +117,7 @@ function Main() {
           setLevel(response.data.pet.pet_rating.level);
           setExperience(response.data.pet.point);
           setMaxProgress(response.data.pet.pet_rating.point);
-          console.log(response.data);
+          console.log('밥주기', statusMessage, tempSaveMessage);
         })
         .catch(error => {
           console.log(error);
@@ -137,6 +140,7 @@ function Main() {
           setLevel(response.data.pet.pet_rating.level);
           setExperience(response.data.pet.point);
           setMaxProgress(response.data.pet.pet_rating.point);
+          console.log('간식주기', statusMessage, tempSaveMessage);
         })
         .catch(error => {
           console.log(error);
@@ -150,6 +154,7 @@ function Main() {
   const handleTouchPet = () => {
     setTempSaveMessage(statusMessage);
     setStatusMessage('당신은 복슬복슬한 느낌에 기분이 좋아집니다!');
+    console.log('쓰다듬기', statusMessage, tempSaveMessage);
   }
 
   return (
