@@ -51,13 +51,15 @@ function Page() {
     const getData = async () => {
       const getId = async () => {
         const res = await axios.get('posts/');
-        const data: PostType = res.data.find((item: any, i: number) => {
-          if (item.todo_date === formattedDate) return i;
-        });
-        console.log(data);
-        setPostId(data.id);
-        setGoal(data.goal);
-        setDeadline(data.days_by_deadline);
+        if (res) {
+          const data: PostType = res.data.find((item: any, i: number) => {
+            if (item.todo_date === formattedDate) return i;
+          });
+          console.log(data);
+          setPostId(data.id);
+          setGoal(data.goal);
+          setDeadline(data.days_by_deadline);
+        }
       };
       getId();
 
@@ -81,17 +83,16 @@ function Page() {
 
   useEffect(() => {
     const postTodo = async () => {
-      if (postId !== undefined) {
-        try {
-          const res = await axios.get('posts/');
-          const data = res.data.find((item: any, i: number) => {
-            if (item.todo_date === formattedDate) return i;
-          });
-          if (!data) {
-            await axios.post('posts/', { todo_date: formattedDate });
-          }
-        } catch (error) {}
-      }
+      try {
+        const res = await axios.get('posts/');
+        const data = res.data.find((item: any, i: number) => {
+          if (item.todo_date === formattedDate) return i;
+        });
+        if (!data) {
+          await axios.post('posts/', { todo_date: formattedDate });
+          location.reload();
+        }
+      } catch (error) {}
     };
     postTodo();
   }, [formattedDate, postId]);
