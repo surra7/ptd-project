@@ -55,15 +55,10 @@ function Main() {
     fetchTokens();
   }, [setAccessToken]);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!accessToken || !csrf) {
-        alert('로그인이 필요합니다.');
-        router.push('/introduce');
-        return;
-      }
-      try {
-        const response = await axios.get('users/myinfo/')
+  useEffect(() => {   
+    axios
+      .get('users/myinfo/')
+      .then(response => {
         setUser(response.data);
         console.log(response.data);
         axios
@@ -82,42 +77,18 @@ function Main() {
             console.log(petData);
           })
           .catch(error => {
-            console.error('펫타입에러', error);
+            console.error('펫에러', error);
+            if (!accessToken || !csrf) {
+              alert('로그인이 필요합니다.');
+              router.push('/introduce');
+              return;
+            }
           });
-      } catch (error) {
-        console.error('유저에러', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchUserData();
+      })
+      .catch(error => {
+        console.error('유저에러', error.data)
+      })
   }, [accessToken, csrf]);
-
-  // useEffect(() => {
-  //   if(!accessToken) {
-  //     alert('로그인이 필요합니다.');
-  //     router.push('/introduce');
-  //   } else {
-  //   axios
-  //     .get<PetType>('pets/mypet/')
-  //     .then(response => {
-  //       setPetData(response.data);
-  //       setBackgroundImageURL(response.data.primary_background.image);
-  //       setActivePetImageURL(response.data.active_pet.image);
-  //       setBoxCount(response.data.random_boxes);
-  //       setRiceCount(response.data.rice_quantity);
-  //       setSnackCount(response.data.snack_quantity);
-  //       setLevel(response.data.pet_rating.level);
-  //       setExperience(response.data.point);
-  //       setMaxProgress(response.data.pet_rating.point);
-  //       setPetName(response.data.active_pet.pet_name);
-  //       console.log(petData);
-  //     })
-  //     .catch(error => {
-  //       console.log('펫타입에러', error);
-  //     });
-  //   }
-  // }, [accessToken])
 
   //밥주기
   const handleFeedRice = () => {
@@ -213,50 +184,3 @@ function Main() {
 }
 
 export default Main;
-
-// useEffect(() => {
-//   const fetchUserData = async () => {
-//     if (!accessToken || !csrf) {
-//       setIsLoading(false);
-//       return;
-//     }
-//     try {
-//       const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
-//         withXSRFToken: true,
-//         headers: {
-//           'x-csrftoken': csrf!,
-//           Authorization: `Bearer ${accessToken}`,
-//         },
-//       });
-//       setUser(response.data);
-//       console.log(response.data);
-//       axios
-//         .get<PetType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/', {
-//           withXSRFToken: true,
-//           headers: {
-//             'x-csrftoken': csrf!,
-//             Authorization: `Bearer ${accessToken}`,
-//           },
-//         })
-//         .then(response => {
-//           setPetData(response.data);
-//           setBackgroundImageURL(response.data.primary_background.image);
-//           setActivePetImageURL(response.data.active_pet.image);
-//           setBoxCount(response.data.random_boxes);
-//           setRiceCount(response.data.rice_quantity);
-//           setSnackCount(response.data.snack_quantity);
-//           console.log(petData);
-//         })
-//         .catch(error => {
-//           console.log('펫타입에러', error);
-//         });
-//     } catch (error) {
-//       console.error('유저에러', error);
-//       alert('로그인이 필요합니다.');
-//       router.push('/introduce');
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-//   fetchUserData();
-// }, [accessToken, csrf]);
