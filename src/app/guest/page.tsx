@@ -22,10 +22,6 @@ export default function Guest() {
   const router = useRouter();
   const itemId = useRef(0);
 
-  useEffect(() => {
-    console.log('user', user);
-  }, [user]);
-
   const modalHandler = () => {
     setModalOpen(!modalOpen);
   };

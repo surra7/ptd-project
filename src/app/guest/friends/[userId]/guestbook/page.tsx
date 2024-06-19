@@ -13,11 +13,12 @@ export default function FriendGuestBook() {
   const [userInput, setUserInput] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const selectedUser = useAtomValue(selectedUserAtom);
+  const user = useAtomValue(userAtom);
   const {
     data: guestBook,
     isLoading: isGuestBookLoading,
     error: isGuestBookError,
-  } = useGetFriendGuestBook(selectedUser?.id);
+  } = useGetFriendGuestBook(selectedUser?.id, user);
   const guestBookList = guestBook ?? [];
   const { mutateAsync: postGuestBook } = usePostGuestBook();
   const scrollRef = useMoveScrollBottom(guestBookList);

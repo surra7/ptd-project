@@ -5,15 +5,15 @@ import { AiOutlineDelete } from 'react-icons/ai';
 
 export default function GuestListItem({ item, modalHandler, itemId }: GuestListItemProps) {
   const user = useAtomValue(userAtom);
-  console.log('user', user);
-  console.log('item', item);
+  console.log('user', user?.id);
+  console.log('item', item.user);
   const updateDate = item.updated_at.slice(0, 10);
   return (
     <div className="w-full min-h-[4.25rem] h-fit px-[0.9375rem] pt-2">
       <div className="h-6 flex justify-start items-center">
         <div className="pr-2 text-primary-400">{item.user_nickname}</div>
         <div className="text-xs text-black-200">{updateDate}</div>
-        {item.user === user?.id ?? (
+        {item.user === user?.id && (
           <button
             className="ml-auto"
             onClick={() => {

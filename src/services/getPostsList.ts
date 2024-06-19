@@ -12,5 +12,6 @@ export const useGetPostsList = () => {
   return useQuery({
     queryKey: ['postsList'],
     queryFn: () => fetchPostList(),
+    staleTime: 0,
   });
 };
