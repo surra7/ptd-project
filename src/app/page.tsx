@@ -137,7 +137,7 @@ function Main() {
 
   return (
     <div className="w-full h-full ">
-      {petData ? (
+      {/* {petData ? ( */}
         <div
           className="wrap-section bg-cover animate-fadeIn"
           style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${backgroundImageURL})` }}>
@@ -152,22 +152,22 @@ function Main() {
             </section>
 
             <section className="h-1/3 flex flex-col items-center">
-              <div className='h-1/4'>
+              <div className='flex h-2/5 p-2'>
                 <Image
                   src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
                   alt="accessory"
                   width={50}
                   height={50}
-                  className="mx-auto"
+                  className="m-auto"
                 />
               </div>
-              <div className='h-3/4 p-2'>
+              <div className='flex h-3/5 p-1'>
                 <Image
                   src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
                   alt="pet"
                   width={110}
                   height={110}
-                  className="mx-auto"
+                  className="m-auto"
                 />                
               </div>
             </section>
@@ -193,11 +193,12 @@ function Main() {
             </section>
           </main>
         </div>
-       ) : (
+{/*       ) : (
          <div className="wrap-section text-center flex">
            <div className="m-auto text-primary-500">Loding...</div>
          </div>
        )}
+*/}
       <NavBottom />
     </div>
   );

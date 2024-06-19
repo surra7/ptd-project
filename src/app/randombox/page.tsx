@@ -17,12 +17,13 @@ function RandomBox() {
     axios
     .post<RandomItemType>('pets/open-random-box/')
     .then(response => {
-      setIsBoxClicked(true);
       setRandomItem(response.data);
       setRandomName(response.data.output_item.name);
       setRandomImage(response.data.output_item.image);
+      setIsBoxClicked(true);
       console.log('randombox 결과', response.data);
     }) .catch(error => {
+      setIsBoxClicked(false);
       alert('보유한 랜덤박스가 없습니다.');
       console.log(error);
     })
@@ -39,7 +40,7 @@ function RandomBox() {
           <div className="h-full m-auto">
             {isBoxClicked ? (
               <div className='h-full flex flex-col animate-boxopen'>
-                <div className='h-2/3 flex items-end py-4 '>
+                <div className='h-2/3 flex items-end py-6 '>
                   <Image 
                     src={`https://api.oz-02-main-04.xyz${randomImage}`} 
                     alt="randomImage" 
