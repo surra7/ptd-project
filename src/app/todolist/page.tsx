@@ -1,4 +1,5 @@
 'use client';
+import { accessTokenAtom, csrfTokenAtom } from '@/atoms/atoms';
 import NavBottom from '@/components/NavBottom';
 import Modal from '@/components/todo/Modal';
 import Mood from '@/components/todo/Mood';
@@ -7,7 +8,10 @@ import Timer from '@/components/todo/Timer';
 import ToDoInsert from '@/components/todo/ToDoInsert';
 import ToDoListItem from '@/components/todo/ToDoListItem';
 import { useTodos, useDeleteTodo, useCreateTodo, TodoItem } from '@/hooks/useTodo';
+import { getCookieValue } from '@/libs/getCookieValue';
 import { axios } from '@/services/instance';
+import { useAtom } from 'jotai';
+import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
 import { IoMusicalNotesOutline } from 'react-icons/io5';
 
@@ -44,8 +48,40 @@ function Page() {
   const [deadline, setDeadline] = useState<number>();
   const { mutateAsync: deleteTodo } = useDeleteTodo(postId as number);
   const { mutateAsync: createTodo } = useCreateTodo(postId as number);
+  const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
+  const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
+  const router = useRouter();
   const today = new Date();
   const formattedDate = `${today.getFullYear()}-${'0' + (today.getMonth() + 1).toString().slice(-2)}-${today.getDate()}`;
+
+  useEffect(() => {
+    const fetchTokens = async () => {
+      try {
+        const csrfToken = getCookieValue('csrftoken');
+        const token = getCookieValue('access_token');
+        if (token) {
+          setAccessToken(token);
+        }
+        if (csrfToken) {
+          setCsrf(csrfToken);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchTokens();
+  }, [setAccessToken, setCsrf]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!accessToken || !csrf) {
+        alert('로그인이 필요합니다.');
+        router.push('/login');
+        return;
+      }
+    };
+    fetchUserData();
+  }, [accessToken, csrf, router]);
 
   useEffect(() => {
     const getData = async () => {
@@ -53,16 +89,16 @@ function Page() {
         const res = await axios.get('posts/');
         if (res) {
           const data: PostType = res.data.find((item: any, i: number) => {
-            if (item.todo_date === formattedDate) return i;
+            if (item.todo_date === formattedDate) return i + 1;
           });
           console.log(data);
           setPostId(data.id);
+          console.log(data.id);
           setGoal(data.goal);
           setDeadline(data.days_by_deadline);
         }
       };
       getId();
-
       if (postId !== undefined) {
         try {
           // const res = await axios.get('posts/');
@@ -86,12 +122,12 @@ function Page() {
       try {
         const res = await axios.get('posts/');
         const data = res.data.find((item: any, i: number) => {
-          if (item.todo_date === formattedDate) return i;
+          if (item.todo_date === formattedDate) return i + 1;
         });
         if (!data) {
           await axios.post('posts/', { todo_date: formattedDate });
           location.reload();
-        }
+        } else return;
       } catch (error) {}
     };
     postTodo();
