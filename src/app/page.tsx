@@ -118,18 +118,21 @@ function Main() {
 
   // 알 깨질떄
   useEffect(() => {
-    if(prevPetLevel == 1 && level == 2) {
-      setIsLevelUp(true);
-      setTempSaveMessage(statusMessage);
-      setStatusMessage('알이 깨지고 있습니다!');
-      setTimeout(() => {
-        setStatusMessage(statusMessage);
-      }, 3000);
     setPrevPetLevel(level);
-    } else if(level == 2 && experience == maxProgress) {
+    console.log('알 실행1')
+    if(prevPetLevel == 1 && level == 2) {
+      // setIsLevelUp(true);
+      // setTempSaveMessage(statusMessage);
+      // setStatusMessage('알이 깨지고 있습니다!');
+      // setTimeout(() => {
+      //   setStatusMessage(tempSaveMessage);
+      // }, 3000);
+      alert('1-2 test')
+    } else if(prevPetLevel == 2 && level == 1) {
       alert('축하합니다! 펫이 모두 성장하였습니다. 새로운 알이 지급되었습니다.')
+      console.log('알 실행2')
     }
-  }, [level, experience])
+  }, [level])
 
   //밥주기
   const handleFeedRice = () => {
@@ -207,21 +210,21 @@ function Main() {
 
             <section className="w-full h-1/3 flex flex-col items-center">
               <div className='flex w-full h-2/5 p-2 justify-center items-center'>
-                <Image
+                {/* <Image
                   src={''}
                   alt="accessory"
                   width={40}
                   height={40}
                   className="h-full object-contain"
-                />
+                /> */}
               </div>
               <div className='flex w-full h-3/5 p-1 justify-center items-center'>
                 {isTouchPet && (
                   <Image
                     src={'/pet/heart.png'}
                     alt="heart"
-                    width={40}
-                    height={40}
+                    width={100}
+                    height={100}
                     className='absolute animate-touchPetHeart'
                   />
                 )}
