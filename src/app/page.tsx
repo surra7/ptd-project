@@ -96,7 +96,7 @@ function Main() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setStatusMessage(tempSaveMessage);
-    }, 5000);
+    }, 3000);
     return () => {
       clearTimeout(timeout);
     }
@@ -109,14 +109,11 @@ function Main() {
         .post<FeedType>('pets/feed-rice/')
         .then(response => {
           setExperience(response.data.pet.pet_rating.point);
-          const defaultMessage = statusMessage
           setStatusMessage(response.data.pet.hunger_degree_status);
           setRiceCount(riceCount - 1);
-          if(level !== response.data.pet.pet_rating.level){
-            setLevel(response.data.pet.pet_rating.level);
-            setExperience(response.data.pet.point);
-            setMaxProgress(response.data.pet.pet_rating.point);
-          };
+          setLevel(response.data.pet.pet_rating.level);
+          setExperience(response.data.pet.point);
+          setMaxProgress(response.data.pet.pet_rating.point);
           console.log(response.data);
         })
         .catch(error => {
@@ -137,9 +134,9 @@ function Main() {
           setTempSaveMessage(statusMessage);
           setStatusMessage(response.data.pet.hunger_degree_status);
           setSnackCount(snackCount - 1);
-            setLevel(response.data.pet.pet_rating.level);
-            setExperience(response.data.pet.point);
-            setMaxProgress(response.data.pet.pet_rating.point);
+          setLevel(response.data.pet.pet_rating.level);
+          setExperience(response.data.pet.point);
+          setMaxProgress(response.data.pet.pet_rating.point);
         })
         .catch(error => {
           console.log(error);
@@ -152,7 +149,7 @@ function Main() {
   // 쓰다듬기
   const handleTouchPet = () => {
     setTempSaveMessage(statusMessage);
-    setStatusMessage('당신의 펫은 달콤함에 콧노래를 흥얼거립니다!');
+    setStatusMessage('당신은 복슬복슬한 느낌에 기분이 좋아집니다!');
   }
 
   return (
