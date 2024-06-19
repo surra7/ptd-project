@@ -100,8 +100,8 @@ function Main() {
           setRiceCount(riceCount - 1);
           if(level !== response.data.pet.pet_rating.level){
             setLevel(response.data.pet.pet_rating.level);
-            setExperience(response.data.pet.pet_rating.point);
-            setMaxProgress(response.data.pet.point);
+            setExperience(response.data.pet.point);
+            setMaxProgress(response.data.pet.pet_rating.point);
           };
           console.log(response.data);
         })
@@ -123,8 +123,8 @@ function Main() {
           setSnackCount(snackCount - 1);
           if(level !== response.data.pet.pet_rating.level){
             setLevel(response.data.pet.pet_rating.level);
-            setExperience(response.data.pet.pet_rating.point);
-            setMaxProgress(response.data.pet.point);
+            setExperience(response.data.pet.point);
+            setMaxProgress(response.data.pet.pet_rating.point);
           };
         })
         .catch(error => {
@@ -137,7 +137,7 @@ function Main() {
 
   return (
     <div className="w-full h-full ">
-      {/* {petData ? ( */}
+      {petData ? (
         <div
           className="wrap-section bg-cover animate-fadeIn"
           style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${backgroundImageURL})` }}>
@@ -151,23 +151,23 @@ function Main() {
               <MainPetButton icon={<BsBox2Heart size="28" />} label="랜덤박스" link="/randombox" count={boxCount} />
             </section>
 
-            <section className="h-1/3 flex flex-col items-center">
-              <div className='flex h-2/5 p-2'>
+            <section className="w-full h-1/3 flex flex-col items-center">
+              <div className='flex w-full h-2/5 p-2 justify-center items-center'>
                 <Image
                   src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
                   alt="accessory"
-                  width={50}
-                  height={50}
-                  className="m-auto"
+                  width={40}
+                  height={40}
+                  className="h-full object-contain"
                 />
               </div>
-              <div className='flex h-3/5 p-1'>
+              <div className='flex w-full h-3/5 p-1 justify-center items-center'>
                 <Image
                   src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
                   alt="pet"
                   width={110}
                   height={110}
-                  className="m-auto"
+                  className="h-full object-contain"
                 />                
               </div>
             </section>
@@ -193,12 +193,11 @@ function Main() {
             </section>
           </main>
         </div>
-{/*       ) : (
+      ) : (
          <div className="wrap-section text-center flex">
            <div className="m-auto text-primary-500">Loding...</div>
          </div>
        )}
-*/}
       <NavBottom />
     </div>
   );
