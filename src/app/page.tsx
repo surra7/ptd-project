@@ -194,7 +194,7 @@ function Main() {
 
   return (
     <div className="w-full h-full ">
-      {/* {petData ? ( */}
+      {petData ? (
         <div
           className="wrap-section bg-cover animate-fadeIn"
           style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${backgroundImageURL})` }}>
@@ -270,11 +270,11 @@ function Main() {
             </section>
           </main>
         </div>
-      {/* ) : (
-         <div className="wrap-section text-center flex">
-           <div className="m-auto text-primary-500">Loding...</div>
-         </div>
-       )} */}
+        ) : (
+          <div className="wrap-section text-center flex">
+            <div className="m-auto text-primary-500">Loding...</div>
+          </div>
+        )} 
       <NavBottom />
     </div>
   );
