@@ -11,7 +11,7 @@ const fetchFriendGuestBook = async (user_id: number | undefined) => {
 
 export const useGetFriendGuestBook = (user_id: number | undefined, user: User | null) => {
   return useQuery({
-    queryKey: ['guestBook', user],
+    queryKey: ['guestBook', user_id, user],
     queryFn: () => fetchFriendGuestBook(user_id),
   });
 };
