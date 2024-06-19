@@ -100,7 +100,7 @@ const Nickname = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen  p-4">
       {user ? (
-        <div className="wrap-section w-full max-w-xs">
+        <div className="h-full wrap-section w-full max-w-xs">
           <section className="wrap-section">
             <h1 className="text-2xl font-bold text-purple-600 mb-4">닉네임 변경하기</h1>
             <div className="mb-4">

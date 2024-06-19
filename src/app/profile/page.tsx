@@ -95,7 +95,7 @@ export default function Page() {
   }
 
   return (
-    <div className="h-full wrap-section">
+    <div className="h-full w-full wrap-section">
       {' '}
       {user ? (
         <>

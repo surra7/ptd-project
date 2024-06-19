@@ -101,7 +101,7 @@ function Goal() {
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="wrap-section flex flex-col items-center justify-center min-h-screen p-4">
+    <div className="h-full w-full wrap-section flex flex-col items-center justify-center min-h-screen p-4">
       <section className="wrap-section">
         <h1 className="text-2xl font-bold text-purple-600 mb-4">목표/디데이 설정</h1>
         <div className="w-full max-w-xs">
