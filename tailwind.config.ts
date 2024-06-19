@@ -71,7 +71,7 @@ const config: Config = {
         fadeIn: '0.6s ease 0s fadeIn',
         fadeInDown: '0.5s ease 0s fadeInDown',
         vibration: 'vibration 1s linear infinite',
-        boxopen: 'boxopen 2s linear',
+        boxopen: 'boxopen 1s linear',
       },
       keyframes: {
         fadeIn: {

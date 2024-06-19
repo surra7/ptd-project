@@ -11,7 +11,7 @@ import { RiContactsBook2Line } from 'react-icons/ri';
 import MainPetButton from '@/components/main/MainPetButton';
 import PetStateMessage from '@/components/main/PetStateMessage';
 import PetProfile from '@/components/main/PetProfile';
-import { PetType } from '@/types/petType';
+import { FeedType, PetType } from '@/types/petType';
 
 import { useRouter } from 'next/navigation';
 import { getCookieValue } from '@/libs/getCookieValue';
@@ -35,7 +35,6 @@ function Main() {
   const [user, setUser] = useAtom<User | null>(userAtom);
   const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchTokens = async () => {
@@ -44,9 +43,11 @@ function Main() {
         const token = getCookieValue('access_token');
         if (token) {
           setAccessToken(token);
+          console.log('accesstoken 값: ', accessToken)
         }
         if (csrfToken) {
           setCsrf(csrfToken);
+          console.log('csrfToken 값: ', csrfToken)
         }
       } catch (error) {
         console.error(error);
@@ -78,15 +79,14 @@ function Main() {
           })
           .catch(error => {
             console.error('펫에러', error);
-            if (!accessToken || !csrf) {
-              alert('로그인이 필요합니다.');
-              router.push('/introduce');
-              return;
-            }
+            alert('로그인이 필요합니다.');
+            router.push('/introduce');
           });
       })
       .catch(error => {
         console.error('유저에러', error.data)
+        // alert('로그인이 필요합니다.');
+        // router.push('/introduce');
       })
   }, [accessToken, csrf]);
 
@@ -94,10 +94,15 @@ function Main() {
   const handleFeedRice = () => {
     if (petData && petData?.rice_quantity > 0) {
       axios
-        .post('pets/feed-rice/')
+        .post<FeedType>('pets/feed-rice/')
         .then(response => {
-          setExperience(response.data.experience);
+          setExperience(response.data.pet.pet_rating.point);
           setRiceCount(riceCount - 1);
+          if(level !== response.data.pet.pet_rating.level){
+            setLevel(response.data.pet.pet_rating.level);
+            setMaxProgress(response.data.pet.pet_rating.point);
+            setMaxProgress(response.data.pet.point);
+          };
           console.log(response.data);
         })
         .catch(error => {
@@ -112,11 +117,15 @@ function Main() {
   const handleFeedSnack = () => {
     if (petData && petData.snack_quantity > 0) {
       axios
-        .post('pets/feed-snack/')
+        .post<FeedType>('pets/feed-snack/')
         .then(response => {
-          setExperience(response.data.experience);
+          setExperience(response.data.pet.pet_rating.point);
           setSnackCount(snackCount - 1);
-          console.log(response.data);
+          if(level !== response.data.pet.pet_rating.level){
+            setLevel(response.data.pet.pet_rating.level);
+            setMaxProgress(response.data.pet.pet_rating.point);
+            setExperience(response.data.pet.point);
+          };
         })
         .catch(error => {
           console.log(error);
@@ -128,7 +137,7 @@ function Main() {
 
   return (
     <div className="w-full h-full ">
-      {petData ? (
+      {/* {petData ? ( */}
         <div
           className="wrap-section bg-cover animate-fadeIn"
           style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${backgroundImageURL})` }}>
@@ -142,14 +151,25 @@ function Main() {
               <MainPetButton icon={<BsBox2Heart size="28" />} label="랜덤박스" link="/randombox" count={boxCount} />
             </section>
 
-            <section className="h-1/3 flex items-center">
-              <Image
-                src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
-                alt="pet"
-                width={130}
-                height={130}
-                className="my-0 mx-auto"
-              />
+            <section className="h-1/3 flex flex-col items-center">
+              <div className='h-1/4'>
+                <Image
+                  src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
+                  alt="accessory"
+                  width={50}
+                  height={50}
+                  className="mx-auto"
+                />
+              </div>
+              <div className='h-3/4 p-2'>
+                <Image
+                  src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
+                  alt="pet"
+                  width={130}
+                  height={130}
+                  className="mx-auto"
+                />                
+              </div>
             </section>
 
             <section className="h-1/3 p-3 text-center">
@@ -173,11 +193,11 @@ function Main() {
             </section>
           </main>
         </div>
-      ) : (
-        <div className="wrap-section text-center flex">
-          <div className="m-auto text-primary-500">Loding...</div>
-        </div>
-      )}
+      {/* // ) : (
+      //   <div className="wrap-section text-center flex">
+      //     <div className="m-auto text-primary-500">Loding...</div>
+      //   </div>
+      // )} */}
       <NavBottom />
     </div>
   );

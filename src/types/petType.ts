@@ -19,7 +19,7 @@ export interface PetType {
   snack_quantity: number;
 };
 
-export interface RandomItem {
+export interface RandomItemType {
   message: string;
   random_boxes: number;
   output_item: {
@@ -27,16 +27,40 @@ export interface RandomItem {
     name: string;
     quantity: number;
     image: string;
-  }
+  };
 };
 
-// {
-//   "message": "Random box opened successfully",
-//   "random_boxes": 1000,
-//   "output_item": {
-//     "type": "snack",
-//     "name": "snack",
-//     "quantity": 9992,
-//     "image": "/media/snacktypes/ice-cream_938063.png"
-//   }
-// }
+export interface FeedType{
+  snack: {
+    id: number;
+    pet: number;
+    snack_type: number;
+    quantity: number;
+  },
+  pet: {
+    user: number;
+    point: number;
+    hunger_degree: string;
+    random_boxes: number;
+    pet_rating: {
+      level: number;
+      point: number;
+    },
+    primary_accessory: null;
+    primary_background: {
+      item_name: string;
+      image: string;
+    },
+    primary_pet: {
+      pet_name: string;
+      image: string;
+    },
+    rice_quantity: number;
+    snack_quantity: number;
+    active_pet: {
+      pet_name: string;
+      image: string;
+    },
+    hunger_degree_status: string;
+  };
+};
