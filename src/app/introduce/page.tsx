@@ -6,7 +6,7 @@ import { useAtom } from 'jotai';
 import { accessTokenAtom, csrfTokenAtom } from '@/atoms/atoms';
 import { getCookieValue } from '@/libs/getCookieValue';
 
-function page() {
+function Page() {
   const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
 
@@ -44,4 +44,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
