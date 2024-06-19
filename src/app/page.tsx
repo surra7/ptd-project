@@ -148,7 +148,7 @@ function Main() {
 
           <main className="w-full h-5/6 ">
             <section className="h-1/3 grid justify-end items-center py-5 px-2 text-center">
-              <MainPetButton icon={<BiCloset size="30" />} label="보관함" count={-1} />
+              <MainPetButton icon={<BiCloset size="30" />} label="보관함" count={-1} link="/closet" />
               <MainPetButton icon={<BsBox2Heart size="28" />} label="랜덤박스" link="/randombox" count={boxCount} />
             </section>
 
