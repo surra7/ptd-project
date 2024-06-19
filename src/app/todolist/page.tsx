@@ -54,34 +54,34 @@ function Page() {
   const today = new Date();
   const formattedDate = `${today.getFullYear()}-${'0' + (today.getMonth() + 1).toString().slice(-2)}-${today.getDate()}`;
 
-  useEffect(() => {
-    const fetchTokens = async () => {
-      try {
-        const csrfToken = getCookieValue('csrftoken');
-        const token = getCookieValue('access_token');
-        if (token) {
-          setAccessToken(token);
-        }
-        if (csrfToken) {
-          setCsrf(csrfToken);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchTokens();
-  }, [setAccessToken, setCsrf]);
+  // useEffect(() => {
+  //   const fetchTokens = async () => {
+  //     try {
+  //       const csrfToken = getCookieValue('csrftoken');
+  //       const token = getCookieValue('access_token');
+  //       if (token) {
+  //         setAccessToken(token);
+  //       }
+  //       if (csrfToken) {
+  //         setCsrf(csrfToken);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchTokens();
+  // }, [setAccessToken, setCsrf]);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!accessToken || !csrf) {
-        alert('로그인이 필요합니다.');
-        router.push('/login');
-        return;
-      }
-    };
-    fetchUserData();
-  }, [accessToken, csrf, router]);
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     if (!accessToken || !csrf) {
+  //       alert('로그인이 필요합니다.');
+  //       router.push('/login');
+  //       return;
+  //     }
+  //   };
+  //   fetchUserData();
+  // }, [accessToken, csrf, router]);
 
   useEffect(() => {
     const getData = async () => {
