@@ -11,6 +11,7 @@ function RandomBox() {
   const router = useRouter();
   const [isBoxClicked, setIsBoxClicked] = useState(false);
   const [randomImage, setRandomImage] = useState('/randombox/box.png');
+  const [randomName, setRandomName] = useState('');
   const [randomItem, setRandomItem] = useState<RandomItem>();
 
   const handleboxClick = () => {
@@ -18,7 +19,8 @@ function RandomBox() {
     .post('pets/open-random-box/')
     .then(response => {
       setIsBoxClicked(true);
-      setRandomItem(response.data);
+      setRandomName(response.data.output.item.name);
+      setRandomImage(response.data.output.itme.image)
       console.log('randomitem 결과', response.data);
     }) .catch(error => {
       alert('보유한 랜덤박스가 없습니다.');
@@ -41,7 +43,7 @@ function RandomBox() {
                 <div
                   className="text-center text-white text-4xl font-bold p-1
                   bg-primary-500">
-                  {randomItem?.output_item.name}
+                  {randomName}
                 </div>
                 <div className="flex justify-center">
                   <button className="p-4" onClick={handleRetryClick}>

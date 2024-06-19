@@ -26,5 +26,17 @@ export interface RandomItem {
     type: string;
     name: string;
     quantity: number;
+    image: string;
   }
 };
+
+// {
+//   "message": "Random box opened successfully",
+//   "random_boxes": 1000,
+//   "output_item": {
+//     "type": "snack",
+//     "name": "snack",
+//     "quantity": 9992,
+//     "image": "/media/snacktypes/ice-cream_938063.png"
+//   }
+// }

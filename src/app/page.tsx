@@ -131,7 +131,7 @@ function Main() {
       {petData ? (
         <div
           className="wrap-section bg-cover animate-fadeIn"
-          style={{ backgroundImage: `url:(https://api.oz-02-main-04.xyz${backgroundImageURL})` }}>
+          style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${backgroundImageURL})` }}>
           <header className="h-1/6 pt-8 pb-2 bg-white">
             <PetProfile name={petName} level={level} progress={experience} maxProgress={maxProgress} />
           </header>
