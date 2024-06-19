@@ -63,11 +63,11 @@ function Main() {
         return;
       }
       try {
-        const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/');
+        const response = await axios.get('users/myinfo/')
         setUser(response.data);
         console.log(response.data);
         axios
-          .get<PetType>('https://api.oz-02-main-04.xyz/api/v1/pets/mypet/')
+          .get<PetType>('pets/mypet/')
           .then(response => {
             setPetData(response.data);
             setBackgroundImageURL(response.data.primary_background.image);
@@ -82,7 +82,7 @@ function Main() {
             console.log(petData);
           })
           .catch(error => {
-            console.log('펫타입에러', error);
+            console.error('펫타입에러', error);
           });
       } catch (error) {
         console.error('유저에러', error);
