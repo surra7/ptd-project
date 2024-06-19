@@ -1,5 +1,5 @@
-import { axios } from './instance';
 import { useQuery } from '@tanstack/react-query';
+import { axios } from '../instance';
 
 const fetchNicknameList = async (nickname: string) => {
   const response = await axios.get(`guestbook/${nickname}`);

@@ -1,7 +1,7 @@
 import { GuestBookListType } from '@/types/guestBookType';
-import { axios } from './instance';
 import { useQuery } from '@tanstack/react-query';
 import { User } from '@/atoms/atoms';
+import { axios } from '../instance';
 
 const fetchFriendGuestBook = async (user_id: number | undefined) => {
   const response = await axios.get<GuestBookListType[]>(`guestbook/comments/${user_id}`);

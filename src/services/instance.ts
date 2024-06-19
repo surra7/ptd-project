@@ -5,15 +5,6 @@ import { useAtom } from 'jotai';
 _axios.defaults.xsrfCookieName = 'csrftoken';
 _axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 
-const useSetAccessToken = () => {
-  const [accessToken] = useAtom(accessTokenAtom);
-  return accessToken;
-};
-const useSetCSRFToken = () => {
-  const [csrfToken] = useAtom(csrfTokenAtom);
-  return csrfToken;
-};
-
 export const axios = _axios.create({
   baseURL: 'https://api.oz-02-main-04.xyz/api/v1/',
   timeout: 0,
@@ -34,7 +25,8 @@ export const setupAxiosInterceptors = () => {
         config.headers.Authorization = `Bearer ${accessToken}`;
         config.headers['x-csrftoken'] = `${csrfToken}`;
       }
-      // config.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4NzIyMjc3LCJpYXQiOjE3MTg2ODYyNzcsImp0aSI6IjMxNjBlZTJjYjk1MjQxYmM5MWY1NzZiOWM4ZTQ3NmI5IiwidXNlcl9pZCI6MTF9._qiyWUifsE-n_5mCbzf2GN27i5wxdcIhO8mkeUxoznQ`;
+      // config.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4ODI1OTMwLCJpYXQiOjE3MTg3ODk5MzAsImp0aSI6IjE5OGU0ZWNiNWNhMTRmNGY4Njc0MGQ5MDA0MWFmYTYxIiwidXNlcl9pZCI6M30.BFP1Ea9G049ezlZPy_dQ2YkX9d0sB4EZGFDBtzXYH6c`;
+      // config.headers['x-csrftoken'] = `IApSu38oJcK3U9Uhg2sUQcXCe2FsOT5D`;
       return config;
     },
     error => {
