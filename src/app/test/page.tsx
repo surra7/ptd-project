@@ -1,7 +1,7 @@
 import React from 'react';
 import { User, userAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
-function Test() {
+function Test2() {
   const [user, setUser] = useAtom<User | null>(userAtom);
   return (
     <div>
@@ -10,4 +10,4 @@ function Test() {
   );
 }
 
-export default Test;
+export default Test2;
