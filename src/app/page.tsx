@@ -100,7 +100,7 @@ function Main() {
           setRiceCount(riceCount - 1);
           if(level !== response.data.pet.pet_rating.level){
             setLevel(response.data.pet.pet_rating.level);
-            setMaxProgress(response.data.pet.pet_rating.point);
+            setExperience(response.data.pet.pet_rating.point);
             setMaxProgress(response.data.pet.point);
           };
           console.log(response.data);
@@ -123,8 +123,8 @@ function Main() {
           setSnackCount(snackCount - 1);
           if(level !== response.data.pet.pet_rating.level){
             setLevel(response.data.pet.pet_rating.level);
-            setMaxProgress(response.data.pet.pet_rating.point);
-            setExperience(response.data.pet.point);
+            setExperience(response.data.pet.pet_rating.point);
+            setMaxProgress(response.data.pet.point);
           };
         })
         .catch(error => {
@@ -137,7 +137,7 @@ function Main() {
 
   return (
     <div className="w-full h-full ">
-      {/* {petData ? ( */}
+      {petData ? (
         <div
           className="wrap-section bg-cover animate-fadeIn"
           style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${backgroundImageURL})` }}>
@@ -165,8 +165,8 @@ function Main() {
                 <Image
                   src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
                   alt="pet"
-                  width={130}
-                  height={130}
+                  width={110}
+                  height={110}
                   className="mx-auto"
                 />                
               </div>
@@ -193,11 +193,11 @@ function Main() {
             </section>
           </main>
         </div>
-      {/* // ) : (
-      //   <div className="wrap-section text-center flex">
-      //     <div className="m-auto text-primary-500">Loding...</div>
-      //   </div>
-      // )} */}
+       ) : (
+         <div className="wrap-section text-center flex">
+           <div className="m-auto text-primary-500">Loding...</div>
+         </div>
+       )}
       <NavBottom />
     </div>
   );
