@@ -30,6 +30,8 @@ function Main() {
   const [maxProgress, setMaxProgress] = useState(0);
   const [experience, setExperience] = useState(0);
   const [petName, setPetName] = useState('');
+  const [statusMessage, setStatusMessage] = useState('');
+  const [tempSaveMessage, setTempSaveMessage] = useState('');
   const router = useRouter();
 
   const [user, setUser] = useAtom<User | null>(userAtom);
@@ -75,6 +77,7 @@ function Main() {
             setExperience(response.data.point);
             setMaxProgress(response.data.pet_rating.point);
             setPetName(response.data.active_pet.pet_name);
+            setStatusMessage(response.data.hunger_degree_status);
             console.log(petData);
           })
           .catch(error => {
@@ -90,6 +93,15 @@ function Main() {
       })
   }, [accessToken, csrf]);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setStatusMessage(tempSaveMessage);
+    }, 5000);
+    return () => {
+      clearTimeout(timeout);
+    }
+  },[tempSaveMessage])
+
   //밥주기
   const handleFeedRice = () => {
     if (petData && petData?.rice_quantity > 0) {
@@ -97,6 +109,8 @@ function Main() {
         .post<FeedType>('pets/feed-rice/')
         .then(response => {
           setExperience(response.data.pet.pet_rating.point);
+          const defaultMessage = statusMessage
+          setStatusMessage(response.data.pet.hunger_degree_status);
           setRiceCount(riceCount - 1);
           if(level !== response.data.pet.pet_rating.level){
             setLevel(response.data.pet.pet_rating.level);
@@ -120,12 +134,12 @@ function Main() {
         .post<FeedType>('pets/feed-snack/')
         .then(response => {
           setExperience(response.data.pet.pet_rating.point);
+          setTempSaveMessage(statusMessage);
+          setStatusMessage(response.data.pet.hunger_degree_status);
           setSnackCount(snackCount - 1);
-          if(level !== response.data.pet.pet_rating.level){
             setLevel(response.data.pet.pet_rating.level);
             setExperience(response.data.pet.point);
             setMaxProgress(response.data.pet.pet_rating.point);
-          };
         })
         .catch(error => {
           console.log(error);
@@ -134,6 +148,12 @@ function Main() {
       alert('간식이 없습니다!');
     }
   };
+
+  // 쓰다듬기
+  const handleTouchPet = () => {
+    setTempSaveMessage(statusMessage);
+    setStatusMessage('당신의 펫은 달콤함에 콧노래를 흥얼거립니다!');
+  }
 
   return (
     <div className="w-full h-full ">
@@ -154,7 +174,7 @@ function Main() {
             <section className="w-full h-1/3 flex flex-col items-center">
               <div className='flex w-full h-2/5 p-2 justify-center items-center'>
                 <Image
-                  src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
+                  src={''}
                   alt="accessory"
                   width={40}
                   height={40}
@@ -173,7 +193,7 @@ function Main() {
             </section>
 
             <section className="h-1/3 p-3 text-center">
-              <PetStateMessage petId={1} />
+              <PetStateMessage message={statusMessage} />
               <div className="flex justify-center items-end">
                 <MainPetButton
                   icon={<BiBowlRice size="30" />}
@@ -187,7 +207,8 @@ function Main() {
                   count={snackCount}
                   handle={() => handleFeedSnack()}
                 />
-                <MainPetButton icon={<BiDonateHeart size="30" />} label="쓰다듬기" count={-1} />
+                <MainPetButton icon={<BiDonateHeart size="30" />} label="쓰다듬기" count={-1} 
+                  handle={() => handleTouchPet()}/>
                 <MainPetButton icon={<RiContactsBook2Line size="30" />} label="방명록" link="/guest" count={-1} />
               </div>
             </section>
