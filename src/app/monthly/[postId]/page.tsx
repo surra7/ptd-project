@@ -54,10 +54,7 @@ function Page({ params }: { params: { postId: number } }) {
           setEditString(undefined);
           setModalIndex(undefined);
         } else {
-          const todo = {
-            todo_item: text,
-          };
-          createTodo(todo as TodoType);
+          alert('지난 할 일 목록은 입력/수정 할 수 없습니다.');
         }
       } else {
         alert('지난 할 일 목록은 입력/수정 할 수 없습니다.');
@@ -97,7 +94,8 @@ function Page({ params }: { params: { postId: number } }) {
     (id?: number) => {
       if (id != undefined) {
         const edit = todos.find(v => v.id === id);
-        setEditString(edit?.todo_item);
+        alert('지난 할 일 목록은 수정 할 수 없습니다.');
+
         setIsModalOpen(false);
       }
     },
@@ -194,7 +192,7 @@ function Page({ params }: { params: { postId: number } }) {
                   <audio controls loop src={musicUrl} className="w-[11rem] h-[2.5rem]"></audio>
                 </div>
               ) : (
-                <MusicInput setMusicTitle={setMusicTitle} setMusicUrl={setMusicUrl} />
+                <MusicInput setMusicTitle={setMusicTitle} setMusicUrl={setMusicUrl} postId={0} />
               )}
             </div>
           </section>

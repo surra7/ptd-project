@@ -1,4 +1,4 @@
-import axios, { AxiosStatic } from 'axios';
+import { axios } from '@/services/instance';
 import React, { useEffect, useState } from 'react';
 import { BiReset } from 'react-icons/bi';
 import { BsSkipStartCircle, BsStopCircle } from 'react-icons/bs';
@@ -13,12 +13,28 @@ function Timer({ postId }: Props) {
   const [isActive, setIsActive] = useState<boolean>(false); // 활성화 여부
 
   useEffect(() => {
+    const getTime = async () => {
+      try {
+        if (postId) {
+          const res = await axios.get(`posts/timer/${postId}`);
+
+          console.log(res);
+          setSeconds(res.data.formatted_duration);
+        } else return;
+      } catch {
+        return;
+      }
+    };
+    getTime();
+  }, [postId]);
+
+  useEffect(() => {
     let interval: NodeJS.Timer;
 
     if (isActive) {
       interval = setInterval(async () => {
         // setSeconds(seconds => seconds + 1);
-        const res = await axios.get(`https://api.oz-02-main-04.xyz/api/v1/posts/timer/${postId}`);
+        const res = await axios.get(`posts/timer/${postId}`);
         console.log(res.data);
         setSeconds(res.data.formatted_duration);
       }, 1000);
@@ -31,15 +47,13 @@ function Timer({ postId }: Props) {
   const handleStart = async (): Promise<void> => {
     setIsActive(prev => !prev);
     try {
-      // const res = await axios.get('https://api.oz-02-main-04.xyz/api/v1/posts/timer/3');
-      // console.log(res.data);
-      // setSeconds(res.data.formatted_duration);
-      // if () {
-      await axios.patch(`https://api.oz-02-main-04.xyz/api/v1/posts/timer/${postId}`, { action: 'restart' });
-      // }
-    } catch {
-      await axios.post(`https://api.oz-02-main-04.xyz/api/v1/posts/timer/${postId}`);
-    }
+      const res = await axios.get(`posts/timer/${postId}`);
+      if (!res) {
+        await axios.post(`posts/timer/${postId}`);
+      } else {
+        await axios.patch(`posts/timer/${postId}`, { action: 'restart' });
+      }
+    } catch {}
   };
 
   const handleStop = async () => {
@@ -48,7 +62,7 @@ function Timer({ postId }: Props) {
     //   const nowTimes = formatTime(seconds);
     //   console.log(nowTimes);
     // }
-    await axios.patch(`https://api.oz-02-main-04.xyz/api/v1/posts/timer/${postId}`, { action: 'pause' });
+    await axios.patch(`posts/timer/${postId}`, { action: 'pause' });
   };
 
   // 리셋
@@ -68,21 +82,6 @@ function Timer({ postId }: Props) {
 
     return `${hoursStr}시간 ${minutesStr}분 ${secondStr}초`;
   };
-
-  useEffect(() => {
-    const getTime = async () => {
-      try {
-        if (postId) {
-          const res = await axios.get(`https://api.oz-02-main-04.xyz/api/v1/posts/timer/${postId}`);
-          console.log(res);
-          setSeconds(res.data.formatted_duration);
-        }
-      } catch {
-        return;
-      }
-    };
-    getTime();
-  }, []);
 
   return (
     <>
