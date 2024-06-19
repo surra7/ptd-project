@@ -23,7 +23,6 @@ export interface TodoType {
 
 function Page({ params }: { params: { postId: number } }) {
   // const [todos, setTodos] = useState<TodoType[]>([]);
-  const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalIndex, setModalIndex] = useState<number>();
   const [editString, setEditString] = useState<string>();

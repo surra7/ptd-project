@@ -17,7 +17,6 @@ function Timer({ postId }: Props) {
       try {
         if (postId) {
           const res = await axios.get(`posts/timer/${postId}`);
-
           console.log(res);
           setSeconds(res.data.formatted_duration);
         } else return;

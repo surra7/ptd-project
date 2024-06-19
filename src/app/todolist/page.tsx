@@ -37,7 +37,7 @@ function Page() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalIndex, setModalIndex] = useState<number>();
   const [editString, setEditString] = useState<string>();
-  const [postId, setPostId] = useState<number>();
+  const [postId, setPostId] = useState<number | undefined>();
   const [musicTitle, setMusicTitle] = useState<string | undefined>();
   const [musicUrl, setMusicUrl] = useState<string>('');
   const [goal, setGoal] = useState<string>('');
