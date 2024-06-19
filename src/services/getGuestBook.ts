@@ -1,6 +1,7 @@
 import { GuestBookListType } from '@/types/guestBookType';
 import { axios } from './instance';
 import { useQuery } from '@tanstack/react-query';
+import { User } from '@/atoms/atoms';
 
 const fetchGuestBook = async () => {
   const response = await axios.get<GuestBookListType[]>(`guestbook/`);
@@ -8,9 +9,9 @@ const fetchGuestBook = async () => {
   return response.data;
 };
 
-export const useGetGuestBook = () => {
+export const useGetGuestBook = (user: User | null) => {
   return useQuery({
-    queryKey: ['guestBook'],
+    queryKey: ['guestBook', user],
     queryFn: () => fetchGuestBook(),
   });
 };
