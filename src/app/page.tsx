@@ -35,7 +35,7 @@ function Main() {
   const [isTouchPet, setIsTouchPet] = useState(false);
   const [isLevelUp, setIsLevelUp] = useState(false);
   const [prevPetLevel, setPrevPetLevel] = useState(level);
-  const [accessoryImageURL, setAccessoryImageURL] = useState(null);
+  const [accessoryImageURL, setAccessoryImageURL] = useState('');
   const router = useRouter();
 
   const [user, setUser] = useAtom<User | null>(userAtom);
@@ -83,18 +83,17 @@ function Main() {
             setMaxProgress(response.data.pet_rating.point);
             setPetName(response.data.active_pet.pet_name);
             setStatusMessage(response.data.hunger_degree_status);
+            setAccessoryImageURL(response.data.primary_accessory.image);
             console.log(petData);
             console.log('처음', statusMessage, tempSaveMessage);
           })
           .catch(error => {
             console.error('펫에러', error);
-            // alert('로그인이 필요합니다.');
             router.push('/introduce');
           });
       })
       .catch(error => {
         console.error('유저에러', error.data);
-        // alert('로그인이 필요합니다.');
         router.push('/introduce');
       });
   }, [accessToken, csrf]);
@@ -111,17 +110,15 @@ function Main() {
   // },[tempSaveMessage])
 
   // 상태메시지 바뀔 때
-  useEffect(() => {
-    setTimeout(() => {
-      setStatusMessage(tempSaveMessage);
-      console.log('timeout', statusMessage, tempSaveMessage);
-    }, 3000);
-  }, [tempSaveMessage]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setStatusMessage(tempSaveMessage);
+  //   }, 3000);
+  // }, [tempSaveMessage]);
 
   // 알 깨질떄
   useEffect(() => {
     setPrevPetLevel(level);
-    console.log('알 실행1');
     if (prevPetLevel == 1 && level == 2) {
       // setIsLevelUp(true);
       // setTempSaveMessage(statusMessage);
@@ -132,7 +129,6 @@ function Main() {
       alert('펫이 부화합니다!');
     } else if (prevPetLevel == 2 && level == 1) {
       alert('축하합니다! 펫이 모두 성장하였습니다. 새로운 알이 지급됩니다.');
-      console.log('알 실행2');
     }
   }, [level]);
 
@@ -142,14 +138,12 @@ function Main() {
       axios
         .post<FeedType>('pets/feed-rice/')
         .then(response => {
-          setExperience(response.data.pet.pet_rating.point);
           setStatusMessage(response.data.pet.hunger_degree_status);
           setRiceCount(riceCount - 1);
           setLevel(response.data.pet.pet_rating.level);
           setExperience(response.data.pet.point);
           setMaxProgress(response.data.pet.pet_rating.point);
           setActivePetImageURL(response.data.pet.active_pet.image);
-          console.log('밥주기', statusMessage, tempSaveMessage);
         })
         .catch(error => {
           console.log(error);
@@ -165,7 +159,6 @@ function Main() {
       axios
         .post<FeedType>('pets/feed-snack/')
         .then(response => {
-          setExperience(response.data.pet.pet_rating.point);
           setTempSaveMessage(statusMessage);
           setStatusMessage(response.data.pet.hunger_degree_status);
           setSnackCount(snackCount - 1);
@@ -173,7 +166,10 @@ function Main() {
           setExperience(response.data.pet.point);
           setMaxProgress(response.data.pet.pet_rating.point);
           setActivePetImageURL(response.data.pet.active_pet.image);
-          console.log('간식주기', statusMessage, tempSaveMessage);
+          
+          setTimeout(() => {
+            setStatusMessage(tempSaveMessage);
+          }, 3000);
         })
         .catch(error => {
           console.log(error);
@@ -187,16 +183,16 @@ function Main() {
   const handleTouchPet = () => {
     setTempSaveMessage(statusMessage);
     setStatusMessage('당신은 복슬복슬한 느낌에 기분이 좋아집니다!');
-    console.log('쓰다듬기', statusMessage, tempSaveMessage);
     setIsTouchPet(true);
     setTimeout(() => {
       setIsTouchPet(false);
-    }, 1000);
+      setStatusMessage(tempSaveMessage);   
+    }, 3000);
   };
 
   return (
     <div className="w-full h-full ">
-      {/* {petData ? ( */}
+      {petData ? (
         <div
           className="wrap-section bg-cover animate-fadeIn"
           style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${backgroundImageURL})` }}>
@@ -273,11 +269,11 @@ function Main() {
             </section>
           </main>
         </div>
-      {/* ) : (
+      ) : (
         <div className="wrap-section text-center flex">
           <div className="m-auto text-primary-500">Loding...</div>
         </div>
-      )} */}
+      )}
       <NavBottom />
     </div>
   );

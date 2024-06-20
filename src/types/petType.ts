@@ -11,10 +11,13 @@ export interface PetType {
     image: string;
   };
   primary_background: {
-      item_name: string;
-      image: string;
+    item_name: string;
+    image: string;
   };
-  primary_accessory: string;
+  primary_accessory: {
+    item_name: string;
+    image: string;
+  }
   random_boxes: number;
   rice_quantity: number;
   snack_quantity: number;
@@ -37,7 +40,7 @@ export interface FeedType{
     pet: number;
     snack_type: number;
     quantity: number;
-  },
+  };
   pet: {
     user: number;
     point: number;
@@ -46,22 +49,25 @@ export interface FeedType{
     pet_rating: {
       level: number;
       point: number;
-    },
-    primary_accessory: null;
+    };
+    primary_accessory: {
+      item_name: string;
+      image: string;
+    };
     primary_background: {
       item_name: string;
       image: string;
-    },
+    };
     primary_pet: {
       pet_name: string;
       image: string;
-    },
+    };
     rice_quantity: number;
     snack_quantity: number;
     active_pet: {
       pet_name: string;
       image: string;
-    },
+    };
     hunger_degree_status: string;
   };
 };
