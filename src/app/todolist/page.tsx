@@ -62,10 +62,10 @@ function Page() {
         setUser(response.data);
         console.log(response.data);
       })
-      .catch(error => {
-        console.error(error);
+      .catch(() => {
         alert('로그인이 필요합니다.');
         router.push('/introduce');
+        return;
       });
   }, [accessToken, csrf]);
 
