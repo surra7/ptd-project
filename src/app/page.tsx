@@ -43,18 +43,15 @@ function Main() {
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
 
   useEffect(() => {
-    console.log(user);
     const fetchTokens = async () => {
       try {
         const csrfToken = getCookieValue('csrftoken');
         const token = getCookieValue('access_token');
         if (token) {
           setAccessToken(token);
-          console.log('accesstoken 값: ', accessToken);
         }
         if (csrfToken) {
           setCsrf(csrfToken);
-          console.log('csrfToken 값: ', csrfToken);
         }
       } catch (error) {
         console.error(error);
@@ -68,7 +65,6 @@ function Main() {
       .get('users/myinfo/')
       .then(response => {
         setUser(response.data);
-        console.log(response.data);
         axios
           .get<PetType>('pets/mypet/')
           .then(response => {
@@ -84,17 +80,15 @@ function Main() {
             setPetName(response.data.active_pet.pet_name);
             setStatusMessage(response.data.hunger_degree_status);
             setAccessoryImageURL(response.data.primary_accessory.image);
-            console.log(petData);
-            console.log('처음', statusMessage, tempSaveMessage);
           })
           .catch(error => {
-            console.error('펫에러', error);
-            // router.push('/introduce');
+            console.error('pet error: ', error);
+            router.push('/introduce');
           });
       })
       .catch(error => {
-        console.error('유저에러', error.data);
-        // router.push('/introduce');
+        console.error('user error: ', error.data);
+        router.push('/introduce');
       });
   }, [accessToken, csrf]);
 
@@ -128,7 +122,7 @@ function Main() {
           setActivePetImageURL(response.data.pet.active_pet.image);
         })
         .catch(error => {
-          console.log(error);
+          console.log('feedrice error: ', error);
         });
     } else {
       alert('밥이 없습니다!');
@@ -152,7 +146,7 @@ function Main() {
           }, 2000);
         })
         .catch(error => {
-          console.log(error);
+          console.log('feedsnack error: ',error);
         });
     } else {
       alert('간식이 없습니다!');
