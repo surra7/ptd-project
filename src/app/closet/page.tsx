@@ -1,6 +1,6 @@
 'use client';
 import NavBottom from '@/components/NavBottom';
-import ClosetSection from '@/components/closet/\bClosetSection';
+import ClosetSection from '@/components/closet/ClosetSection';
 import { useState } from 'react';
 import { BiBookBookmark } from 'react-icons/bi';
 import { TbJewishStar, TbWallpaper } from 'react-icons/tb';

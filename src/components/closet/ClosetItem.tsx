@@ -15,7 +15,7 @@ export default function ClosetItem({ isSelected, item }: ClosetItemProps) {
         <MdPets size={50} color="white" className="justify-self-center" />
       )}
       <div
-        className={`h-[1.625rem] text-mm ${isSelected ? 'text-white' : 'text-black-400'} mt-2 flex justify-center items-center`}>
+        className={`h-[1.625rem] text-mm ${isSelected ? 'text-white' : 'text-black-400'} my-1 flex justify-center items-center`}>
         {item.item}
       </div>
     </div>

@@ -10,3 +10,7 @@ export interface ClosetItemProps {
     image: string;
   };
 }
+
+export interface postItemType {
+  item_name: string;
+}
