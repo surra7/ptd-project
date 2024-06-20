@@ -7,10 +7,6 @@ import { useRouter } from 'next/navigation';
 
 const KakaoLogin = () => {
   const router = useRouter();
-  const [user, setUser] = useAtom(userAtom);
-  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
-  const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
-  const [nickname, setNickname] = useAtom(nicknameAtom);
   //   useEffect(() => {
   //     console.log(user);
   //     if (!user === null) {
