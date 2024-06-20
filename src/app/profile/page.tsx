@@ -56,7 +56,7 @@ export default function Page() {
           },
         });
         setUser(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -102,10 +102,10 @@ export default function Page() {
       {user ? (
         <>
           {/* <div className=" flex flex-col p-4 mt-10"> */}
-          <section className="wrap-section p-4 mt-10">
+          <section className="wrap-section p-4 flex flex-col items-center justify-center">
             {' '}
-            <p className="text-2xl font-bold text-purple-600 mb-4"> {user.닉네임} 님 반가워요!</p>
-            <hr className="border-purple-600 w-full mb-4" />
+            <p className="text-2xl font-bold text-purple-600 mb-4"> {user.닉네임}</p>
+            <span>님 반가워요!</span> <hr className="border-purple-600 w-full mb-4" />
             <ul className="space-y-4">
               <li>
                 <Link href="/nickname">
@@ -120,7 +120,7 @@ export default function Page() {
               <li>
                 {' '}
                 <Link href="/introduce">
-                  <p className="text-purple-600 hover:underline">petodo 가이드 보기</p>
+                  <p className="text-purple-600 hover:underline">Petodo 가이드 보기</p>
                 </Link>{' '}
               </li>
               <li>
@@ -138,22 +138,15 @@ export default function Page() {
           {/* <div className=" flex flex-col justify-center align-middle  p-4"> */}
           <section
             className="wrap-section
-            ">
+           flex items-center flex-col justify-center">
             <p className="text-2xl font-bold text-purple-600 mb-4">로그인 해주세요.</p>
-            {/* <button
-                onClick={handleKakaoLogin}
-                className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                카카오 로그인
-              </button> */}
+
             <button onClick={handleKakaoLogin}>
               {' '}
-              {/* {nickname} */}
               <Image src={'/images/kakaoLogin.png'} alt="kakao-login" width={200} height={200} />
             </button>
           </section>
-          <div className="mb-10">
-            <NavBottom />
-          </div>
+          <div className="mb-10">{/* <NavBottom /> */}</div>
 
           {/* </div> */}
         </>

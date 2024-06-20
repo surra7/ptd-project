@@ -98,7 +98,7 @@ const Nickname = () => {
   };
 
   return (
-    <div className="h-full flex flex-col  min-h-screen pt-10  p-4">
+    <div className="h-full flex flex-col items-center justify-center min-h-screen pt-10  p-4">
       {userInfo ? (
         <div className="h-full w-full ">
           <section className="wrap-section">
