@@ -2,7 +2,7 @@
 import { selectedUserAtom } from '@/atoms/atoms';
 import MainPetButton from '@/components/main/MainPetButton';
 import { axios } from '@/services/instance';
-import { SelectedItems } from '@/types/guestBookType';
+import { SelectedAccessoryType, SelectedBackgroundType, ApiResponse } from '@/types/guestBookType';
 import { useAtomValue } from 'jotai';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -11,30 +11,32 @@ import { RiContactsBook2Line } from 'react-icons/ri';
 
 export default function FriendMain() {
   const selectedUser = useAtomValue(selectedUserAtom);
-  const [selectedImageURL, setSelectedImageURL] = useState('');
-  const [selectedAccessoryURL, setSelectedAccessoryURL] = useState('');
+  const [selectedBackground, setSelectedBackground] = useState<SelectedBackgroundType[]>([]);
+  // const [selectedImageURL, setSelectedImageURL] = useState<SelectedBackgroundType[]>([]);
+  // const [selectedAccessoryURL, setSelectedAccessoryURL] = useState<SelectedAccessoryType[]>([]);
 
   useEffect(() => {
     axios
-      .get<SelectedItems>('pets/closet/backgrounds/?selected=true')
+      .get<ApiResponse>('pets/closet/backgrounds/?selected=true')
       .then(response => {
-        setSelectedImageURL(response.data.image);
+        setSelectedBackground(response.data.data);
+        console.log(response.data);
       })
       .catch(error => {
         console.error("guest image error: ", error);
       })
     }, [])
 
-  useEffect(() => {
-    axios
-      .get<SelectedItems>('pets/closet/accessories/?selected=true')
-      .then(response => {
-        setSelectedAccessoryURL(response.data.image);
-      })
-      .catch(error => {
-        console.error("guest image error: ", error);
-      })
-    }, [])
+  // useEffect(() => {
+  //   axios
+  //     .get<SelectedAccessoryType[]>('pets/closet/accessories/?selected=true')
+  //     .then(response => {
+  //       setSelectedAccessoryURL(response.data.image);
+  //     })
+  //     .catch(error => {
+  //       console.error("guest image error: ", error);
+  //     })
+  //   }, [])
 
   return (
     <div className="w-full h-full bg-cover"
