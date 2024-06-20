@@ -95,7 +95,7 @@ function Page() {
 
           // console.log(data.id);
 
-          setMusicTitle(musicRes.data.title);
+          setMusicTitle(`${musicRes.data.singer} - ${musicRes.data.title}`);
           setMusicUrl(musicRes.data.song_url);
         } catch {}
       } else return;
