@@ -63,10 +63,10 @@ function Main() {
   }, [setAccessToken]);
 
   useEffect(() => {
-    if (!user) {
-      router.push('/login');
-      alert('login please');
-    }
+    // if (!user) {
+    //   router.push('/login');
+    //   alert('login please');
+    // }
     axios
       .get('users/myinfo/')
       .then(response => {
