@@ -23,7 +23,7 @@ function Carousel3({ accessToken }: Props) {
         <div className="flex flex-col gap-5 items-center">
           <p className="text-[0.9rem] text-black-300">놓친 부분은 마이페이지에서 다시 볼 수 있어요.</p>
           <Link
-            href={`${accessToken ? 'login' : '/'}`}
+            href={`${accessToken ? '/' : 'login'}`}
             className="w-[12rem] h-[3rem] font-bold rounded-3xl text-white bg-primary-400 text-center flex justify-center items-center">
             PeTodo 시작하기
           </Link>

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import React, { useState } from 'react';
+import { axios } from '@/services/instance';
+import React, { useEffect, useState } from 'react';
 import { TbMoodEmpty, TbMoodSad, TbMoodSmile } from 'react-icons/tb';
 
 interface Props {
@@ -10,20 +10,20 @@ function Mood({ formattedDate }: Props) {
   const [selectMood, setSelectMood] = useState<number>();
 
   const handleSelect = async (selectMood: number) => {
-    // await axios.put('https://api.oz-02-main-04.xyz/api/v1/posts/1', { feeling_status: selectMood });
     setSelectMood(selectMood);
+    await axios.put('posts/', { feeling_status: selectMood, todo_date: formattedDate });
   };
 
-  const getMood = async () => {
-    const res = await axios.get('posts/');
-    const data = res.data.find((item: any, i: number) => {
-      if (item.todo_date === formattedDate) return i;
-    });
-    if (data.feeling_status) {
+  useEffect(() => {
+    const getMood = async () => {
+      const res = await axios.get('posts/');
+      const data = res.data.find((item: any, i: number) => {
+        if (item.todo_date === formattedDate) return i + 1;
+      });
       setSelectMood(data.feeling_status);
-    }
-    getMood;
-  };
+    };
+    getMood();
+  }, []);
 
   return (
     <>

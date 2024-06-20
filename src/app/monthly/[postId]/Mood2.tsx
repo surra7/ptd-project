@@ -4,25 +4,24 @@ import { TbMoodEmpty, TbMoodSad, TbMoodSmile } from 'react-icons/tb';
 
 interface Props {
   formattedDate: string;
+  selectMood: number | undefined;
 }
 
-function Mood({ formattedDate }: Props) {
-  const [selectMood, setSelectMood] = useState<number>();
-
+function Mood({ formattedDate, selectMood }: Props) {
   const handleSelect = () => {
     alert('지난 할 일에서 변경 할 수 없습니다');
   };
 
-  // const getMood = async () => {
-  //   const res = await axios.get('posts/');
-  //   const data = res.data.find((item: any, i: number) => {
-  //     if (item.todo_date === formattedDate) return i;
-  //   });
-  //   if (data.feeling_status) {
-  //     // setSelectMood(data.feeling_status);
-  //   }
-  //   getMood;
-  // };
+  // useEffect(() => {
+  //   const getMood = async () => {
+  //     const res = await axios.get('posts/');
+  //     const data = res.data.find((item: any, i: number) => {
+  //       if (item.todo_date === formattedDate) return i + 1;
+  //     });
+  //     setSelectMood(data.feeling_status);
+  //   };
+  //   getMood();
+  // }, []);
 
   return (
     <>
