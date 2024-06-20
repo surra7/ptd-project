@@ -102,7 +102,7 @@ export default function Page() {
       {user ? (
         <>
           {/* <div className=" flex flex-col p-4 mt-10"> */}
-          <section className="wrap-section p-4 mt-10 pb-20">
+          <section className="wrap-section p-4 mt-10">
             {' '}
             <p className="text-2xl font-bold text-purple-600 mb-4">안녕하세요! {user.닉네임} 님</p>
             <hr className="border-purple-600 w-full mb-4" />
@@ -151,7 +151,10 @@ export default function Page() {
               <Image src={'/images/kakaoLogin.png'} alt="kakao-login" width={200} height={200} />
             </button>
           </section>
-          <NavBottom />
+          <div className="mb-10">
+            <NavBottom />
+          </div>
+
           {/* </div> */}
         </>
       )}
