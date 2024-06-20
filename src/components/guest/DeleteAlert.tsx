@@ -1,12 +1,12 @@
 import { DeleteAlertProps } from '@/types/guestBookType';
 import ModalWrapper from '../ModalWrapper';
-import { useDeleteGuestBook } from '@/services/deleteGuestBook';
+import { useDeleteGuestBook } from '@/services/guest/deleteGuestBook';
 
 export default function DeleteAlert({ onClose, itemId }: DeleteAlertProps) {
   const { mutateAsync: deleteGuestBook } = useDeleteGuestBook();
 
   const handleDeleteItem = () => {
-    deleteGuestBook(itemId.current);
+    deleteGuestBook({ comment_id: itemId.current });
     onClose();
   };
 

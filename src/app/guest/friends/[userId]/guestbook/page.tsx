@@ -3,9 +3,10 @@ import { selectedUserAtom, userAtom } from '@/atoms/atoms';
 import DeleteAlert from '@/components/guest/DeleteAlert';
 import GuestListItem from '@/components/guest/GuestListItem';
 import useMoveScrollBottom from '@/hooks/useMoveScrollBottom';
-import { useGetFriendGuestBook } from '@/services/getFriendGuestBook';
-import { usePostGuestBook } from '@/services/postGuestBook';
+import { useGetFriendGuestBook } from '@/services/guest/getFriendGuestBook';
+import { usePostGuestBook } from '@/services/guest/postGuestBook';
 import { useAtomValue } from 'jotai';
+import Image from 'next/image';
 import { useCallback, useRef, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 
@@ -13,11 +14,8 @@ export default function FriendGuestBook() {
   const [userInput, setUserInput] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const selectedUser = useAtomValue(selectedUserAtom);
-  const {
-    data: guestBook,
-    isLoading: isGuestBookLoading,
-    error: isGuestBookError,
-  } = useGetFriendGuestBook(selectedUser?.id);
+  const user = useAtomValue(userAtom);
+  const { data: guestBook } = useGetFriendGuestBook(selectedUser?.id, user);
   const guestBookList = guestBook ?? [];
   const { mutateAsync: postGuestBook } = usePostGuestBook();
   const scrollRef = useMoveScrollBottom(guestBookList);
@@ -42,7 +40,7 @@ export default function FriendGuestBook() {
 
   return (
     <main className="w-full h-full relative">
-      <div className="w-full h-full bg-saturdayBlue absolute">배경</div>
+      <Image src="/background/spring.jpg" alt="배경이미지" layout="fill" className="object-cover" />
       {modalOpen && <DeleteAlert onClose={modalHandler} itemId={itemId} />}
       <div className="w-full h-[calc(100%-2.6875rem)] absolute z-10 pt-11 px-[1.4375rem] flex flex-col">
         <div

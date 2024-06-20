@@ -1,9 +1,7 @@
 'use client';
-import { selectedUserAtom } from '@/atoms/atoms';
 import NickNameList from '@/components/guest/NickNameList';
-import { useGetSearchNickName } from '@/services/getSearchNickName';
+import { useGetSearchNickName } from '@/services/guest/getSearchNickName';
 import { NickNameListType } from '@/types/guestBookType';
-import { useAtom } from 'jotai';
 import { useCallback, useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 
@@ -27,7 +25,6 @@ export default function Friends() {
       if (!isNicknameLoading && !isNicknameError) {
         const { data } = await refetch();
         setNicknameList(data);
-        console.log(data);
       }
     },
     [isNicknameLoading, isNicknameError, refetch],

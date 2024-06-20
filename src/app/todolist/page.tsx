@@ -1,4 +1,5 @@
 'use client';
+import { accessTokenAtom, csrfTokenAtom } from '@/atoms/atoms';
 import NavBottom from '@/components/NavBottom';
 import Modal from '@/components/todo/Modal';
 import Mood from '@/components/todo/Mood';
@@ -7,7 +8,10 @@ import Timer from '@/components/todo/Timer';
 import ToDoInsert from '@/components/todo/ToDoInsert';
 import ToDoListItem from '@/components/todo/ToDoListItem';
 import { useTodos, useDeleteTodo, useCreateTodo, TodoItem } from '@/hooks/useTodo';
+import { getCookieValue } from '@/libs/getCookieValue';
 import { axios } from '@/services/instance';
+import { useAtom } from 'jotai';
+import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
 import { IoMusicalNotesOutline } from 'react-icons/io5';
 
@@ -20,85 +24,144 @@ export interface TodoType {
   post: number;
 }
 
+interface PostType {
+  d_day: string;
+  days_by_deadline: number;
+  feeling_status: number;
+  goal: string;
+  id: number;
+  memo: null | string;
+  todo_date: string;
+  todo_progress: number;
+  user: number;
+}
+
 function Page() {
   // const [todos, setTodos] = useState<TodoType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalIndex, setModalIndex] = useState<number>();
   const [editString, setEditString] = useState<string>();
+  const [postId, setPostId] = useState<number | undefined>();
   const [musicTitle, setMusicTitle] = useState<string | undefined>();
   const [musicUrl, setMusicUrl] = useState<string>('');
   const [goal, setGoal] = useState<string>('');
   const [deadline, setDeadline] = useState<number>();
-  const [postId, setPostId] = useState<number | undefined>();
-  const { data: todos = [], refetch } = useTodos(postId);
-  const { mutateAsync: deleteTodo } = useDeleteTodo(postId);
-  const { mutateAsync: createTodo } = useCreateTodo(postId);
-
+  const { mutateAsync: deleteTodo } = useDeleteTodo(postId as number);
+  const { mutateAsync: createTodo } = useCreateTodo(postId as number);
+  const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
+  const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
+  const router = useRouter();
   const today = new Date();
   const formattedDate = `${today.getFullYear()}-${'0' + (today.getMonth() + 1).toString().slice(-2)}-${today.getDate()}`;
 
+  // useEffect(() => {
+  //   const fetchTokens = async () => {
+  //     try {
+  //       const csrfToken = getCookieValue('csrftoken');
+  //       const token = getCookieValue('access_token');
+  //       if (token) {
+  //         setAccessToken(token);
+  //       }
+  //       if (csrfToken) {
+  //         setCsrf(csrfToken);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchTokens();
+  // }, [setAccessToken, setCsrf]);
+
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     if (!accessToken || !csrf) {
+  //       alert('로그인이 필요합니다.');
+  //       router.push('/login');
+  //       return;
+  //     }
+  //   };
+  //   fetchUserData();
+  // }, [accessToken, csrf, router]);
+
   useEffect(() => {
     const getData = async () => {
-      try {
+      const getId = async () => {
         const res = await axios.get('posts/');
-        const data = res.data.find((item: any, i: number) => {
-          if (item.todo_date === formattedDate) return i;
-        });
-        // console.log(data);
-        setPostId(data.id);
         if (res) {
+          const data: PostType = res.data.find((item: any, i: number) => {
+            if (item.todo_date === formattedDate) return i + 1;
+          });
+          console.log(data);
+          setPostId(data.id);
+          console.log(data.id);
           setGoal(data.goal);
           setDeadline(data.days_by_deadline);
         }
-      } catch (e) {
-        // console.log(e);
-      }
+      };
+      getId();
+      if (postId !== undefined) {
+        try {
+          // const res = await axios.get('posts/');
+          const musicRes = await axios.get(`posts/music/playing/${postId}`);
+          // const data: PostType = res.data.find((item: any, i: number) => {
+          //   if (item.todo_date === formattedDate) return i;
+          // });
+
+          // console.log(data.id);
+
+          setMusicTitle(musicRes.data.title);
+          setMusicUrl(musicRes.data.song_url);
+        } catch {}
+      } else return;
     };
     getData();
-  }, []);
+  }, [formattedDate, postId]);
 
   useEffect(() => {
     const postTodo = async () => {
       try {
         const res = await axios.get('posts/');
         const data = res.data.find((item: any, i: number) => {
-          if (item.todo_date === formattedDate) return i;
+          if (item.todo_date === formattedDate) return i + 1;
         });
         if (!data) {
           await axios.post('posts/', { todo_date: formattedDate });
-        }
+          location.reload();
+        } else return;
       } catch (error) {}
     };
     postTodo();
-  }, []);
+  }, [formattedDate, postId]);
 
-  // console.log(postId);
+  const { data: todos = [], refetch } = useTodos(postId as number);
 
   const onInsert = useCallback(
     async (text?: string) => {
-      if (text) {
-        if (editString !== undefined && modalIndex !== undefined) {
-          const edit = todos.find(v => v.id === modalIndex);
-          if (edit !== undefined) {
-            edit.todo_item = text;
-            // setTodos([...todos]);
+      if (postId !== undefined) {
+        if (text) {
+          if (editString !== undefined && modalIndex !== undefined) {
+            const edit = todos.find(v => v.id === modalIndex);
+            if (edit !== undefined) {
+              edit.todo_item = text;
+              // setTodos([...todos]);
+            }
+            await axios.put(`posts/todo/${postId}/${modalIndex}`, {
+              todo_item: text,
+            });
+            setEditString(undefined);
+            setModalIndex(undefined);
+          } else {
+            const todo = {
+              todo_item: text,
+            };
+            createTodo(todo as TodoType);
           }
-          await axios.put(`posts/todo/${postId}/${modalIndex}`, {
-            todo_item: text,
-          });
-          setEditString(undefined);
-          setModalIndex(undefined);
         } else {
-          const todo = {
-            todo_item: text,
-          };
-          createTodo(todo as TodoType);
+          alert('TODO를 적어주세요!');
         }
-      } else {
-        alert('TODO를 적어주세요!');
       }
     },
-    [todos, editString, modalIndex],
+    [editString, modalIndex, todos, postId, createTodo],
   );
 
   const openModal = useCallback(
@@ -124,7 +187,7 @@ function Page() {
       setIsModalOpen(false);
       setModalIndex(undefined);
     },
-    [todos],
+    [deleteTodo],
   );
 
   const onEdit = useCallback(
@@ -150,31 +213,13 @@ function Page() {
         refetch();
       }
     },
-    [todos],
+    [postId, refetch, todos],
   );
 
   const deleteMusic = async () => {
-    await axios.delete(`https://api.oz-02-main-04.xyz/api/v1/posts/music/${postId}`);
+    await axios.delete(`posts/music/${postId}`);
     setMusicTitle('');
   };
-
-  useEffect(() => {
-    const getMusic = async () => {
-      try {
-        if (postId !== undefined) {
-          const res = await axios.get(`posts/music/playing/${postId}`);
-          // console.log(res.data);
-          if (res) {
-            setMusicTitle(res.data.title);
-            setMusicUrl(res.data.song_url);
-          }
-        }
-      } catch (e) {
-        return;
-      }
-    };
-    getMusic();
-  }, []);
 
   return (
     <div className="w-full h-full">

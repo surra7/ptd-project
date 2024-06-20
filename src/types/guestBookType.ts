@@ -43,3 +43,7 @@ export interface SelectedUser {
   id: number;
   nickname: string;
 }
+
+export interface DeleteId {
+  comment_id: number;
+}

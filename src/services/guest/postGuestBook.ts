@@ -1,6 +1,6 @@
 import { postGuestBookProps } from '@/types/guestBookType';
-import { axios } from './instance';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { axios } from '../instance';
 
 const fetchPostGuestBook = async (new_comment: postGuestBookProps) => {
   const commentData = JSON.stringify(new_comment);

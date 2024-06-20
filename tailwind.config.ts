@@ -71,7 +71,9 @@ const config: Config = {
         fadeIn: '0.6s ease 0s fadeIn',
         fadeInDown: '0.5s ease 0s fadeInDown',
         vibration: 'vibration 1s linear infinite',
-        boxopen: 'boxopen 2s linear',
+        boxopen: 'boxopen 1s linear',
+        touchPetHeart: 'touchPetHeart 0.5s ease-in',
+        hatch: 'eggVibration 2s ease-in',
       },
       keyframes: {
         fadeIn: {
@@ -89,9 +91,26 @@ const config: Config = {
           '75%': { transform: 'rotate(10deg)' },
           '100%': { transform: 'rotate(0deg)' },
         },
+        eggVibration: {
+          '0%': { transform: 'rotate(0deg)' },
+          '10%': { transform: 'rotate(-10deg)' },
+          '20%': { transform: 'rotate(0deg)' },
+          '30%': { transform: 'rotate(10deg)' },
+          '40%': { transform: 'rotate(0deg)' },
+          '50%': { transform: 'rotate(-10deg)' },
+          '60%': { transform: 'rotate(0deg)' },
+          '70%': { transform: 'rotate(10deg)' },
+          '80%': { transform: 'rotate(0deg)'},
+          '90%': { opacity: '50%', scale:'150%'},
+          '100%': { opacity: '0%', scale:'300%'},
+        },
         boxopen: {
           '0%': {opacity: '0', scale: '0%'},
-          '100%': {opacity: '100', scale: '100%'}
+          '100%': {opacity: '100', scale: '100%'},
+        },
+        touchPetHeart: {
+          '0%': {opacity: '0', scale: '0%'},
+          '100%': {opacity: '1', scale: '100%'},
         },
       },
     },

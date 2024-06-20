@@ -19,12 +19,48 @@ export interface PetType {
   snack_quantity: number;
 };
 
-export interface RandomItem {
+export interface RandomItemType {
   message: string;
   random_boxes: number;
   output_item: {
     type: string;
     name: string;
     quantity: number;
-  }
+    image: string;
+  };
+};
+
+export interface FeedType{
+  snack: {
+    id: number;
+    pet: number;
+    snack_type: number;
+    quantity: number;
+  },
+  pet: {
+    user: number;
+    point: number;
+    hunger_degree: string;
+    random_boxes: number;
+    pet_rating: {
+      level: number;
+      point: number;
+    },
+    primary_accessory: null;
+    primary_background: {
+      item_name: string;
+      image: string;
+    },
+    primary_pet: {
+      pet_name: string;
+      image: string;
+    },
+    rice_quantity: number;
+    snack_quantity: number;
+    active_pet: {
+      pet_name: string;
+      image: string;
+    },
+    hunger_degree_status: string;
+  };
 };
