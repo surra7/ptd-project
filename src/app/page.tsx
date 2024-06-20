@@ -63,10 +63,6 @@ function Main() {
   }, [setAccessToken]);
 
   useEffect(() => {
-    // if (!user) {
-    //   router.push('/login');
-    //   alert('login please');
-    // }
     axios
       .get('users/myinfo/')
       .then(response => {
@@ -91,14 +87,14 @@ function Main() {
           })
           .catch(error => {
             console.error('펫에러', error);
-            // alert('로그인이 필요합니다.');
-            // router.push('/introduce');
+            alert('로그인이 필요합니다.');
+            router.push('/introduce');
           });
       })
       .catch(error => {
         console.error('유저에러', error.data);
-        // alert('로그인이 필요합니다.');
-        // router.push('/introduce');
+        alert('로그인이 필요합니다.');
+        router.push('/introduce');
       });
   }, [accessToken, csrf]);
 
