@@ -42,6 +42,7 @@ function Main() {
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
 
   useEffect(() => {
+    console.log(user);
     const fetchTokens = async () => {
       try {
         const csrfToken = getCookieValue('csrftoken');
