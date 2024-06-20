@@ -95,11 +95,11 @@ export default function Page() {
   }
 
   return (
-    <div className="h-full w-full ">
+    <div className=" ">
       {' '}
       {user ? (
         <>
-          <div className="h-full flex flex-col  min-h-screen p-4 mt-10">
+          <div className="h-full flex flex-col p-4 mt-10">
             <section className="wrap-section">
               {' '}
               <p className="text-2xl font-bold text-purple-600 mb-4">안녕하세요! {user.닉네임} 님</p>
