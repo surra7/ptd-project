@@ -1,15 +1,23 @@
 'use client';
 import NavBottom from '@/components/NavBottom';
 import ClosetSection from '@/components/closet/ClosetSection';
-import { useState } from 'react';
+import PetSelectAlert from '@/components/closet/PetSelectAlert';
+import { useRef, useState } from 'react';
 import { BiBookBookmark } from 'react-icons/bi';
 import { TbJewishStar, TbWallpaper } from 'react-icons/tb';
 export default function Closet() {
   const [selectedMenu, setSelectedMenu] = useState<string>('액세서리');
+  const [modalOpen, setModalOpen] = useState(false);
+  const selectedItemName = useRef('');
+
+  const modalHandler = () => {
+    setModalOpen(!modalOpen);
+  };
 
   return (
     <main className="w-full h-full">
       <section className="wrap-section flex flex-col justify-center items-center">
+        {modalOpen && <PetSelectAlert onClose={modalHandler} selectedItemName={selectedItemName} />}
         <div className="w-[21.5rem] h-[3.3125rem] text-lg font-semibold mx-auto flex justify-center items-center border-b-[0.5px] border-black-200 border-opacity-70 mt-9">
           옷장
         </div>
@@ -35,11 +43,23 @@ export default function Closet() {
         </div>
         <div className="w-full h-full">
           {selectedMenu === '액세서리' ? (
-            <ClosetSection selectedMenu={selectedMenu} />
+            <ClosetSection
+              selectedMenu={selectedMenu}
+              modalHandler={modalHandler}
+              selectedItemName={selectedItemName}
+            />
           ) : selectedMenu === '배경화면' ? (
-            <ClosetSection selectedMenu={selectedMenu} />
+            <ClosetSection
+              selectedMenu={selectedMenu}
+              modalHandler={modalHandler}
+              selectedItemName={selectedItemName}
+            />
           ) : (
-            <ClosetSection selectedMenu={selectedMenu} />
+            <ClosetSection
+              selectedMenu={selectedMenu}
+              modalHandler={modalHandler}
+              selectedItemName={selectedItemName}
+            />
           )}
         </div>
       </section>

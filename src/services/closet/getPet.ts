@@ -12,5 +12,6 @@ export const useGetPet = () => {
   return useQuery({
     queryKey: ['petList'],
     queryFn: () => fetchGetPet(),
+    staleTime: 0,
   });
 };

@@ -12,5 +12,6 @@ export const useGetAccessory = () => {
   return useQuery({
     queryKey: ['accessoryList'],
     queryFn: () => fetchGetAccessory(),
+    staleTime: 0,
   });
 };
