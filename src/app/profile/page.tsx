@@ -104,7 +104,7 @@ export default function Page() {
           {/* <div className=" flex flex-col p-4 mt-10"> */}
           <section className="wrap-section p-4 mt-10">
             {' '}
-            <p className="text-2xl font-bold text-purple-600 mb-4">안녕하세요! {user.닉네임} 님</p>
+            <p className="text-2xl font-bold text-purple-600 mb-4"> {user.닉네임} 님 반가워요!</p>
             <hr className="border-purple-600 w-full mb-4" />
             <ul className="space-y-4">
               <li>
