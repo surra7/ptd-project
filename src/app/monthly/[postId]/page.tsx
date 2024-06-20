@@ -26,6 +26,7 @@ export interface TodoType {
 
 function Page({ params }: { params: { postId: number } }) {
   // const [todos, setTodos] = useState<TodoType[]>([]);
+  const [memo, setMemo] = useState<string | undefined>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalIndex, setModalIndex] = useState<number>();
   const [editString, setEditString] = useState<string>();
@@ -124,6 +125,7 @@ function Page({ params }: { params: { postId: number } }) {
       setGoal(data.goal);
       setDeadline(data.days_by_deadline);
       setSelectMood(data.feeling_status);
+      setMemo(data.memo);
     };
     getGoal();
   }, []);
@@ -179,7 +181,7 @@ function Page({ params }: { params: { postId: number } }) {
           </section>
           <section>
             <div className="flex items-center justify-center w-full h-[2.5625rem] border-b-[0.0313rem] border-borderGray px-[0.625rem] gap-[0.3125rem]">
-              총 공부 했던 시간 : <span className="text-primary-400">{time}</span>
+              총 활동시간 : <span className="text-primary-400">{time}</span>
             </div>
           </section>
           <section className="flex w-full h-[2.5625rem] items-center px-[0.625rem] gap-[0.625rem] border-b-[0.0313rem] border-borderGray">
@@ -220,7 +222,7 @@ function Page({ params }: { params: { postId: number } }) {
         )}
         <section>
           <p className="m-2 pb-1 border-b-borderGray border-b w-[3.0625rem] text-center">Memo</p>
-          <div className="w-full h-[6rem] text-[0.875rem] px-2 resize-none focus:outline-none"></div>
+          <div className="w-full h-[6rem] text-[0.875rem] px-2 resize-none focus:outline-none">{memo}</div>
         </section>
       </main>
       <NavBottom />
