@@ -33,7 +33,7 @@ function Page() {
       <div className="w-mobile h-mobile pt-10 flex flex-col gap-10">
         <div className="flex justify-end relative">
           <Link
-            href={`${accessToken ? 'login' : '/'}`}
+            href={`${accessToken ? '/' : 'login'}`}
             className="text-right pr-5 text-black-300 hover:text-primary-400">
             SKIP
           </Link>
