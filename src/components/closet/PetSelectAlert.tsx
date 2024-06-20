@@ -20,7 +20,7 @@ export default function PetSelectAlert({ onClose, selectedItemName }: PetSelectA
           <div className="text-mm font-medium text-center text-black-200 mt-2">
             친구가 놀러왔을 때 대표 펫이 보여집니다.
           </div>
-          <div className="w-full h-[2.625rem] flex justify-center gap-[0.625rem] mt-8">
+          <div className="w-full h-[2.625rem] flex justify-center gap-[0.625rem] mt-[1.1875rem]">
             <button className="w-[8.9375rem] h-full bg-black-200 rounded-[1.25rem] text-white" onClick={onClose}>
               취소
             </button>
