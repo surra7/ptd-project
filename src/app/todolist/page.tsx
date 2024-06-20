@@ -226,9 +226,11 @@ function Page() {
       <main className="wrap-section relative ">
         <header className="pt-[2rem]">
           <div className="flex w-full h-[3.1875rem] px-5 justify-between items-center border-b-[0.0313rem] border-borderGray">
-            <p className="font-bold text-black-900 text-[1.125rem]">{goal}</p>
+            <p className="font-bold text-black-900 text-[1.125rem]">
+              {goal ? goal : '마이페이지에서 목표를 설정해보세요!'}
+            </p>
             <div className="w-[3.75rem] h-[2.375rem] text-primary-600 font-extrabold text-[1.625rem] text-center flex justify-center items-center">
-              D-{deadline}
+              {deadline ? `D-${deadline}` : ''}
             </div>
           </div>
           <section className="w-full h-[2.5625rem] flex border-b-[0.0313rem] border-borderGray items-center">
