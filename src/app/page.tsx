@@ -182,10 +182,10 @@ function Main() {
             <section className="w-full h-1/3 flex flex-col items-center">
               <div className="flex w-full h-2/5 pb-2 justify-center items-center">
               {isTouchPet ? (
-                  <Image src={'/pet/hand.png'} alt="heart" width={50} height={50} className="animate-shackHand" />
+                  <Image src={'/pet/hand.png'} alt="hand" width={50} height={50} className="animate-shackHand" />
               ) : 
                 (accessoryImageURL) && (
-                  <Image src={`${accessoryImageURL}`} alt="accessory" width={40} height={40} className="object-contain items-end" />
+                  <Image src={`https://api.oz-02-main-04.xyz${accessoryImageURL}`} alt="accessory" width={40} height={40} className="object-contain items-end" />
                 )
               }
               </div>
@@ -193,7 +193,7 @@ function Main() {
                 {/* {isLevelUp ? (
                   <Image src={'/pet/crackEgg.png'} alt="pet" width={80} height={80} className="h-full object-contain" />
                 ) : ( */}
-                  <Image src={`${activePetImageURL}`} alt="pet" width={150} height={130} className="object-contain items-top" />
+                  <Image src={`https://api.oz-02-main-04.xyz${activePetImageURL}`} alt="pet" width={150} height={130} className="object-contain items-top" />
                 {/* )} */}
               </div>
             </section>
