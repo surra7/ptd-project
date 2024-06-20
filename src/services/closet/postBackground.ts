@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axios } from '../instance';
-import { postItemType } from '@/types/closetType';
+import { PostItemType } from '@/types/closetType';
 
-const fetchPostBackground = async (item_name: postItemType) => {
+const fetchPostBackground = async (item_name: PostItemType) => {
   const itemName = JSON.stringify(item_name);
   const response = await axios.post(`pets/closet/select-background/`, itemName);
   console.log(response.data);
@@ -12,7 +12,7 @@ const fetchPostBackground = async (item_name: postItemType) => {
 export const usePostBackground = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ item_name }: postItemType) => fetchPostBackground({ item_name }),
+    mutationFn: ({ item_name }: PostItemType) => fetchPostBackground({ item_name }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['backgroundList'] });
     },

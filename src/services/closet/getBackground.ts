@@ -12,5 +12,6 @@ export const useGetBackground = () => {
   return useQuery({
     queryKey: ['backgroundList'],
     queryFn: () => fetchGetBackground(),
+    staleTime: 0,
   });
 };
