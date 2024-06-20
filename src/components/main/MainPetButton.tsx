@@ -19,7 +19,7 @@ function MainPetButton({ icon, label, link, count, handle, boxCount }: MainPetBu
         {count === -1 ? (
           null
           ) : (
-          <div className="text-mm font-medium text-black-400">+{count}</div>
+          <div className="text-mm font-medium text-black-50 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.7)]">+{count}</div>
         )}            
       </div>
       <button className="grid w-[4.375rem] h-full mx-2 p-1 bg-[rgba(255,255,255,0.7)] rounded-xl font-mm justify-center items-end"

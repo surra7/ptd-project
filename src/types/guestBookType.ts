@@ -47,3 +47,9 @@ export interface SelectedUser {
 export interface DeleteId {
   comment_id: number;
 }
+
+export interface SelectedItems {
+  selected: boolean;
+  item: string;
+  image: string;
+}
