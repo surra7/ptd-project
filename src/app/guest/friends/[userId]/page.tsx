@@ -38,17 +38,20 @@ export default function FriendMain() {
       <main className="w-full h-5/6 flex flex-col justify-end">
         <section className="w-full h-1/3 grid justify-end p-4 text-center"></section>
         <section className="w-full h-1/3 flex flex-col items-center">
+        {selectedAccessory && (
           <Image src={`https://api.oz-02-main-04.xyz${selectedAccessory}`} alt="accessory" width={40} height={40} className="h-full object-contain" />
+        )}
           <Image src={`https://api.oz-02-main-04.xyz${selectedPet}`} alt="egg" width={130} height={130} className="my-0 mx-auto" />
         </section>
 
         <section className="h-1/3 p-3 text-center flex justify-center items-center">
           <div className="flex justify-center">
-            <MainPetButton icon={<BiDonateHeart size="30" />} label="쓰다듬기" />
+            <MainPetButton icon={<BiDonateHeart size="30" />} label="쓰다듬기" count={-1} />
             <MainPetButton
               icon={<RiContactsBook2Line size="30" />}
               label="방명록"
               link={`/guest/friends/${selectedUser?.id}/guestbook`}
+              count={-1}
             />
           </div>
         </section>
