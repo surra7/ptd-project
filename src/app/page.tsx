@@ -43,7 +43,7 @@ function Main() {
 
   useEffect(() => {
     if (!user) {
-      router.push('/profile');
+      router.push('/login');
     }
     const fetchTokens = async () => {
       try {
