@@ -87,13 +87,13 @@ function Main() {
           })
           .catch(error => {
             console.error('펫에러', error);
-            alert('로그인이 필요합니다.');
+            // alert('로그인이 필요합니다.');
             router.push('/introduce');
           });
       })
       .catch(error => {
         console.error('유저에러', error.data);
-        alert('로그인이 필요합니다.');
+        // alert('로그인이 필요합니다.');
         router.push('/introduce');
       });
   }, [accessToken, csrf]);
