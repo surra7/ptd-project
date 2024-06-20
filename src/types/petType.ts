@@ -14,6 +14,7 @@ export interface PetType {
       item_name: string;
       image: string;
   };
+  primary_accessory: string;
   random_boxes: number;
   rice_quantity: number;
   snack_quantity: number;

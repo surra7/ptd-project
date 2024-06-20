@@ -35,6 +35,7 @@ function Main() {
   const [isTouchPet, setIsTouchPet] = useState(false);
   const [isLevelUp, setIsLevelUp] = useState(false);
   const [prevPetLevel, setPrevPetLevel] = useState(level);
+  const [accessoryImageURL, setAccessoryImageURL] = useState(null);
   const router = useRouter();
 
   const [user, setUser] = useAtom<User | null>(userAtom);
@@ -195,7 +196,7 @@ function Main() {
 
   return (
     <div className="w-full h-full ">
-      {petData ? (
+      {/* {petData ? ( */}
         <div
           className="wrap-section bg-cover animate-fadeIn"
           style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${backgroundImageURL})` }}>
@@ -211,13 +212,16 @@ function Main() {
 
             <section className="w-full h-1/3 flex flex-col items-center">
               <div className="flex w-full h-2/5 p-2 justify-center items-center">
-                {/* <Image
-                  src={''}
-                  alt="accessory"
-                  width={40}
-                  height={40}
-                  className="h-full object-contain"
-                /> */}
+               {accessoryImageURL && (
+                  <Image
+                    src={`https://api.oz-02-main-04.xyz${accessoryImageURL}`}
+                    alt="accessory"
+                    width={40}
+                    height={40}
+                    className="h-full object-contain"
+                  />
+               )}
+
               </div>
               <div className="flex w-full h-3/5 p-1 justify-center items-center">
                 {isTouchPet && (
@@ -269,11 +273,11 @@ function Main() {
             </section>
           </main>
         </div>
-      ) : (
+      {/* ) : (
         <div className="wrap-section text-center flex">
           <div className="m-auto text-primary-500">Loding...</div>
         </div>
-      )}
+      )} */}
       <NavBottom />
     </div>
   );

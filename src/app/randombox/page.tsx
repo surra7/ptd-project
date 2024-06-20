@@ -57,7 +57,7 @@ function RandomBox() {
                       다시뽑기
                     </button>
                     <button className="p-4" onClick={() => router.push('/')}>
-                      돌아가기
+                      홈으로
                     </button>
                   </div>                  
                 </div>
@@ -81,7 +81,7 @@ function RandomBox() {
                     박스를 클릭하세요!
                   </div>
                   <button className="w-full m-auto p-4" onClick={() => router.push('/')}>
-                    돌아가기
+                    홈으로
                   </button>                  
                 </div>
               </div>
