@@ -25,7 +25,7 @@ function Goal() {
       setAccessToken(newAccessToken);
       return newAccessToken;
     } catch (error) {
-      console.error('refresh access token:', error);
+      //   console.error('refresh access token:', error);
       return null;
     }
   };
@@ -45,12 +45,12 @@ function Goal() {
       return;
     }
 
-    console.log('Goal:', goal);
-    console.log('D-Day:', dDay);
+    // console.log('Goal:', goal);
+    // console.log('D-Day:', dDay);
 
     const csrfToken = getCookieValue('csrftoken');
-    console.log('CSRF Token:', csrfToken);
-    console.log(user);
+    // console.log('CSRF Token:', csrfToken);
+    // console.log(user);
     if (!user) return;
 
     try {
@@ -65,8 +65,8 @@ function Goal() {
           },
         },
       );
-      alert(`목표가 설정되었습니다. ${response.data}`);
-      console.log(response.data);
+      alert(`목표가 설정되었습니다.`);
+      //   console.log(response.data);
       router.push('/todolist');
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
@@ -85,7 +85,7 @@ function Goal() {
               },
             );
             alert(`2차시도 완료되었습니다! ${retryResponse.data}`);
-            console.log(retryResponse.data);
+            // console.log(retryResponse.data);
           } catch (retryError) {
             console.error('Retry request', retryError);
           }
@@ -101,7 +101,7 @@ function Goal() {
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="h-full w-full  flex flex-col  min-h-screen p-4 pt-10">
+    <div className="h-full w-full  flex flex-col justify-center items-center  min-h-screen p-4 pt-10">
       <section className="wrap-section">
         <h1 className="text-2xl font-bold text-purple-600 mb-4">목표/디데이 설정</h1>
         <div className="w-full max-w-xs">

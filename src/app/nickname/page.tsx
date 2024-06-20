@@ -28,8 +28,8 @@ const Nickname = () => {
   useEffect(() => {
     const csrfToken = getCookieValue('csrftoken');
     const token = getCookieValue('access_token');
-    console.log(csrfToken);
-    console.log(accessToken);
+    // console.log(csrfToken);
+    // console.log(accessToken);
     if (token) {
       setAccessToken(token);
     }
@@ -40,8 +40,8 @@ const Nickname = () => {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      console.log(csrfToken);
-      console.log(accessToken);
+    //   console.log(csrfToken);
+    //   console.log(accessToken);
 
       if (!accessToken || !csrfToken) return;
       try {
@@ -98,7 +98,7 @@ const Nickname = () => {
   };
 
   return (
-    <div className="h-full flex flex-col  min-h-screen pt-10  p-4">
+    <div className="h-full flex flex-col items-center justify-center min-h-screen pt-10  p-4">
       {userInfo ? (
         <div className="h-full w-full ">
           <section className="wrap-section">
