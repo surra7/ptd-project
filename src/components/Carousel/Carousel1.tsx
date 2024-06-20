@@ -3,7 +3,11 @@ import React from 'react';
 import intro1 from '../../../public/images/intro1.png';
 import Link from 'next/link';
 
-function Carousel1() {
+interface Props {
+  accessToken: string | null;
+}
+
+function Carousel1({ accessToken }: Props) {
   return (
     <main className="flex flex-col gap-12">
       <section className="flex flex-col items-center gap-2">
@@ -24,6 +28,13 @@ function Carousel1() {
           </Link>
         </div>
       </section>
+      <div className="flex flex-col gap-5 items-center">
+        <Link
+          href={`${accessToken ? 'login' : '/'}`}
+          className="w-[12rem] h-[3rem] font-bold rounded-3xl text-white bg-primary-400 text-center flex justify-center items-center">
+          PeTodo 시작하기
+        </Link>
+      </div>
     </main>
   );
 }

@@ -7,7 +7,11 @@ import giftBox from '../../../public/images/intro2-giftbox.png';
 import glitter from '../../../public/images/intro2-glitter.png';
 import Link from 'next/link';
 
-function Carousel2() {
+interface Props {
+  accessToken: string | null;
+}
+
+function Carousel2({ accessToken }: Props) {
   return (
     <main className="flex flex-col gap-12">
       <section className="flex flex-col items-center gap-2">
@@ -49,6 +53,13 @@ function Carousel2() {
           </Link>
         </div>
       </section>
+      <div className="flex flex-col gap-5 items-center">
+        <Link
+          href={`${accessToken ? 'login' : '/'}`}
+          className="w-[12rem] h-[3rem] font-bold rounded-3xl text-white bg-primary-400 text-center flex justify-center items-center">
+          PeTodo 시작하기
+        </Link>
+      </div>
     </main>
   );
 }

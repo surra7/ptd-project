@@ -11,6 +11,9 @@ import { axios } from '@/services/instance';
 import { usePathname } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
 import { IoMusicalNotesOutline } from 'react-icons/io5';
+import ToDoInsert2 from './ToDoInsert2';
+import MusicInput2 from './MusicInput2';
+import Mood2 from './Mood2';
 
 export interface TodoType {
   id: number;
@@ -30,6 +33,7 @@ function Page({ params }: { params: { postId: number } }) {
   const [musicUrl, setMusicUrl] = useState<string>('');
   const [goal, setGoal] = useState<string>('');
   const [deadline, setDeadline] = useState<number>();
+  const [postId, setPostId] = useState<number>(params.postId);
   const { data: todos = [], refetch } = useTodos(params.postId);
   const { mutateAsync: deleteTodo } = useDeleteTodo(params.postId);
   const { mutateAsync: createTodo } = useCreateTodo(params.postId);
@@ -112,6 +116,20 @@ function Page({ params }: { params: { postId: number } }) {
   );
 
   useEffect(() => {
+    const getGoal = async () => {
+      const res = await axios.get('/posts/');
+      const data = res.data.find((item: any, i: number) => {
+        console.log(item.id == postId);
+        if (item.id == params.postId) return i + 1;
+      });
+      setDate(data.todo_date);
+      setGoal(data.goal);
+      setDeadline(data.days_by_deadline);
+    };
+    getGoal();
+  }, []);
+
+  useEffect(() => {
     const getMusic = async () => {
       try {
         const res = await axios.get(`posts/music/playing/${params.postId}`);
@@ -134,23 +152,26 @@ function Page({ params }: { params: { postId: number } }) {
         }
       };
       getTime();
-
       const getGoal = async () => {
+        const res = await axios.get('/posts/');
+        console.log(res.data);
+
         try {
-          const res = await axios.get('posts/');
-          console.log(res.data);
           if (res) {
-            setGoal(res.data[0].goal);
-            setDeadline(res.data[0].days_by_deadline);
-            setDate(res.data[0].todo_date);
+            const data = res.data.find((item: any, i: number) => {
+              if (item.todo_date === formattedDate) return i + 1;
+            });
+
+            setGoal(data.goal);
+            setDeadline(data.days_by_deadline);
           }
         } catch (e) {
           console.log(e);
         }
       };
       getGoal();
+      getMusic();
     };
-    getMusic();
   }, []);
 
   const deleteMusic = async () => {
@@ -172,7 +193,7 @@ function Page({ params }: { params: { postId: number } }) {
               {date}
             </div>
             <div className="w-[15.5rem] h-[2rem] px-[0.625rem] flex justify-between items-center">
-              <Mood formattedDate={formattedDate} />
+              <Mood2 formattedDate={formattedDate} />
             </div>
           </section>
           <section>
@@ -191,7 +212,7 @@ function Page({ params }: { params: { postId: number } }) {
                   <audio controls loop src={musicUrl} className="w-[11rem] h-[2.5rem]"></audio>
                 </div>
               ) : (
-                <MusicInput setMusicTitle={setMusicTitle} setMusicUrl={setMusicUrl} postId={0} />
+                <MusicInput2 setMusicTitle={setMusicTitle} setMusicUrl={setMusicUrl} postId={0} />
               )}
             </div>
           </section>
@@ -210,7 +231,7 @@ function Page({ params }: { params: { postId: number } }) {
             />
           ))}
         </section>
-        <ToDoInsert onInsert={onInsert} init={editString} />
+        <ToDoInsert2 onInsert={onInsert} init={editString} />
         {isModalOpen ? (
           <Modal onRemove={onRemove} onEdit={onEdit} id={modalIndex} setIsModalOpen={setIsModalOpen} />
         ) : (
@@ -218,10 +239,7 @@ function Page({ params }: { params: { postId: number } }) {
         )}
         <section>
           <p className="m-2 pb-1 border-b-borderGray border-b w-[3.0625rem] text-center">Memo</p>
-          <textarea
-            name="memo"
-            id="memo"
-            className="w-full h-[6rem] text-[0.875rem] px-2 resize-none focus:outline-none"></textarea>
+          <div className="w-full h-[6rem] text-[0.875rem] px-2 resize-none focus:outline-none"></div>
         </section>
       </main>
       <NavBottom />
