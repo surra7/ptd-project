@@ -35,8 +35,7 @@ function Page({ params }: { params: { postId: number } }) {
   const [deadline, setDeadline] = useState<number>();
   const [postId, setPostId] = useState<number>(params.postId);
   const { data: todos = [], refetch } = useTodos(params.postId);
-  const { mutateAsync: deleteTodo } = useDeleteTodo(params.postId);
-  const { mutateAsync: createTodo } = useCreateTodo(params.postId);
+  const [selectMood, setSelectMood] = useState<number>();
   const [time, setTime] = useState<number>(0);
   const [date, setDate] = useState<string>('');
   const formattedDate = '';
@@ -119,12 +118,12 @@ function Page({ params }: { params: { postId: number } }) {
     const getGoal = async () => {
       const res = await axios.get('/posts/');
       const data = res.data.find((item: any, i: number) => {
-        console.log(item.id == postId);
         if (item.id == params.postId) return i + 1;
       });
       setDate(data.todo_date);
       setGoal(data.goal);
       setDeadline(data.days_by_deadline);
+      setSelectMood(data.feeling_status);
     };
     getGoal();
   }, []);
@@ -152,24 +151,6 @@ function Page({ params }: { params: { postId: number } }) {
         }
       };
       getTime();
-      const getGoal = async () => {
-        const res = await axios.get('/posts/');
-        console.log(res.data);
-
-        try {
-          if (res) {
-            const data = res.data.find((item: any, i: number) => {
-              if (item.todo_date === formattedDate) return i + 1;
-            });
-
-            setGoal(data.goal);
-            setDeadline(data.days_by_deadline);
-          }
-        } catch (e) {
-          console.log(e);
-        }
-      };
-      getGoal();
       getMusic();
     };
   }, []);
@@ -193,7 +174,7 @@ function Page({ params }: { params: { postId: number } }) {
               {date}
             </div>
             <div className="w-[15.5rem] h-[2rem] px-[0.625rem] flex justify-between items-center">
-              <Mood2 formattedDate={formattedDate} />
+              <Mood2 formattedDate={formattedDate} selectMood={selectMood} />
             </div>
           </section>
           <section>
