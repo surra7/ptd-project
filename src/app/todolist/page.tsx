@@ -1,5 +1,5 @@
 'use client';
-import { accessTokenAtom, csrfTokenAtom } from '@/atoms/atoms';
+import { User, accessTokenAtom, csrfTokenAtom, userAtom } from '@/atoms/atoms';
 import NavBottom from '@/components/NavBottom';
 import Modal from '@/components/todo/Modal';
 import Mood from '@/components/todo/Mood';
@@ -50,38 +50,24 @@ function Page() {
   const { mutateAsync: createTodo } = useCreateTodo(postId as number);
   const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
+  const [user, setUser] = useAtom<User | null>(userAtom);
   const router = useRouter();
   const today = new Date();
   const formattedDate = `${today.getFullYear()}-${'0' + (today.getMonth() + 1).toString().slice(-2)}-${today.getDate()}`;
 
   useEffect(() => {
-    const fetchTokens = async () => {
-      try {
-        const csrfToken = getCookieValue('csrftoken');
-        const token = getCookieValue('access_token');
-        if (token) {
-          setAccessToken(token);
-        }
-        if (csrfToken) {
-          setCsrf(csrfToken);
-        }
-      } catch (error) {
+    axios
+      .get('users/myinfo/')
+      .then(response => {
+        setUser(response.data);
+        console.log(response.data);
+      })
+      .catch(error => {
         console.error(error);
-      }
-    };
-    fetchTokens();
-  }, [setAccessToken, setCsrf]);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!accessToken || !csrf) {
         alert('로그인이 필요합니다.');
-        router.push('/login');
-        return;
-      }
-    };
-    fetchUserData();
-  }, [accessToken, csrf, router]);
+        router.push('/introduce');
+      });
+  }, [accessToken, csrf]);
 
   useEffect(() => {
     const getData = async () => {
