@@ -19,7 +19,7 @@ const getCookieValue = (name: any) => {
 };
 
 const Nickname = () => {
-  const [user, setUser] = useState<User | null>(null);
+  //   const [user, setUser] = useAtom<User | null>(userAtom);
   const [newNickname, setNewNickname] = useState('');
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -53,9 +53,9 @@ const Nickname = () => {
 
           withXSRFToken: true,
         });
-        setUser(response.data);
+        // setUser(response.data);
         setUserInfo(response.data);
-        console.log(user);
+        // console.log(user);
       } catch (error) {
         console.error(error);
       }
@@ -65,7 +65,7 @@ const Nickname = () => {
   }, [accessToken, csrfToken]);
 
   const handleNicknameChange = async () => {
-    console.log(user);
+    // console.log(user);
     if (!newNickname) {
       alert('닉네임을 입력해주세요.');
       return;
@@ -89,7 +89,7 @@ const Nickname = () => {
       );
       if (response.status === 200) {
         alert('닉네임이 변경되었습니다.');
-        setUser({ ...user, 닉네임: newNickname });
+        setUserInfo(prevUser => (prevUser ? { ...prevUser, 닉네임: newNickname } : null));
       }
       router.push('/profile');
     } catch (error) {
@@ -98,14 +98,14 @@ const Nickname = () => {
   };
 
   return (
-    <div className="flex flex-col  min-h-screen  p-4">
-      {user ? (
-        <div className="h-full  w-full max-w-xs">
+    <div className="h-full flex flex-col  min-h-screen  p-4">
+      {userInfo ? (
+        <div className="h-full w-full ">
           <section className="wrap-section">
             <h1 className="text-2xl font-bold text-purple-600 mb-4">닉네임 변경하기</h1>
             <div className="mb-4">
-              <p className="text-sm font-medium text-gray-700">계정: {user?.계정}</p>
-              <p className="text-sm font-medium text-gray-700">닉네임: {user?.닉네임}</p>
+              <p className="text-sm font-medium text-gray-700">계정: {userInfo?.계정}</p>
+              <p className="text-sm font-medium text-gray-700">닉네임: {userInfo?.닉네임}</p>
             </div>
             <input
               type="text"

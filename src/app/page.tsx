@@ -42,17 +42,18 @@ function Main() {
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
 
   useEffect(() => {
+    if (!user) return;
     const fetchTokens = async () => {
       try {
         const csrfToken = getCookieValue('csrftoken');
         const token = getCookieValue('access_token');
         if (token) {
           setAccessToken(token);
-          console.log('accesstoken 값: ', accessToken)
+          console.log('accesstoken 값: ', accessToken);
         }
         if (csrfToken) {
           setCsrf(csrfToken);
-          console.log('csrfToken 값: ', csrfToken)
+          console.log('csrfToken 값: ', csrfToken);
         }
       } catch (error) {
         console.error(error);
@@ -61,7 +62,7 @@ function Main() {
     fetchTokens();
   }, [setAccessToken]);
 
-  useEffect(() => {   
+  useEffect(() => {
     axios
       .get('users/myinfo/')
       .then(response => {
@@ -82,7 +83,7 @@ function Main() {
             setPetName(response.data.active_pet.pet_name);
             setStatusMessage(response.data.hunger_degree_status);
             console.log(petData);
-            console.log('처음',statusMessage, tempSaveMessage);
+            console.log('처음', statusMessage, tempSaveMessage);
           })
           .catch(error => {
             console.error('펫에러', error);
@@ -91,10 +92,10 @@ function Main() {
           });
       })
       .catch(error => {
-        console.error('유저에러', error.data)
+        console.error('유저에러', error.data);
         alert('로그인이 필요합니다.');
         router.push('/introduce');
-      })
+      });
   }, [accessToken, csrf]);
 
   // // 상태메시지 바뀔 때
@@ -108,31 +109,31 @@ function Main() {
   //   }
   // },[tempSaveMessage])
 
-    // 상태메시지 바뀔 때
-    useEffect(() => {
-      setTimeout(() => {
-        setStatusMessage(tempSaveMessage);
-        console.log('timeout', statusMessage, tempSaveMessage);
-      }, 3000);
-    },[tempSaveMessage])
+  // 상태메시지 바뀔 때
+  useEffect(() => {
+    setTimeout(() => {
+      setStatusMessage(tempSaveMessage);
+      console.log('timeout', statusMessage, tempSaveMessage);
+    }, 3000);
+  }, [tempSaveMessage]);
 
   // 알 깨질떄
   useEffect(() => {
     setPrevPetLevel(level);
-    console.log('알 실행1')
-    if(prevPetLevel == 1 && level == 2) {
+    console.log('알 실행1');
+    if (prevPetLevel == 1 && level == 2) {
       // setIsLevelUp(true);
       // setTempSaveMessage(statusMessage);
       // setStatusMessage('알이 깨지고 있습니다!');
       // setTimeout(() => {
       //   setStatusMessage(tempSaveMessage);
       // }, 3000);
-      alert('펫이 부화합니다!')
-    } else if(prevPetLevel == 2 && level == 1) {
-      alert('축하합니다! 펫이 모두 성장하였습니다. 새로운 알이 지급됩니다.')
-      console.log('알 실행2')
+      alert('펫이 부화합니다!');
+    } else if (prevPetLevel == 2 && level == 1) {
+      alert('축하합니다! 펫이 모두 성장하였습니다. 새로운 알이 지급됩니다.');
+      console.log('알 실행2');
     }
-  }, [level])
+  }, [level]);
 
   //밥주기
   const handleFeedRice = () => {
@@ -209,7 +210,7 @@ function Main() {
             </section>
 
             <section className="w-full h-1/3 flex flex-col items-center">
-              <div className='flex w-full h-2/5 p-2 justify-center items-center'>
+              <div className="flex w-full h-2/5 p-2 justify-center items-center">
                 {/* <Image
                   src={''}
                   alt="accessory"
@@ -218,32 +219,26 @@ function Main() {
                   className="h-full object-contain"
                 /> */}
               </div>
-              <div className='flex w-full h-3/5 p-1 justify-center items-center'>
+              <div className="flex w-full h-3/5 p-1 justify-center items-center">
                 {isTouchPet && (
                   <Image
                     src={'/pet/heart.png'}
                     alt="heart"
                     width={100}
                     height={100}
-                    className='absolute animate-touchPetHeart'
+                    className="absolute animate-touchPetHeart"
                   />
                 )}
                 {isLevelUp ? (
+                  <Image src={'/pet/crackEgg.png'} alt="pet" width={80} height={80} className="h-full object-contain" />
+                ) : (
                   <Image
-                  src={'/pet/crackEgg.png'}
-                  alt="pet"
-                  width={80}
-                  height={80}
-                  className="h-full object-contain"
-                />   
-                ):(
-                <Image
-                  src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
-                  alt="pet"
-                  width={80}
-                  height={80}
-                  className="h-full object-contain"
-                />   
+                    src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
+                    alt="pet"
+                    width={80}
+                    height={80}
+                    className="h-full object-contain"
+                  />
                 )}
               </div>
             </section>
@@ -263,18 +258,22 @@ function Main() {
                   count={snackCount}
                   handle={() => handleFeedSnack()}
                 />
-                <MainPetButton icon={<BiDonateHeart size="30" />} label="쓰다듬기" count={-1} 
-                  handle={() => handleTouchPet()}/>
+                <MainPetButton
+                  icon={<BiDonateHeart size="30" />}
+                  label="쓰다듬기"
+                  count={-1}
+                  handle={() => handleTouchPet()}
+                />
                 <MainPetButton icon={<RiContactsBook2Line size="30" />} label="방명록" link="/guest" count={-1} />
               </div>
             </section>
           </main>
         </div>
-        ) : (
-          <div className="wrap-section text-center flex">
-            <div className="m-auto text-primary-500">Loding...</div>
-          </div>
-        )} 
+      ) : (
+        <div className="wrap-section text-center flex">
+          <div className="m-auto text-primary-500">Loding...</div>
+        </div>
+      )}
       <NavBottom />
     </div>
   );

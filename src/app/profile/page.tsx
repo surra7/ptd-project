@@ -99,7 +99,7 @@ export default function Page() {
       {' '}
       {user ? (
         <>
-          <div className="h-full flex flex-col  min-h-screen p-4">
+          <div className="h-full flex flex-col  min-h-screen p-4 mt-10">
             <section className="wrap-section">
               {' '}
               <p className="text-2xl font-bold text-purple-600 mb-4">안녕하세요! {user.닉네임} 님</p>
@@ -107,18 +107,18 @@ export default function Page() {
               <ul className="space-y-4">
                 <li>
                   <Link href="/nickname">
-                    <a className="text-purple-600 hover:underline">닉네임 변경하기</a>
+                    <p className="text-purple-600 hover:underline">닉네임 변경하기</p>
                   </Link>
                 </li>
                 <li>
                   <Link href="/goal">
-                    <a className="text-purple-600 hover:underline">목표 설정하기</a>
+                    <p className="text-purple-600 hover:underline">목표 설정하기</p>
                   </Link>
                 </li>
                 <li>
                   {' '}
                   <Link href="/introduce">
-                    <a className="text-purple-600 hover:underline">petodo 가이드 보기</a>
+                    <p className="text-purple-600 hover:underline">petodo 가이드 보기</p>
                   </Link>{' '}
                 </li>
                 <li>
