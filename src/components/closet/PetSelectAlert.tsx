@@ -16,7 +16,7 @@ export default function PetSelectAlert({ onClose, selectedItemName }: PetSelectA
         <div
           className="w-[20.0625rem] h-[9.25rem] bg-white rounded-[10px] flex flex-col justify-center z-40"
           onClick={e => e.stopPropagation()}>
-          <div className="text-lg font-bold text-center">대표 펫으로 설정 하시겠습니까?</div>
+          <div className="text-lg font-bold text-center mt-[0.375rem]">대표 펫으로 설정 하시겠습니까?</div>
           <div className="text-mm font-medium text-center text-black-200 mt-2">
             친구가 놀러왔을 때 대표 펫이 보여집니다.
           </div>

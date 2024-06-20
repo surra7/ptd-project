@@ -35,6 +35,7 @@ function Main() {
   const [isTouchPet, setIsTouchPet] = useState(false);
   const [isLevelUp, setIsLevelUp] = useState(false);
   const [prevPetLevel, setPrevPetLevel] = useState(level);
+  const [accessoryImageURL, setAccessoryImageURL] = useState('');
   const router = useRouter();
 
   const [user, setUser] = useAtom<User | null>(userAtom);
@@ -82,45 +83,24 @@ function Main() {
             setMaxProgress(response.data.pet_rating.point);
             setPetName(response.data.active_pet.pet_name);
             setStatusMessage(response.data.hunger_degree_status);
+            setAccessoryImageURL(response.data.primary_accessory.image);
             console.log(petData);
             console.log('처음', statusMessage, tempSaveMessage);
           })
           .catch(error => {
             console.error('펫에러', error);
-            // alert('로그인이 필요합니다.');
-            router.push('/introduce');
+            // router.push('/introduce');
           });
       })
       .catch(error => {
         console.error('유저에러', error.data);
-        // alert('로그인이 필요합니다.');
-        router.push('/introduce');
+        // router.push('/introduce');
       });
   }, [accessToken, csrf]);
-
-  // // 상태메시지 바뀔 때
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     setStatusMessage(tempSaveMessage);
-  //     console.log('timeout', statusMessage, tempSaveMessage);
-  //   }, 3000);
-  //   return () => {
-  //     clearTimeout(timeout);
-  //   }
-  // },[tempSaveMessage])
-
-  // 상태메시지 바뀔 때
-  useEffect(() => {
-    setTimeout(() => {
-      setStatusMessage(tempSaveMessage);
-      console.log('timeout', statusMessage, tempSaveMessage);
-    }, 3000);
-  }, [tempSaveMessage]);
 
   // 알 깨질떄
   useEffect(() => {
     setPrevPetLevel(level);
-    console.log('알 실행1');
     if (prevPetLevel == 1 && level == 2) {
       // setIsLevelUp(true);
       // setTempSaveMessage(statusMessage);
@@ -131,7 +111,6 @@ function Main() {
       alert('펫이 부화합니다!');
     } else if (prevPetLevel == 2 && level == 1) {
       alert('축하합니다! 펫이 모두 성장하였습니다. 새로운 알이 지급됩니다.');
-      console.log('알 실행2');
     }
   }, [level]);
 
@@ -141,14 +120,12 @@ function Main() {
       axios
         .post<FeedType>('pets/feed-rice/')
         .then(response => {
-          setExperience(response.data.pet.pet_rating.point);
           setStatusMessage(response.data.pet.hunger_degree_status);
           setRiceCount(riceCount - 1);
           setLevel(response.data.pet.pet_rating.level);
           setExperience(response.data.pet.point);
           setMaxProgress(response.data.pet.pet_rating.point);
           setActivePetImageURL(response.data.pet.active_pet.image);
-          console.log('밥주기', statusMessage, tempSaveMessage);
         })
         .catch(error => {
           console.log(error);
@@ -164,15 +141,15 @@ function Main() {
       axios
         .post<FeedType>('pets/feed-snack/')
         .then(response => {
-          setExperience(response.data.pet.pet_rating.point);
-          setTempSaveMessage(statusMessage);
-          setStatusMessage(response.data.pet.hunger_degree_status);
+          setTempSaveMessage(response.data.pet.hunger_degree_status);
           setSnackCount(snackCount - 1);
           setLevel(response.data.pet.pet_rating.level);
           setExperience(response.data.pet.point);
           setMaxProgress(response.data.pet.pet_rating.point);
           setActivePetImageURL(response.data.pet.active_pet.image);
-          console.log('간식주기', statusMessage, tempSaveMessage);
+          const feedSnackTime = setTimeout(() => {
+            setTempSaveMessage('');
+          }, 2000);
         })
         .catch(error => {
           console.log(error);
@@ -184,13 +161,12 @@ function Main() {
 
   // 쓰다듬기
   const handleTouchPet = () => {
-    setTempSaveMessage(statusMessage);
-    setStatusMessage('당신은 복슬복슬한 느낌에 기분이 좋아집니다!');
-    console.log('쓰다듬기', statusMessage, tempSaveMessage);
+    setTempSaveMessage('당신은 복슬복슬한 느낌에 기분이 좋아집니다!');
     setIsTouchPet(true);
-    setTimeout(() => {
+    const touchTime = setTimeout(() => {
+      setTempSaveMessage('');
       setIsTouchPet(false);
-    }, 1000);
+    }, 2000);
   };
 
   return (
@@ -210,28 +186,31 @@ function Main() {
             </section>
 
             <section className="w-full h-1/3 flex flex-col items-center">
-              <div className="flex w-full h-2/5 p-2 justify-center items-center">
-                {/* <Image
-                  src={''}
-                  alt="accessory"
-                  width={40}
-                  height={40}
-                  className="h-full object-contain"
-                /> */}
+              <div className="flex w-full h-2/5 p-2 justify-center items-end">
+              {isTouchPet ? (
+                  <Image
+                    src={'/pet/hand.png'}
+                    alt="heart"
+                    width={50}
+                    height={50}
+                    className="animate-shackHand"
+                  />
+              ) : 
+                (accessoryImageURL) && (
+                  <Image
+                    src={`https://api.oz-02-main-04.xyz${accessoryImageURL}`}
+                    alt="accessory"
+                    width={40}
+                    height={40}
+                    className="h-full object-contain"
+                  />
+                )
+              }
               </div>
               <div className="flex w-full h-3/5 p-1 justify-center items-center">
-                {isTouchPet && (
-                  <Image
-                    src={'/pet/heart.png'}
-                    alt="heart"
-                    width={100}
-                    height={100}
-                    className="absolute animate-touchPetHeart"
-                  />
-                )}
-                {isLevelUp ? (
+                {/* {isLevelUp ? (
                   <Image src={'/pet/crackEgg.png'} alt="pet" width={80} height={80} className="h-full object-contain" />
-                ) : (
+                ) : ( */}
                   <Image
                     src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
                     alt="pet"
@@ -239,12 +218,17 @@ function Main() {
                     height={80}
                     className="h-full object-contain"
                   />
-                )}
+                {/* )} */}
               </div>
             </section>
 
             <section className="h-1/3 p-3 text-center">
-              <PetStateMessage message={statusMessage} />
+            {tempSaveMessage ? (
+              <PetStateMessage message={tempSaveMessage} messageClass='animate-fadeInOut'/>
+            ) : (
+              <PetStateMessage message={statusMessage} messageClass='animate-fadeIn'/>
+            )}
+              
               <div className="flex justify-center items-end">
                 <MainPetButton
                   icon={<BiBowlRice size="30" />}
@@ -269,11 +253,11 @@ function Main() {
             </section>
           </main>
         </div>
-      ) : (
+       ) : (
         <div className="wrap-section text-center flex">
           <div className="m-auto text-primary-500">Loding...</div>
         </div>
-      )}
+      )} 
       <NavBottom />
     </div>
   );
