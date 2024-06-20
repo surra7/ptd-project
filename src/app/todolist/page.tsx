@@ -38,6 +38,7 @@ interface PostType {
 
 function Page() {
   // const [todos, setTodos] = useState<TodoType[]>([]);
+  const [memo, setMemo] = useState<string | undefined>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalIndex, setModalIndex] = useState<number>();
   const [editString, setEditString] = useState<string>();
@@ -82,6 +83,7 @@ function Page() {
           console.log(data.id);
           setGoal(data.goal);
           setDeadline(data.days_by_deadline);
+          setMemo(data.memo as string);
         }
       };
       getId();
@@ -207,6 +209,14 @@ function Page() {
     setMusicTitle('');
   };
 
+  useEffect(() => {
+    const updateMemo = async (v: string | undefined) => {
+      setMemo(v);
+      await axios.put('posts/', { memo: memo, todo_date: formattedDate });
+    };
+    updateMemo(memo);
+  }, [memo]);
+
   return (
     <div className="w-full h-full">
       <main className="wrap-section relative ">
@@ -271,6 +281,8 @@ function Page() {
         <section>
           <p className="m-2 pb-1 border-b-borderGray border-b w-[3.0625rem] text-center">Memo</p>
           <textarea
+            value={memo}
+            onChange={e => setMemo(e.target.value)}
             name="memo"
             id="memo"
             className="w-full h-[6rem] text-[0.875rem] px-2 resize-none focus:outline-none"></textarea>
