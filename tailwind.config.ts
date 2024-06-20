@@ -74,6 +74,7 @@ const config: Config = {
         boxopen: 'boxopen 1s linear',
         touchPetHeart: 'touchPetHeart 0.5s ease-in',
         hatch: 'eggVibration 2s ease-in',
+        shackHand: 'shackHand 2s ease-in'
       },
       keyframes: {
         fadeIn: {
@@ -110,8 +111,22 @@ const config: Config = {
         },
         touchPetHeart: {
           '0%': {opacity: '0', scale: '0%'},
-          '100%': {opacity: '1', scale: '100%'},
+          '50%': {opacity: '1', scale: '100%'},
+          '100%': {opacity: '0', scale: '200%'},
         },
+        shackHand: {
+          '0%': { transform: 'rotate(0deg)', scale: '100%', opacity: '1'},
+          '10%': { transform: 'rotate(5deg)', scale: '120%', opacity: '1'},
+          '20%': { transform: 'rotate(0deg)', scale: '100%', opacity: '1'},
+          '30%': { transform: 'rotate(5deg)', scale: '120%', opacity: '1'},
+          '40%': { transform: 'rotate(0deg)', scale: '100%', opacity: '1'},
+          '50%': { transform: 'rotate(5deg)', scale: '120%', opacity: '1'},
+          '60%': { transform: 'rotate(0deg)', scale: '100%', opacity: '1'},
+          '70%': { transform: 'rotate(5deg)', scale: '120%', opacity: '1'},
+          '80%': { transform: 'rotate(0deg)', scale: '100%', opacity: '0.9'},
+          '90%': { transform: 'rotate(5deg)', scale: '120%', opacity: '0.7'},
+          '100%': { transform: 'rotate(0deg)', scale: '120%', opacity: '0'},
+        }
       },
     },
   },
