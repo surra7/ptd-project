@@ -65,7 +65,7 @@ function Goal() {
           },
         },
       );
-      alert(`1 완료되었습니다! ${response.data}`);
+      alert(`목표가 설정되었습니다. ${response.data}`);
       console.log(response.data);
       router.push('/todolist');
     } catch (error: any) {
