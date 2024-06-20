@@ -99,8 +99,8 @@ export default function Page() {
       {' '}
       {user ? (
         <>
-          <div className="wrap-section flex flex-col  min-h-screen p-4">
-            <section className="">
+          <div className="h-full flex flex-col  min-h-screen p-4">
+            <section className="wrap-section">
               {' '}
               <p className="text-2xl font-bold text-purple-600 mb-4">안녕하세요! {user.닉네임} 님</p>
               <hr className="border-purple-600 w-full mb-4" />
