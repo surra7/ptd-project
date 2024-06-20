@@ -2,7 +2,7 @@
 import { selectedUserAtom } from '@/atoms/atoms';
 import MainPetButton from '@/components/main/MainPetButton';
 import { axios } from '@/services/instance';
-import { BackgroundType } from '@/types/guestBookType';
+import { SelectedUserItemType } from '@/types/guestBookType';
 import { useAtomValue } from 'jotai';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -12,16 +12,18 @@ import { RiContactsBook2Line } from 'react-icons/ri';
 
 export default function FriendMain() {
   const selectedUser = useAtomValue(selectedUserAtom);
-  const [backgroundData, setBackgroundData] = useState<BackgroundType[]>([]);
-  const [selectedBackground, setSelectedBackground] = useState<BackgroundType | null>(null);
+  const [selectedUserItem, setSelectedUserItem] = useState<SelectedUserItemType>();
+  const [selectedPet, isSelectedPet] = useState('');
+  const [selectedBackground, isSelectedBackground] = useState('');
+  const [selectedAccessory, isSelectedAccessory] = useState('');
 
   useEffect(() => {
-    axios.get<BackgroundType[]>('pets/closet/backgrounds/')
+    axios.get<SelectedUserItemType>(`pets/${selectedUser?.id}`)
       .then(response => {
-        setBackgroundData(response.data);
-        const selected = response.data.find(item => item.selected)
-        setSelectedBackground(selected || null);
-        console.log(backgroundData, selectedBackground)
+        setSelectedUserItem(response.data);
+        isSelectedPet(response.data.primary_pet.image);
+        isSelectedBackground(response.data.primary_background.image);
+        isSelectedAccessory(response.data.primary_background.image);
       })
       .catch(error => {
         console.log('guestbackground error: ',error);
@@ -30,13 +32,14 @@ export default function FriendMain() {
 
   return (
     <div className="w-full h-full bg-cover"
-      style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${selectedBackground?.image || ''})` }}>
+      style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${selectedBackground})` }}>
       <header className="h-1/6 pt-8 pb-2"></header>
 
       <main className="w-full h-5/6 flex flex-col justify-end">
-        <section className="h-1/3 grid justify-end p-4 text-center"></section>
-        <section className="h-1/3 flex items-center">
-          <Image src={`https://api.oz-02-main-04.xyz${''}`} alt="egg" width={130} height={130} className="my-0 mx-auto" />
+        <section className="w-full h-1/3 grid justify-end p-4 text-center"></section>
+        <section className="w-full h-1/3 flex flex-col items-center">
+          <Image src={`https://api.oz-02-main-04.xyz${selectedAccessory}`} alt="accessory" width={40} height={40} className="h-full object-contain" />
+          <Image src={`https://api.oz-02-main-04.xyz${selectedPet}`} alt="egg" width={130} height={130} className="my-0 mx-auto" />
         </section>
 
         <section className="h-1/3 p-3 text-center flex justify-center items-center">

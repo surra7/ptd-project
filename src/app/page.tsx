@@ -180,7 +180,7 @@ function Main() {
             </section>
 
             <section className="w-full h-1/3 flex flex-col items-center">
-              <div className="flex w-full h-2/5 p-2 justify-center items-end">
+              <div className="flex w-full h-2/5 justify-center items-end">
               {isTouchPet ? (
                   <Image
                     src={'/pet/hand.png'}
@@ -196,12 +196,12 @@ function Main() {
                     alt="accessory"
                     width={40}
                     height={40}
-                    className="h-full object-contain"
+                    className="h-full object-contain items-end"
                   />
                 )
               }
               </div>
-              <div className="flex w-full h-3/5 p-1 justify-center items-top">
+              <div className="flex w-full h-3/5 justify-center items-top">
                 {/* {isLevelUp ? (
                   <Image src={'/pet/crackEgg.png'} alt="pet" width={80} height={80} className="h-full object-contain" />
                 ) : ( */}
