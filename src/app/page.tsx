@@ -42,10 +42,6 @@ function Main() {
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
 
   useEffect(() => {
-    if (!user) {
-      router.push('/login');
-      alert('login please');
-    }
     const fetchTokens = async () => {
       try {
         const csrfToken = getCookieValue('csrftoken');
@@ -66,6 +62,10 @@ function Main() {
   }, [setAccessToken]);
 
   useEffect(() => {
+    if (!user) {
+      router.push('/login');
+      alert('login please');
+    }
     axios
       .get('users/myinfo/')
       .then(response => {
