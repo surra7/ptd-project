@@ -8,7 +8,7 @@ import NavBottom from '@/components/NavBottom';
 import Link from 'next/link';
 import { getCookieValue } from '@/libs/getCookieValue';
 import { deleteCookie } from '@/libs/deleteCookieValue';
-
+import { useRouter } from 'next/navigation';
 export interface User {
   id: number;
   계정: string;
@@ -21,6 +21,7 @@ export default function Page() {
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
   const [isLoading, setIsLoading] = useState(true);
   const [nickname, setNickname] = useAtom(nicknameAtom);
+  const router = useRouter();
   useEffect(() => {
     const fetchTokens = async () => {
       try {
@@ -76,6 +77,7 @@ export default function Page() {
       setUser(null);
       setAccessToken(null);
       setCsrf(null);
+      router.push('/login');
     } catch (error) {
       console.error(error);
     }
@@ -100,7 +102,7 @@ export default function Page() {
       {user ? (
         <>
           {/* <div className=" flex flex-col p-4 mt-10"> */}
-          <section className="wrap-section">
+          <section className="wrap-section p-4 mt-10">
             {' '}
             <p className="text-2xl font-bold text-purple-600 mb-4">안녕하세요! {user.닉네임} 님</p>
             <hr className="border-purple-600 w-full mb-4" />
