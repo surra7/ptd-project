@@ -42,7 +42,9 @@ function Main() {
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      router.push('/profile');
+    }
     const fetchTokens = async () => {
       try {
         const csrfToken = getCookieValue('csrftoken');
