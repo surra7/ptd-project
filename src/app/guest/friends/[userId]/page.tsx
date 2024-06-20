@@ -38,10 +38,10 @@ export default function FriendMain() {
       <main className="w-full h-5/6 flex flex-col justify-end">
         <section className="w-full h-1/3 grid justify-end p-4 text-center"></section>
         <section className="w-full h-1/3 flex flex-col items-center">
-        <div className="flex w-full h-2/5 pb-2 justify-center items-center">
-          {selectedAccessory && (
-            <Image src={`https://api.oz-02-main-04.xyz${selectedAccessory}`} alt="accessory" width={40} height={40} className="object-contain items-end" />
-          )}          
+        <div className="flex w-full h-2/5 pb-2 justify-center items-end">
+          {/* {selectedAccessory && ( */}
+            <Image src={`https://api.oz-02-main-04.xyz${selectedAccessory}`} alt="accessory" width={50} height={50} className="object-contain items-end" /> 
+           {/* )}           */}
         </div>
         <div className="flex w-full h-3/5 justify-center items-top">
           <Image src={`https://api.oz-02-main-04.xyz${selectedPet}`} alt="egg" width={130} height={130} className="object-contain items-top" />
