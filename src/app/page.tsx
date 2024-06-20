@@ -44,6 +44,7 @@ function Main() {
   useEffect(() => {
     if (!user) {
       router.push('/login');
+      alert('login please');
     }
     const fetchTokens = async () => {
       try {
