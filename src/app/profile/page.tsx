@@ -104,23 +104,23 @@ export default function Page() {
           {/* <div className=" flex flex-col p-4 mt-10"> */}
           <section className="wrap-section p-4 flex flex-col items-center justify-center">
             {' '}
-            <p className="text-2xl font-bold text-purple-600 mb-4"> {user.닉네임}</p>
+            <span className="text-2xl font-bold text-purple-600 mb-4"> {user.닉네임}</span>
             <span>님 반가워요!</span> <hr className="border-purple-600 w-full mb-4" />
             <ul className="space-y-4">
               <li>
                 <Link href="/nickname">
-                  <p className="text-purple-600 hover:underline">닉네임 변경하기</p>
+                  <p className=" hover:underline">닉네임 변경하기</p>
                 </Link>
               </li>
               <li>
                 <Link href="/goal">
-                  <p className="text-purple-600 hover:underline">목표 설정하기</p>
+                  <p className=" hover:underline">목표 설정하기</p>
                 </Link>
               </li>
               <li>
                 {' '}
                 <Link href="/introduce">
-                  <p className="text-purple-600 hover:underline">Petodo 가이드 보기</p>
+                  <p className=" hover:underline">Petodo 가이드 보기</p>
                 </Link>{' '}
               </li>
               <li>
