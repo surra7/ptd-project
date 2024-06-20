@@ -21,7 +21,7 @@ function Carousel2({ accessToken }: Props) {
         </p>
       </section>
       <section className="flex flex-col items-center justify-center gap-3">
-        <div className='flex justify-center'>
+        <div className="flex justify-center">
           <Image className="w-[16.875rem] h-[31rem] shadow-lg border rounded-md" src={intro2} alt="" priority />
           <Image
             className="absolute w-[10rem] -translate-x-[7.5rem] translate-y-[6rem] -rotate-[30deg]"
@@ -41,21 +41,12 @@ function Carousel2({ accessToken }: Props) {
             alt=""
             priority
           />
-          <Image className="absolute w-[10rem] translate-x-[7rem] translate-y-[16rem]" src={glitter} alt="" priority />          
-        </div>
-
-        <div className="flex flex-col gap-5 items-center">
-          <p className="text-[0.9rem] text-black-300">놓친 부분은 마이페이지에서 다시 볼 수 있어요.</p>
-          <Link
-            href={'/login'}
-            className="w-[12rem] h-[3rem] font-bold rounded-3xl text-white bg-primary-400 text-center flex justify-center items-center">
-            PeTodo 시작하기
-          </Link>
+          <Image className="absolute w-[10rem] translate-x-[7rem] translate-y-[16rem]" src={glitter} alt="" priority />
         </div>
       </section>
       <div className="flex flex-col gap-5 items-center">
         <Link
-          href={`${accessToken ? 'login' : '/'}`}
+          href={`${accessToken ? '/' : 'login'}`}
           className="w-[12rem] h-[3rem] font-bold rounded-3xl text-white bg-primary-400 text-center flex justify-center items-center">
           PeTodo 시작하기
         </Link>
