@@ -23,7 +23,7 @@ export default function FriendMain() {
         setSelectedUserItem(response.data);
         isSelectedPet(response.data.primary_pet.image);
         isSelectedBackground(response.data.primary_background.image);
-        isSelectedAccessory(response.data.primary_background.image);
+        isSelectedAccessory(response.data.primary_accessory);
       })
       .catch(error => {
         console.log('guestbackground error: ',error);
