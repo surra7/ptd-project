@@ -134,7 +134,7 @@ export default function Page() {
         </>
       ) : (
         <>
-          <div className=" flex flex-col justify-center align-middle min-h-screen p-4">
+          <div className=" flex flex-col justify-center align-middle  p-4">
             <section
               className="wrap-section
             ">
