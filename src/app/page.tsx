@@ -201,7 +201,7 @@ function Main() {
                 )
               }
               </div>
-              <div className="flex w-full h-3/5 p-1 justify-center items-center">
+              <div className="flex w-full h-3/5 p-1 justify-center items-top">
                 {/* {isLevelUp ? (
                   <Image src={'/pet/crackEgg.png'} alt="pet" width={80} height={80} className="h-full object-contain" />
                 ) : ( */}

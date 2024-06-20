@@ -48,17 +48,7 @@ export interface DeleteId {
   comment_id: number;
 }
 
-export interface SelectedBackgroundType {
-  selected: boolean;
-  item: string;
-  image: string;
-}
-
-export interface ApiResponse {
-  data: SelectedBackgroundType[];
-}
-
-export interface SelectedAccessoryType {
+export interface BackgroundType {
   selected: boolean;
   item: string;
   image: string;

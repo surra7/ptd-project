@@ -1,17 +1,36 @@
 'use client';
 import { selectedUserAtom } from '@/atoms/atoms';
 import MainPetButton from '@/components/main/MainPetButton';
+import { axios } from '@/services/instance';
+import { BackgroundType } from '@/types/guestBookType';
 import { useAtomValue } from 'jotai';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { BiDonateHeart } from 'react-icons/bi';
 import { RiContactsBook2Line } from 'react-icons/ri';
 
 export default function FriendMain() {
   const selectedUser = useAtomValue(selectedUserAtom);
+  const [backgroundData, setBackgroundData] = useState<BackgroundType[]>([]);
+  const [selectedBackground, setSelectedBackground] = useState<BackgroundType | null>(null);
+
+  useEffect(() => {
+    axios.get<BackgroundType[]>('pets/closet/backgrounds/')
+      .then(response => {
+        setBackgroundData(response.data);
+        const selected = response.data.find(item => item.selected)
+        setSelectedBackground(selected || null);
+        console.log(backgroundData, selectedBackground)
+      })
+      .catch(error => {
+        console.log('guestbackground error: ',error);
+      })
+  })
 
   return (
     <div className="w-full h-full bg-cover"
-      style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${''})` }}>
+      style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${selectedBackground?.image || ''})` }}>
       <header className="h-1/6 pt-8 pb-2"></header>
 
       <main className="w-full h-5/6 flex flex-col justify-end">
