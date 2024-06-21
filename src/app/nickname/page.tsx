@@ -106,17 +106,17 @@ const Nickname = () => {
               value={newNickname}
               onChange={e => setNewNickname(e.target.value)}
               placeholder="새 닉네임 입력"
-              className="mt-1 block w-[2rem] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
             />
             <div className="flex justify-between mt-4 w-full">
               <Link href="/profile">
-                <button className="w-[6rem] ml-6 px-4 py-2  text-black rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                <button className="w-full mr-2 px-4 py-2  text-black rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                   취소
                 </button>
               </Link>
               <button
                 onClick={handleNicknameChange}
-                className="w-[3rem] px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                className="w-full  px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                 완료
               </button>
             </div>

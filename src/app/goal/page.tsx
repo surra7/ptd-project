@@ -179,13 +179,13 @@ function Goal() {
         </div>
         <div className="w-full flex justify-between mt-6">
           <Link href={'/profile'}>
-            <button className="w-full ml-6 px-4 py-2 text-black rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+            <button className="w-full px-4 py-2 text-black rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
               취소
             </button>
           </Link>
           <button
             onClick={handleSetGoal}
-            className="w-full px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+            className="w-full ml-2 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
             완료
           </button>
         </div>
