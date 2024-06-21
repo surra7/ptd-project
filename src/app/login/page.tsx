@@ -14,7 +14,7 @@ const KakaoLogin = () => {
       </div>
       <button onClick={handleKakaoLogin}>
         {' '}
-        <Image src={'/images/kakaoLogin.png'} alt="kakao-login" width={200} height={200} />
+        <Image src={'/images/kakao_login_large_narrow_1_1.svg'} alt="kakao-login" width={200} height={200} />
       </button>
     </div>
   );
