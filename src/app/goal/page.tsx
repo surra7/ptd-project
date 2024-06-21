@@ -1,5 +1,4 @@
 'use client';
-
 import axios from 'axios';
 import React, { useState } from 'react';
 import { userAtom, accessTokenAtom, refreshTokenAtom } from '@/atoms/atoms';
@@ -8,13 +7,20 @@ import { getCookieValue } from '@/libs/getCookieValue';
 import NavBottom from '@/components/NavBottom';
 import { useRouter } from 'next/navigation';
 
+interface GoalResponse {
+  days_by_deadline: number;
+}
+
 function Goal() {
   const [goal, setGoal] = useState<string | null>(null);
-  const [dDay, setDDay] = useState<string | null>(null);
+  const [year, setYear] = useState<string>('');
+  const [month, setMonth] = useState<string>('');
+  const [day, setDay] = useState<string>('');
   const [user] = useAtom(userAtom);
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [refreshToken] = useAtom(refreshTokenAtom);
   const router = useRouter();
+  const [res, setRes] = useState<GoalResponse | null>(null);
 
   const refreshAccessToken = async () => {
     try {
@@ -25,13 +31,12 @@ function Goal() {
       setAccessToken(newAccessToken);
       return newAccessToken;
     } catch (error) {
-      //   console.error('refresh access token:', error);
       return null;
     }
   };
 
   const handleSetGoal = async () => {
-    if (!goal || !dDay) {
+    if (!goal || !year || !month || !day) {
       alert('목표와 D-Day를 모두 입력해주세요.');
       return;
     }
@@ -39,24 +44,21 @@ function Goal() {
       alert('로그인 해주세요!');
       router.push('/login');
     }
+
+    const dDay = `${year}-${month}-${day}`;
     const today = new Date().toISOString().split('T')[0];
     if (dDay <= today) {
       alert('디데이는 오늘 이후의 날짜여야 합니다.');
       return;
     }
 
-    // console.log('Goal:', goal);
-    // console.log('D-Day:', dDay);
-
     const csrfToken = getCookieValue('csrftoken');
-    // console.log('CSRF Token:', csrfToken);
-    // console.log(user);
     if (!user) return;
 
     try {
       const response = await axios.post(
         `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
-        { goal, d_day: dDay, days_by_deadline: '' },
+        { goal, d_day: dDay },
         {
           withCredentials: true,
           headers: {
@@ -66,7 +68,7 @@ function Goal() {
         },
       );
       alert(`목표가 설정되었습니다.`);
-      //   console.log(response.data);
+      setRes(response.data);
       router.push('/todolist');
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
@@ -75,7 +77,7 @@ function Goal() {
           try {
             const retryResponse = await axios.post(
               `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
-              { goal, d_day: dDay, days_by_deadline: '' },
+              { goal, d_day: dDay },
               {
                 withCredentials: true,
                 headers: {
@@ -85,7 +87,7 @@ function Goal() {
               },
             );
             alert(`2차시도 완료되었습니다! ${retryResponse.data}`);
-            // console.log(retryResponse.data);
+            setRes(retryResponse.data);
           } catch (retryError) {
             console.error('Retry request', retryError);
           }
@@ -99,11 +101,15 @@ function Goal() {
   };
 
   const today = new Date().toISOString().split('T')[0];
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 10 }, (_, i) => (currentYear + i).toString());
+  const months = Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0'));
+  const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0'));
 
   return (
-    <div className="h-full w-full  flex flex-col justify-center items-center  min-h-screen p-4 pt-10">
+    <div className="h-full w-full flex flex-col justify-center items-center min-h-screen p-4 pt-10">
       <section className="wrap-section">
-        <h1 className="text-2xl font-bold text-purple-600 mb-4">목표/디데이 설정</h1>
+        <h1 className="text-2xl font-bold text-purple-600 mb-4">목표/디데이를 입력해 주세요.</h1>
         <div className="w-full max-w-xs">
           <label htmlFor="goal" className="block text-sm font-medium text-gray-700">
             목표
@@ -119,16 +125,43 @@ function Goal() {
         </div>
         <div className="w-full max-w-xs mt-4">
           <label htmlFor="dDay" className="block text-sm font-medium text-gray-700">
-            D-Day
+            남은기간: {res?.days_by_deadline ?? 'N/A'}
           </label>
-          <input
-            id="dDay"
-            type="date"
-            value={dDay || ''}
-            min={today}
-            onChange={e => setDDay(e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-          />
+          <div className="flex space-x-2">
+            <select
+              value={year}
+              onChange={e => setYear(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+              <option value="">년</option>
+              {years.map(y => (
+                <option key={y} value={y}>
+                  {y}
+                </option>
+              ))}
+            </select>
+            <select
+              value={month}
+              onChange={e => setMonth(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+              <option value="">월</option>
+              {months.map(m => (
+                <option key={m} value={m}>
+                  {m}
+                </option>
+              ))}
+            </select>
+            <select
+              value={day}
+              onChange={e => setDay(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+              <option value="">일</option>
+              {days.map(d => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <button
           onClick={handleSetGoal}

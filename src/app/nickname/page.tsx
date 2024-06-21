@@ -5,6 +5,7 @@ import { userAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
 import NavBottom from '@/components/NavBottom';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface User {
   id?: number;
@@ -24,6 +25,7 @@ const Nickname = () => {
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useAtom(userAtom);
+  const [msg, setMsg] = useState('공백없이 00자 이내로 작성해주세요.');
   const router = useRouter();
   useEffect(() => {
     const csrfToken = getCookieValue('csrftoken');
@@ -40,8 +42,8 @@ const Nickname = () => {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-    //   console.log(csrfToken);
-    //   console.log(accessToken);
+      //   console.log(csrfToken);
+      //   console.log(accessToken);
 
       if (!accessToken || !csrfToken) return;
       try {
@@ -94,18 +96,20 @@ const Nickname = () => {
       router.push('/profile');
     } catch (error) {
       console.error(error);
+      setMsg('다른 닉네임을 입력해 주세요!');
     }
   };
 
   return (
-    <div className="h-full flex flex-col items-center justify-center min-h-screen pt-10  p-4">
+    <div className="h-full min-h-screen pt-10  p-4">
       {userInfo ? (
-        <div className="h-full w-full ">
+        <div className="h-full w-full flex flex-col items-center justify-center ">
           <section className="wrap-section">
-            <h1 className="text-2xl font-bold text-purple-600 mb-4">닉네임 변경하기</h1>
+            <h1 className="text-2xl font-bold text-purple-600 mb-4">닉네임을 입력해 주세요</h1>
             <div className="mb-4">
-              <p className="text-sm font-medium text-gray-700">계정: {userInfo?.계정}</p>
-              <p className="text-sm font-medium text-gray-700">닉네임: {userInfo?.닉네임}</p>
+              <p id="msg">{msg}</p>
+              {/* <p className="text-sm font-medium text-gray-700">계정: {userInfo?.계정}</p>
+              <p className="text-sm font-medium text-gray-700">닉네임: {userInfo?.닉네임}</p> */}
             </div>
             <input
               type="text"
@@ -114,11 +118,17 @@ const Nickname = () => {
               placeholder="새 닉네임 입력"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
             />
-            <button
-              onClick={handleNicknameChange}
-              className="mt-4 w-full px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-              완료
-            </button>
+            <div className="flex">
+              {' '}
+              <Link href="/">
+                <button>취소</button>
+              </Link>
+              <button
+                onClick={handleNicknameChange}
+                className="mt-4 w-full px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                완료
+              </button>
+            </div>
           </section>
           <NavBottom />
         </div>

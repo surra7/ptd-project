@@ -104,8 +104,11 @@ export default function Page() {
           {/* <div className=" flex flex-col p-4 mt-10"> */}
           <section className="wrap-section p-4 flex flex-col items-center justify-center">
             {' '}
-            <span className="text-2xl font-bold text-purple-600 mb-4"> {user.닉네임}</span>
-            <span>님 반가워요!</span> <hr className="border-purple-600 w-full mb-4" />
+            <div className="flex">
+              <span className="text-2xl font-bold text-purple-600 mb-4"> {user.닉네임}</span>
+              <span>님 반가워요!</span>{' '}
+            </div>
+            <hr className="border-purple-600 w-full mb-4" />
             <ul className="space-y-4">
               <li>
                 <Link href="/nickname">
@@ -124,7 +127,7 @@ export default function Page() {
                 </Link>{' '}
               </li>
               <li>
-                <a onClick={handleLogout} className="text-purple-600 hover:underline">
+                <a onClick={handleLogout} className="text-red-600 hover:underline">
                   로그아웃
                 </a>
               </li>
