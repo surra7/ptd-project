@@ -20,18 +20,16 @@ const getCookieValue = (name: any) => {
 };
 
 const Nickname = () => {
-  //   const [user, setUser] = useAtom<User | null>(userAtom);
   const [newNickname, setNewNickname] = useState('');
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useAtom(userAtom);
   const [msg, setMsg] = useState('공백없이 10자 이내로 작성해주세요.');
   const router = useRouter();
+
   useEffect(() => {
     const csrfToken = getCookieValue('csrftoken');
     const token = getCookieValue('access_token');
-    // console.log(csrfToken);
-    // console.log(accessToken);
     if (token) {
       setAccessToken(token);
     }
@@ -42,9 +40,6 @@ const Nickname = () => {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      //   console.log(csrfToken);
-      //   console.log(accessToken);
-
       if (!accessToken || !csrfToken) return;
       try {
         const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
@@ -52,12 +47,9 @@ const Nickname = () => {
             Authorization: `Bearer ${accessToken}`,
             'X-CSRFToken': csrfToken,
           },
-
           withXSRFToken: true,
         });
-        // setUser(response.data);
         setUserInfo(response.data);
-        // console.log(user);
       } catch (error) {
         console.error(error);
       }
@@ -67,7 +59,6 @@ const Nickname = () => {
   }, [accessToken, csrfToken]);
 
   const handleNicknameChange = async () => {
-    // console.log(user);
     if (!newNickname) {
       alert('닉네임을 입력해주세요.');
       return;
@@ -82,7 +73,6 @@ const Nickname = () => {
         {
           headers: {
             'Content-Type': 'application/json',
-
             Authorization: `Bearer ${accessToken}`,
             'x-csrftoken': csrfToken,
           },
@@ -101,16 +91,14 @@ const Nickname = () => {
   };
 
   return (
-    <div className="h-full min-h-screen p-4 pt-40">
+    <div className="h-full min-h-screen p-4 pt-40 flex flex-col items-center justify-center">
       {userInfo ? (
-        <div className="h-full w-full flex flex-col items-center justify-center ">
-          <section className="wrap-section">
+        <div className="h-full w-full flex flex-col items-center justify-center">
+          <section className="wrap-section w-full max-w-md">
             <div className="text-center">
               <h1 className="text-2xl font-bold text-purple-600 mb-4">닉네임을 입력해 주세요</h1>
               <div className="mb-4">
                 <p id="msg">{msg}</p>
-                {/* <p className="text-sm font-medium text-gray-700">계정: {userInfo?.계정}</p>
-              <p className="text-sm font-medium text-gray-700">닉네임: {userInfo?.닉네임}</p> */}
               </div>
             </div>
             <input
@@ -120,16 +108,15 @@ const Nickname = () => {
               placeholder="새 닉네임 입력"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
             />
-            <div className="flex">
-              {' '}
+            <div className="flex justify-between mt-4 w-full">
               <Link href="/profile">
-                <button className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                <button className="w-1/2 mr-2 px-4 py-2  text-black rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                   취소
                 </button>
               </Link>
               <button
                 onClick={handleNicknameChange}
-                className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                className="w-1/2 ml-2 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                 완료
               </button>
             </div>

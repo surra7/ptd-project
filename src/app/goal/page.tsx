@@ -122,9 +122,9 @@ function Goal() {
 
   return (
     <div className="h-full w-full flex flex-col justify-center items-center min-h-screen p-4 pt-40">
-      <section className="wrap-section">
+      <section className="wrap-section w-full max-w-md">
         <h1 className="text-center text-2xl font-bold text-purple-600 mb-4">목표/디데이를 입력해 주세요.</h1>
-        <div className="w-full max-w-xs">
+        <div className="w-full">
           <label htmlFor="goal" className="block text-sm font-medium text-gray-700">
             목표
           </label>
@@ -137,7 +137,7 @@ function Goal() {
             placeholder="목표 입력"
           />
         </div>
-        <div className="w-full max-w-xs mt-4">
+        <div className="w-full mt-4">
           <label htmlFor="dDay" className="block text-sm font-medium text-gray-700">
             남은기간: {daysLeft !== null ? `${daysLeft}일 남음` : '날짜를 입력하시면 디데이가 계산됩니다.'}
           </label>
@@ -177,17 +177,18 @@ function Goal() {
             </select>
           </div>
         </div>
-        <Link href={'/profile'}>
-          <button className="mt-6 px-4 py-2  text-black rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-            취소
+        <div className="w-full flex justify-between mt-6">
+          <Link href={'/profile'}>
+            <button className="w-1/2 mr-2 px-4 py-2 text-black rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+              취소
+            </button>
+          </Link>
+          <button
+            onClick={handleSetGoal}
+            className="w-1/2 ml-2 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+            완료
           </button>
-        </Link>
-
-        <button
-          onClick={handleSetGoal}
-          className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-          완료
-        </button>
+        </div>
       </section>
       <NavBottom />
     </div>
