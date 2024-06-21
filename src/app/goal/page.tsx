@@ -6,6 +6,7 @@ import { useAtom } from 'jotai';
 import { getCookieValue } from '@/libs/getCookieValue';
 import NavBottom from '@/components/NavBottom';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface GoalResponse {
   days_by_deadline: number;
@@ -122,7 +123,7 @@ function Goal() {
   return (
     <div className="h-full w-full flex flex-col justify-center items-center min-h-screen p-4 pt-40">
       <section className="wrap-section">
-        <h1 className="text-2xl font-bold text-purple-600 mb-4">목표/디데이를 입력해 주세요.</h1>
+        <h1 className="text-center text-2xl font-bold text-purple-600 mb-4">목표/디데이를 입력해 주세요.</h1>
         <div className="w-full max-w-xs">
           <label htmlFor="goal" className="block text-sm font-medium text-gray-700">
             목표
@@ -138,7 +139,7 @@ function Goal() {
         </div>
         <div className="w-full max-w-xs mt-4">
           <label htmlFor="dDay" className="block text-sm font-medium text-gray-700">
-            남은기간: {daysLeft !== null ? `${daysLeft}일 남음` : 'N/A'}
+            남은기간: {daysLeft !== null ? `${daysLeft}일 남음` : '날짜를 입력하시면 디데이가 계산됩니다.'}
           </label>
           <div className="flex space-x-2">
             <select
@@ -176,6 +177,12 @@ function Goal() {
             </select>
           </div>
         </div>
+        <Link href={'/profile'}>
+          <button className="mt-6 px-4 py-2  text-black rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+            취소
+          </button>
+        </Link>
+
         <button
           onClick={handleSetGoal}
           className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">

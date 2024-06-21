@@ -101,15 +101,17 @@ const Nickname = () => {
   };
 
   return (
-    <div className="h-full min-h-screen pt-10  p-4 pt-40">
+    <div className="h-full min-h-screen p-4 pt-40">
       {userInfo ? (
         <div className="h-full w-full flex flex-col items-center justify-center ">
           <section className="wrap-section">
-            <h1 className="text-2xl font-bold text-purple-600 mb-4">닉네임을 입력해 주세요</h1>
-            <div className="mb-4">
-              <p id="msg">{msg}</p>
-              {/* <p className="text-sm font-medium text-gray-700">계정: {userInfo?.계정}</p>
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-purple-600 mb-4">닉네임을 입력해 주세요</h1>
+              <div className="mb-4">
+                <p id="msg">{msg}</p>
+                {/* <p className="text-sm font-medium text-gray-700">계정: {userInfo?.계정}</p>
               <p className="text-sm font-medium text-gray-700">닉네임: {userInfo?.닉네임}</p> */}
+              </div>
             </div>
             <input
               type="text"
@@ -121,13 +123,13 @@ const Nickname = () => {
             <div className="flex">
               {' '}
               <Link href="/profile">
-                <button className="mt-4 w-full px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                <button className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                   취소
                 </button>
               </Link>
               <button
                 onClick={handleNicknameChange}
-                className="mt-4 w-full px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                 완료
               </button>
             </div>
