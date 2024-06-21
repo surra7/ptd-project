@@ -48,8 +48,23 @@ export interface DeleteId {
   comment_id: number;
 }
 
-export interface SelectedItems {
-  selected: boolean;
-  item: string;
-  image: string;
+export interface SelectedUserItemType {
+  user: number;
+  nickname: string;
+  pet_rating: {
+    level: number;
+    point: number;
+  };
+  point: number;
+  hunger_degree_status: string;
+  primary_pet: {
+    pet_name: string;
+    image: string;
+  };
+  primary_background: {
+    item_name: string;
+    image: string;
+  };
+  primary_accessory: string;
+  guestbook_url: string;
 }
