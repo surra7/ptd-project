@@ -1,190 +1,144 @@
 'use client';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { userAtom, accessTokenAtom, refreshTokenAtom } from '@/atoms/atoms';
+import { useState, useEffect } from 'react';
+import { userAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
-import { getCookieValue } from '@/libs/getCookieValue';
 import NavBottom from '@/components/NavBottom';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
-interface GoalResponse {
-  days_by_deadline: number;
+interface User {
+  id?: number;
+  계정?: string;
+  닉네임: string;
 }
 
-function Goal() {
-  const [goal, setGoal] = useState<string | null>(null);
-  const [year, setYear] = useState<string>('');
-  const [month, setMonth] = useState<string>('');
-  const [day, setDay] = useState<string>('');
-  const [user] = useAtom(userAtom);
-  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
-  const [refreshToken] = useAtom(refreshTokenAtom);
+const getCookieValue = (name: any) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()!.split(';').shift();
+};
+
+const Nickname = () => {
+  //   const [user, setUser] = useAtom<User | null>(userAtom);
+  const [newNickname, setNewNickname] = useState('');
+  const [csrfToken, setCsrfToken] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useAtom(userAtom);
+  const [msg, setMsg] = useState('공백없이 10자 이내로 작성해주세요.');
   const router = useRouter();
-  const [res, setRes] = useState<GoalResponse | null>(null);
-  const [daysLeft, setDaysLeft] = useState<number | null>(null);
-
-  const refreshAccessToken = async () => {
-    try {
-      const response = await axios.post('https://api.oz-02-main-04.xyz/api/token/refresh/', {
-        refresh: refreshToken,
-      });
-      const newAccessToken = response.data.access;
-      setAccessToken(newAccessToken);
-      return newAccessToken;
-    } catch (error) {
-      return null;
-    }
-  };
-
-  const handleSetGoal = async () => {
-    if (!goal || !year || !month || !day) {
-      alert('목표와 D-Day를 모두 입력해주세요.');
-      return;
-    }
-    if (!user) {
-      alert('로그인 해주세요!');
-      router.push('/login');
-    }
-
-    const dDay = `${year}-${month}-${day}`;
-    const today = new Date().toISOString().split('T')[0];
-    if (dDay <= today) {
-      alert('디데이는 오늘 이후의 날짜여야 합니다.');
-      return;
-    }
-
+  useEffect(() => {
     const csrfToken = getCookieValue('csrftoken');
-    if (!user) return;
-
-    try {
-      const response = await axios.post(
-        `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
-        { goal, d_day: dDay },
-        {
-          withCredentials: true,
-          headers: {
-            'X-CSRFToken': csrfToken,
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      alert(`목표가 설정되었습니다.`);
-      setRes(response.data);
-      router.push('/todolist');
-    } catch (error: any) {
-      if (error.response && error.response.status === 401) {
-        const newAccessToken = await refreshAccessToken();
-        if (newAccessToken) {
-          try {
-            const retryResponse = await axios.post(
-              `https://api.oz-02-main-04.xyz/api/v1/posts/goal`,
-              { goal, d_day: dDay },
-              {
-                withCredentials: true,
-                headers: {
-                  'X-CSRFToken': csrfToken,
-                  Authorization: `Bearer ${newAccessToken}`,
-                },
-              },
-            );
-            alert(`2차시도 완료되었습니다! ${retryResponse.data}`);
-            setRes(retryResponse.data);
-          } catch (retryError) {
-            console.error('Retry request', retryError);
-          }
-        } else {
-          console.error('refresh access token');
-        }
-      } else {
-        console.error('Error:', error);
-      }
+    const token = getCookieValue('access_token');
+    // console.log(csrfToken);
+    // console.log(accessToken);
+    if (token) {
+      setAccessToken(token);
     }
-  };
+    if (csrfToken) {
+      setCsrfToken(csrfToken);
+    }
+  }, []);
 
   useEffect(() => {
-    if (year && month && day) {
-      const dDay = new Date(`${year}-${month}-${day}`);
-      const today = new Date();
-      const timeDiff = dDay.getTime() - today.getTime();
-      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      setDaysLeft(diffDays);
-    } else {
-      setDaysLeft(null);
-    }
-  }, [year, month, day]);
+    const fetchUserInfo = async () => {
+      //   console.log(csrfToken);
+      //   console.log(accessToken);
 
-  const today = new Date().toISOString().split('T')[0];
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 10 }, (_, i) => (currentYear + i).toString());
-  const months = Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0'));
-  const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0'));
+      if (!accessToken || !csrfToken) return;
+      try {
+        const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'X-CSRFToken': csrfToken,
+          },
+
+          withXSRFToken: true,
+        });
+        // setUser(response.data);
+        setUserInfo(response.data);
+        // console.log(user);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserInfo();
+  }, [accessToken, csrfToken]);
+
+  const handleNicknameChange = async () => {
+    // console.log(user);
+    if (!newNickname) {
+      alert('닉네임을 입력해주세요.');
+      return;
+    }
+    try {
+      const response = await axios.post(
+        'https://api.oz-02-main-04.xyz/api/v1/users/myinfo/',
+        {
+          action: 'change_nickname',
+          nickname: newNickname,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+
+            Authorization: `Bearer ${accessToken}`,
+            'x-csrftoken': csrfToken,
+          },
+          withXSRFToken: true,
+        },
+      );
+      if (response.status === 200) {
+        alert('닉네임이 변경되었습니다.');
+        setUserInfo(prevUser => (prevUser ? { ...prevUser, 닉네임: newNickname } : null));
+      }
+      router.push('/profile');
+    } catch (error) {
+      console.error(error);
+      setMsg('다른 닉네임을 입력해 주세요!');
+    }
+  };
 
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center min-h-screen p-4 pt-10">
-      <section className="wrap-section">
-        <h1 className="text-2xl font-bold text-purple-600 mb-4">목표/디데이를 입력해 주세요.</h1>
-        <div className="w-full max-w-xs">
-          <label htmlFor="goal" className="block text-sm font-medium text-gray-700">
-            목표
-          </label>
-          <input
-            id="goal"
-            type="text"
-            value={goal || ''}
-            onChange={e => setGoal(e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-            placeholder="목표 입력"
-          />
+    <div className="h-full min-h-screen pt-10  p-4 pt-40">
+      {userInfo ? (
+        <div className="h-full w-full flex flex-col items-center justify-center ">
+          <section className="wrap-section">
+            <h1 className="text-2xl font-bold text-purple-600 mb-4">닉네임을 입력해 주세요</h1>
+            <div className="mb-4">
+              <p id="msg">{msg}</p>
+              {/* <p className="text-sm font-medium text-gray-700">계정: {userInfo?.계정}</p>
+              <p className="text-sm font-medium text-gray-700">닉네임: {userInfo?.닉네임}</p> */}
+            </div>
+            <input
+              type="text"
+              value={newNickname}
+              onChange={e => setNewNickname(e.target.value)}
+              placeholder="새 닉네임 입력"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+            />
+            <div className="flex">
+              {' '}
+              <Link href="/profile">
+                <button className="mt-4 w-full px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                  취소
+                </button>
+              </Link>
+              <button
+                onClick={handleNicknameChange}
+                className="mt-4 w-full px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                완료
+              </button>
+            </div>
+          </section>
+          <NavBottom />
         </div>
-        <div className="w-full max-w-xs mt-4">
-          <label htmlFor="dDay" className="block text-sm font-medium text-gray-700">
-            남은기간: {daysLeft !== null ? `${daysLeft}일 남음` : 'N/A'}
-          </label>
-          <div className="flex space-x-2">
-            <select
-              value={year}
-              onChange={e => setYear(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
-              <option value="">년</option>
-              {years.map(y => (
-                <option key={y} value={y}>
-                  {y}
-                </option>
-              ))}
-            </select>
-            <select
-              value={month}
-              onChange={e => setMonth(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
-              <option value="">월</option>
-              {months.map(m => (
-                <option key={m} value={m}>
-                  {m}
-                </option>
-              ))}
-            </select>
-            <select
-              value={day}
-              onChange={e => setDay(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
-              <option value="">일</option>
-              {days.map(d => (
-                <option key={d} value={d}>
-                  {d}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <button
-          onClick={handleSetGoal}
-          className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-          완료
-        </button>
-      </section>
-      <NavBottom />
+      ) : (
+        <p className="text-lg text-purple-600">로딩 중...</p>
+      )}
     </div>
   );
-}
+};
 
-export default Goal;
+export default Nickname;

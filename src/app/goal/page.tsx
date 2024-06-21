@@ -1,6 +1,6 @@
 'use client';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { userAtom, accessTokenAtom, refreshTokenAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
 import { getCookieValue } from '@/libs/getCookieValue';
@@ -21,6 +21,7 @@ function Goal() {
   const [refreshToken] = useAtom(refreshTokenAtom);
   const router = useRouter();
   const [res, setRes] = useState<GoalResponse | null>(null);
+  const [daysLeft, setDaysLeft] = useState<number | null>(null);
 
   const refreshAccessToken = async () => {
     try {
@@ -100,6 +101,18 @@ function Goal() {
     }
   };
 
+  useEffect(() => {
+    if (year && month && day) {
+      const dDay = new Date(`${year}-${month}-${day}`);
+      const today = new Date();
+      const timeDiff = dDay.getTime() - today.getTime();
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      setDaysLeft(diffDays);
+    } else {
+      setDaysLeft(null);
+    }
+  }, [year, month, day]);
+
   const today = new Date().toISOString().split('T')[0];
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 10 }, (_, i) => (currentYear + i).toString());
@@ -107,7 +120,7 @@ function Goal() {
   const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0'));
 
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center min-h-screen p-4 pt-10">
+    <div className="h-full w-full flex flex-col justify-center items-center min-h-screen p-4 pt-40">
       <section className="wrap-section">
         <h1 className="text-2xl font-bold text-purple-600 mb-4">목표/디데이를 입력해 주세요.</h1>
         <div className="w-full max-w-xs">
@@ -125,7 +138,7 @@ function Goal() {
         </div>
         <div className="w-full max-w-xs mt-4">
           <label htmlFor="dDay" className="block text-sm font-medium text-gray-700">
-            남은기간: {res?.days_by_deadline ?? 'N/A'}
+            남은기간: {daysLeft !== null ? `${daysLeft}일 남음` : 'N/A'}
           </label>
           <div className="flex space-x-2">
             <select
