@@ -17,11 +17,11 @@ export interface PetType {
   primary_accessory: {
     item_name: string;
     image: string;
-  }
+  } | null;
   random_boxes: number;
   rice_quantity: number;
   snack_quantity: number;
-};
+}
 
 export interface RandomItemType {
   message: string;
@@ -32,9 +32,9 @@ export interface RandomItemType {
     quantity: number;
     image: string;
   };
-};
+}
 
-export interface FeedType{
+export interface FeedType {
   snack: {
     id: number;
     pet: number;
@@ -70,4 +70,4 @@ export interface FeedType{
     };
     hunger_degree_status: string;
   };
-};
+}

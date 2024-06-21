@@ -79,7 +79,7 @@ function Main() {
             setMaxProgress(response.data.pet_rating.point);
             setPetName(response.data.active_pet.pet_name);
             setStatusMessage(response.data.hunger_degree_status);
-            setAccessoryImageURL(response.data.primary_accessory.image);
+            if (response.data.primary_accessory !== null) setAccessoryImageURL(response.data.primary_accessory.image);
           })
           .catch(error => {
             console.error('pet error: ', error);
@@ -146,7 +146,7 @@ function Main() {
           }, 2000);
         })
         .catch(error => {
-          console.log('feedsnack error: ',error);
+          console.log('feedsnack error: ', error);
         });
     } else {
       alert('간식이 없습니다!');
@@ -181,30 +181,42 @@ function Main() {
 
             <section className="w-full h-1/3 flex flex-col items-center">
               <div className="flex w-full h-2/5 pb-2 justify-center items-end">
-              {isTouchPet ? (
+                {isTouchPet ? (
                   <Image src={'/pet/hand.png'} alt="hand" width={50} height={50} className="animate-shackHand" />
-              ) : 
-                (accessoryImageURL) && (
-                  <Image src={`https://api.oz-02-main-04.xyz${accessoryImageURL}`} alt="accessory" width={50} height={50} className="object-contain items-end" />
-                )
-              }
+                ) : (
+                  accessoryImageURL && (
+                    <Image
+                      src={`https://api.oz-02-main-04.xyz${accessoryImageURL}`}
+                      alt="accessory"
+                      width={50}
+                      height={50}
+                      className="object-contain items-end"
+                    />
+                  )
+                )}
               </div>
               <div className="flex w-full h-3/5 justify-center items-top">
                 {/* {isLevelUp ? (
                   <Image src={'/pet/crackEgg.png'} alt="pet" width={80} height={80} className="h-full object-contain" />
                 ) : ( */}
-                  <Image src={`https://api.oz-02-main-04.xyz${activePetImageURL}`} alt="pet" width={150} height={130} className="object-contain items-top" />
+                <Image
+                  src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
+                  alt="pet"
+                  width={150}
+                  height={130}
+                  className="object-contain items-top"
+                />
                 {/* )} */}
               </div>
             </section>
 
             <section className="h-1/3 p-3 text-center">
-            {tempSaveMessage ? (
-              <PetStateMessage message={tempSaveMessage} messageClass='animate-fadeInOut'/>
-            ) : (
-              <PetStateMessage message={statusMessage} messageClass='animate-fadeIn'/>
-            )}
-              
+              {tempSaveMessage ? (
+                <PetStateMessage message={tempSaveMessage} messageClass="animate-fadeInOut" />
+              ) : (
+                <PetStateMessage message={statusMessage} messageClass="animate-fadeIn" />
+              )}
+
               <div className="flex justify-center items-end">
                 <MainPetButton
                   icon={<BiBowlRice size="30" />}
@@ -229,11 +241,11 @@ function Main() {
             </section>
           </main>
         </div>
-       ) : (
+      ) : (
         <div className="wrap-section text-center flex">
           <div className="m-auto text-primary-500">Loding...</div>
         </div>
-      )} 
+      )}
       <NavBottom />
     </div>
   );
