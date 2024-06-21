@@ -8,9 +8,9 @@ const KakaoLogin = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen  p-4">
+    <div className="bg-purple-600 flex flex-col items-center justify-center min-h-screen  p-4">
       <div className="mb-40">
-        <Image src={'/images/logoPurple.png'} alt="logo" width={100} height={100} />
+        <Image src={'/images/logoWhite.png'} alt="logo" width={100} height={100} />
       </div>
       <button onClick={handleKakaoLogin}>
         {' '}
