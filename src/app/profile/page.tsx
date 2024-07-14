@@ -47,7 +47,7 @@ export default function Page() {
         return;
       }
       try {
-        const response = await axios.get('https://api.oz-02-main-04.xyz/api/v1/users/myinfo/', {
+        const response = await axios.get('https://api.petodo.today/api/v1/users/myinfo/', {
           withXSRFToken: true,
           withCredentials: true,
           headers: {
@@ -69,11 +69,11 @@ export default function Page() {
 
   const handleLogout = async () => {
     try {
-      deleteCookie('access_token', '/', 'oz-02-main-04.xyz');
-      deleteCookie('refresh_token', '/', 'oz-02-main-04.xyz');
-      deleteCookie('csrftoken', '/', 'oz-02-main-04.xyz');
-      deleteCookie('csrftoken', '/', 'api.oz-02-main-04.xyz');
-      deleteCookie('sessionid', '/', 'oz-02-main-04.xyz');
+      deleteCookie('access_token', '/', 'petodo.today');
+      deleteCookie('refresh_token', '/', 'petodo.today');
+      deleteCookie('csrftoken', '/', 'petodo.today');
+      deleteCookie('csrftoken', '/', 'api.petodo.today');
+      deleteCookie('sessionid', '/', 'petodo.today');
       setUser(null);
       setAccessToken(null);
       setCsrf(null);
@@ -84,7 +84,7 @@ export default function Page() {
   };
 
   const handleKakaoLogin = () => {
-    const kakaoAuthUrl = `https://api.oz-02-main-04.xyz/api/v1/users/kakao/`;
+    const kakaoAuthUrl = `https://api.petodo.today/api/v1/users/kakao/`;
     window.location.href = kakaoAuthUrl;
   };
 

@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    remotePatterns: [{ protocol: 'https', hostname: 'api.oz-02-main-04.xyz' }],
+    remotePatterns: [{ protocol: 'https', hostname: 'api.petodo.today' }],
   },
 };
 

@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const KakaoLogin = () => {
   const handleKakaoLogin = () => {
-    const kakaoAuthUrl = `https://api.oz-02-main-04.xyz/api/v1/users/kakao/`;
+    const kakaoAuthUrl = `https://api.petodo.today/api/v1/users/kakao/`;
     window.location.href = kakaoAuthUrl;
   };
 

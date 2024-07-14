@@ -18,7 +18,8 @@ export default function FriendMain() {
   const [selectedAccessory, isSelectedAccessory] = useState('');
 
   useEffect(() => {
-    axios.get<SelectedUserItemType>(`pets/${selectedUser?.id}`)
+    axios
+      .get<SelectedUserItemType>(`pets/${selectedUser?.id}`)
       .then(response => {
         setSelectedUserItem(response.data);
         isSelectedPet(response.data.primary_pet.image);
@@ -26,26 +27,33 @@ export default function FriendMain() {
         isSelectedAccessory(response.data.primary_accessory);
       })
       .catch(error => {
-        console.log('guestbackground error: ',error);
-      })
-  })
+        console.log('guestbackground error: ', error);
+      });
+  });
 
   return (
-    <div className="w-full h-full bg-cover"
-      style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${selectedBackground})` }}>
+    <div
+      className="w-full h-full bg-cover"
+      style={{ backgroundImage: `url(https://api.petodo.today${selectedBackground})` }}>
       <header className="h-1/6 pt-8 pb-2"></header>
 
       <main className="w-full h-5/6 flex flex-col justify-end">
         <section className="w-full h-1/3 grid justify-end p-4 text-center"></section>
         <section className="w-full h-1/3 flex flex-col items-center">
-        {/* <div className="flex w-full h-2/5 pb-2 justify-center items-end">
+          {/* <div className="flex w-full h-2/5 pb-2 justify-center items-end">
           {selectedAccessory && (
-            <Image src={`https://api.oz-02-main-04.xyz${selectedAccessory}`} alt="accessory" width={50} height={50} className="object-contain items-end" /> 
+            <Image src={`https://api.petodo.today${selectedAccessory}`} alt="accessory" width={50} height={50} className="object-contain items-end" /> 
            )}
         </div> */}
-        <div className="flex w-full h-3/5 justify-center items-top">
-          <Image src={`https://api.oz-02-main-04.xyz${selectedPet}`} alt="egg" width={130} height={130} className="object-contain items-top" />
-        </div>
+          <div className="flex w-full h-3/5 justify-center items-top">
+            <Image
+              src={`https://api.petodo.today${selectedPet}`}
+              alt="egg"
+              width={130}
+              height={130}
+              className="object-contain items-top"
+            />
+          </div>
         </section>
 
         <section className="h-1/3 p-3 text-center flex justify-center items-center">

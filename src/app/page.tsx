@@ -168,7 +168,7 @@ function Main() {
       {petData ? (
         <div
           className="wrap-section bg-cover animate-fadeIn"
-          style={{ backgroundImage: `url(https://api.oz-02-main-04.xyz${backgroundImageURL})` }}>
+          style={{ backgroundImage: `url(https://api.petodo.today${backgroundImageURL})` }}>
           <header className="h-1/6 pt-8 pb-2 bg-white">
             <PetProfile name={petName} level={level} progress={experience} maxProgress={maxProgress} />
           </header>
@@ -186,7 +186,7 @@ function Main() {
                 ) : (
                   accessoryImageURL && (
                     <Image
-                      src={`https://api.oz-02-main-04.xyz${accessoryImageURL}`}
+                      src={`https://api.petodo.today.xyz${accessoryImageURL}`}
                       alt="accessory"
                       width={50}
                       height={50}
@@ -200,7 +200,7 @@ function Main() {
                   <Image src={'/pet/crackEgg.png'} alt="pet" width={80} height={80} className="h-full object-contain" />
                 ) : ( */}
                 <Image
-                  src={`https://api.oz-02-main-04.xyz${activePetImageURL}`}
+                  src={`https://api.petodo.today${activePetImageURL}`}
                   alt="pet"
                   width={150}
                   height={130}

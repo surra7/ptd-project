@@ -170,7 +170,7 @@ function Page() {
       // if (id != undefined) {
       //   setTodos(todos.filter(todo => todo.id !== id));
       // }
-      // await axios.delete(`https://api.oz-02-main-04.xyz/api/v1/posts/todo/1/${id}`);
+      // await axios.delete(`https://api.petodo.today/api/v1/posts/todo/1/${id}`);
       deleteTodo(id!);
       setIsModalOpen(false);
       setModalIndex(undefined);
