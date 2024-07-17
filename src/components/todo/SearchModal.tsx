@@ -39,27 +39,27 @@ function SearchModal({ setIsModalOpen, setMusicTitle, setMusicUrl, postId }: Pro
   return (
     <ModalWrapper onClose={() => setIsModalOpen(false)}>
       <div className="w-full h-full flex justify-center items-center bg-black-950 bg-opacity-50 z-10">
-        <div className="w-[12.5rem] h-[25rem] bg-white z-30">
+        <div className="w-[15.625rem] h-[26.25rem] bg-white z-30" onClick={e => e.stopPropagation()}>
           <form onSubmit={onSubmit}>
             <input
               type="text"
               value={value}
               onChange={getValue}
-              className="py-2 pl-1 flex items-center border-b-[0.0313rem] border-borderGray"
+              className="w-full py-2 pl-1 text-sm flex items-center border-b-[0.0313rem] border-borderGray"
               placeholder="음악을 입력해주세요."></input>
           </form>
           <div className="w-full h-[20rem] bg-white overflow-auto">
             <ul>
               {musicList &&
                 musicList.map((item, index) => (
-                  <li onClick={() => onMusic(item.title, item.singer, item.song_url)} key={index}>
+                  <li onClick={() => onMusic(item.title, item.singer, item.song_url)} key={index} className="py-1">
                     {item.singer} - {item.title}
                   </li>
                 ))}
             </ul>
           </div>
           <div onClick={() => setIsModalOpen(false)} className="w-full border-t-[0.0313rem] border-borderGray">
-            <div className="p-1 cursor-pointer">닫기</div>
+            <div className="w-fit h-fit p-1 text-sm cursor-pointer">닫기</div>
           </div>
         </div>
       </div>
