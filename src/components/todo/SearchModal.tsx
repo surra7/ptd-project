@@ -1,6 +1,7 @@
 import { axios } from '@/services/instance';
 import { SetStateAction } from 'jotai';
 import React, { useState } from 'react';
+import ModalWrapper from '../ModalWrapper';
 
 interface Props {
   setIsModalOpen(boolean: boolean): void;
@@ -36,35 +37,33 @@ function SearchModal({ setIsModalOpen, setMusicTitle, setMusicUrl, postId }: Pro
   };
 
   return (
-    <>
-      <div className="absolute top-0 left-0 w-full h-full bg-black-950 bg-opacity-50 z-10"></div>
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
-        <div className="bg-white">
+    <ModalWrapper onClose={() => setIsModalOpen(false)}>
+      <div className="w-full h-full flex justify-center items-center bg-black-950 bg-opacity-50 z-10">
+        <div className="w-[12.5rem] h-[25rem] bg-white z-30">
           <form onSubmit={onSubmit}>
             <input
               type="text"
               value={value}
               onChange={getValue}
-              className=""
+              className="py-2 pl-1 flex items-center border-b-[0.0313rem] border-borderGray"
               placeholder="음악을 입력해주세요."></input>
           </form>
-          <div className="w-full h-[20rem] bg-white overflow-scroll">
+          <div className="w-full h-[20rem] bg-white overflow-auto">
             <ul>
-              {musicList ? (
+              {musicList &&
                 musicList.map((item, index) => (
                   <li onClick={() => onMusic(item.title, item.singer, item.song_url)} key={index}>
                     {item.singer} - {item.title}
                   </li>
-                ))
-              ) : (
-                <></>
-              )}
+                ))}
             </ul>
           </div>
-          <div onClick={() => setIsModalOpen(false)}>닫기</div>
+          <div onClick={() => setIsModalOpen(false)} className="w-full border-t-[0.0313rem] border-borderGray">
+            <div className="p-1 cursor-pointer">닫기</div>
+          </div>
         </div>
       </div>
-    </>
+    </ModalWrapper>
   );
 }
 

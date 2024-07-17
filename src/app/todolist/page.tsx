@@ -8,7 +8,6 @@ import Timer from '@/components/todo/Timer';
 import ToDoInsert from '@/components/todo/ToDoInsert';
 import ToDoListItem from '@/components/todo/ToDoListItem';
 import { useTodos, useDeleteTodo, useCreateTodo, TodoItem } from '@/hooks/useTodo';
-import { getCookieValue } from '@/libs/getCookieValue';
 import { axios } from '@/services/instance';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
@@ -37,7 +36,6 @@ interface PostType {
 }
 
 function Page() {
-  // const [todos, setTodos] = useState<TodoType[]>([]);
   const [memo, setMemo] = useState<string | undefined>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalIndex, setModalIndex] = useState<number>();
@@ -49,8 +47,6 @@ function Page() {
   const [deadline, setDeadline] = useState<number>();
   const { mutateAsync: deleteTodo } = useDeleteTodo(postId as number);
   const { mutateAsync: createTodo } = useCreateTodo(postId as number);
-  const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
-  const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
   const [user, setUser] = useAtom<User | null>(userAtom);
   const router = useRouter();
   const today = new Date();
@@ -68,7 +64,7 @@ function Page() {
         router.push('/introduce');
         return;
       });
-  }, [accessToken, csrf]);
+  }, [setUser, router]);
 
   useEffect(() => {
     const getData = async () => {
@@ -215,7 +211,7 @@ function Page() {
       await axios.put('posts/', { memo: memo, todo_date: formattedDate });
     };
     updateMemo(memo);
-  }, [memo]);
+  }, [memo, formattedDate]);
 
   return (
     <div className="w-full h-full">

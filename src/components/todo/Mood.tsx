@@ -23,12 +23,12 @@ function Mood({ formattedDate }: Props) {
       setSelectMood(data.feeling_status);
     };
     getMood();
-  }, []);
+  }, [formattedDate]);
 
   return (
     <>
       <div className="flex w-[4.25rem] h-[1.5625rem] gap-[0.1875rem] items-center">
-        <label className="flex items-center gap-[0.1875rem]">
+        <label className="flex items-center gap-[0.1875rem] cursor-pointer">
           <input type="radio" name="mood" value={0} className="hidden" onClick={() => handleSelect(0)} />
           <TbMoodSmile
             className={`w-[1.5625rem] h-[1.5625rem] ${selectMood === 0 ? 'text-primary-600' : 'text-black-200'}`}
@@ -38,7 +38,7 @@ function Mood({ formattedDate }: Props) {
           </p>
         </label>
       </div>
-      <label className="flex items-center gap-[0.1875rem]">
+      <label className="flex items-center gap-[0.1875rem] cursor-pointer">
         <input type="radio" name="mood" value={1} className="hidden" onClick={() => handleSelect(1)} />
         <TbMoodEmpty
           className={`w-[1.5625rem] h-[1.5625rem] ${selectMood === 1 ? 'text-primary-600' : 'text-black-200'}`}
@@ -47,7 +47,7 @@ function Mood({ formattedDate }: Props) {
           SO SO
         </p>
       </label>
-      <label className="flex items-center gap-[0.1875rem]">
+      <label className="flex items-center gap-[0.1875rem] cursor-pointer">
         <input type="radio" name="mood" value={2} className="hidden" onClick={() => handleSelect(2)} />
         <TbMoodSad
           className={`w-[1.5625rem] h-[1.5625rem] ${selectMood === 2 ? 'text-primary-600' : 'text-black-200'}`}

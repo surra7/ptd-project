@@ -106,7 +106,7 @@ function Main() {
     } else if (prevPetLevel == 2 && level == 1) {
       alert('축하합니다! 펫이 모두 성장하였습니다. 새로운 알이 지급됩니다.');
     }
-  }, [level]);
+  }, [level, prevPetLevel]);
 
   //밥주기
   const handleFeedRice = () => {

@@ -97,13 +97,10 @@ export default function Page() {
   }
 
   return (
-    <div className="h-full w-full pb-10 ">
-      {' '}
+    <div className="h-full w-full">
       {user ? (
         <>
-          {/* <div className=" flex flex-col p-4 mt-10"> */}
           <section className="wrap-section p-4 pt-40 flex flex-col ">
-            {' '}
             <div className="flex items-baseline">
               <span className="text-2xl font-bold text-purple-600 mb-4"> {user.닉네임}</span>
               <span>님 반가워요!</span>{' '}
@@ -134,7 +131,7 @@ export default function Page() {
             </ul>
             <hr className="border-purple-600 w-full my-4" />
           </section>
-          <NavBottom /> {/* </div> */}
+          <NavBottom />
         </>
       ) : (
         <>
