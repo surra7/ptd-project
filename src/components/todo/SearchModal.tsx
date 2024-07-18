@@ -40,27 +40,27 @@ function SearchModal({ setIsModalOpen, setMusicTitle, setMusicUrl, postId }: Pro
   return (
     <ModalWrapper onClose={() => setIsModalOpen(false)}>
       <div className="w-full h-full flex justify-center items-center bg-black-950 bg-opacity-50 z-10">
-        <div className="w-[15.625rem] h-[26.25rem] bg-white z-30" onClick={e => e.stopPropagation()}>
-          <form onSubmit={onSubmit} className="flex">
+        <div className="w-[16.25rem] h-[27.5rem] bg-white z-30" onClick={e => e.stopPropagation()}>
+          <form onSubmit={onSubmit} className="flex border-b-[0.0313rem] border-borderGray">
             <input
               type="text"
               value={value}
               onChange={getValue}
-              className="w-full py-2 pl-1 flex items-center border-b-[0.0313rem] border-borderGray"
+              className="w-full py-2 pl-1 flex items-center"
               placeholder="음악을 입력해주세요."
             />
-            <button className="justify-items-end">
+            <button type="submit" className="justify-items-end mr-1">
               <MdSearch size={32} color="black" />
             </button>
           </form>
-          <div className="w-full h-[21.875rem] bg-white overflow-auto">
+          <div className="w-full h-[23.125rem] bg-white overflow-auto">
             <ul>
               {musicList &&
                 musicList.map((item, index) => (
                   <li
                     onClick={() => onMusic(item.title, item.singer, item.song_url)}
                     key={index}
-                    className="p-1 text-mm border-b-[0.0313rem] border-borderGray">
+                    className="p-1 text-mm border-b-[0.0313rem] border-borderGray cursor-pointer">
                     {item.singer} - {item.title}
                   </li>
                 ))}
