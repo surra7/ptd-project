@@ -74,9 +74,7 @@ function Page() {
           const data: PostType = res.data.find((item: any, i: number) => {
             if (item.todo_date === formattedDate) return i + 1;
           });
-          console.log(data);
           setPostId(data.id);
-          console.log(data.id);
           setGoal(data.goal);
           setDeadline(data.days_by_deadline);
           setMemo(data.memo as string);
@@ -127,7 +125,6 @@ function Page() {
             const edit = todos.find(v => v.id === modalIndex);
             if (edit !== undefined) {
               edit.todo_item = text;
-              // setTodos([...todos]);
             }
             await axios.put(`posts/todo/${postId}/${modalIndex}`, {
               todo_item: text,

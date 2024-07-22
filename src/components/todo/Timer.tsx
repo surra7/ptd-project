@@ -19,6 +19,8 @@ function Timer({ postId }: Props) {
           const res = await axios.get(`posts/timer/${postId}`);
           console.log(res);
           setSeconds(res.data.formatted_duration);
+          if (res.data.on_btn) setIsActive(true);
+          else setIsActive(false);
         } else return;
       } catch {
         return;
@@ -99,9 +101,9 @@ function Timer({ postId }: Props) {
           <button type="button" onClick={handleStart}>
             <BsSkipStartCircle className="w-[1.625rem] h-[1.625rem] text-black-200" />
           </button>
-          {/* <button type="button" onClick={handleReset}>
+          <button type="button" onClick={handleReset}>
             <BiReset className="w-[1.625rem] h-[1.625rem] text-red-400" />
-          </button> */}
+          </button>
         </>
       )}
     </>

@@ -54,7 +54,6 @@ export default function Page() {
           },
         });
         setUser(response.data);
-        // console.log(response.data);
       } catch (error) {
         console.error(error);
       } finally {
