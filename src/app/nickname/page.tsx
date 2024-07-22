@@ -93,8 +93,8 @@ const Nickname = () => {
   return (
     <div className="w-full h-full">
       {userInfo ? (
-        <div className="h-full w-full px-4 pt-40 flex flex-col items-center justify-center">
-          <section className="wrap-section">
+        <div className="h-full w-full">
+          <section className="wrap-section px-4 pt-40 flex flex-col items-center justify-center">
             <div className="text-center">
               <div className="text-2xl font-bold text-purple-600 mb-4">닉네임을 입력해 주세요</div>
               <div className="mb-4">
@@ -110,13 +110,13 @@ const Nickname = () => {
             />
             <div className="flex justify-between mt-4 w-full">
               <Link href="/profile">
-                <button className="w-1/2 mr-2 px-4 py-2 rounded-md shadow hover:bg-black-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                <button className="w-40 px-4 py-2 rounded-md shadow hover:bg-black-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                   취소
                 </button>
               </Link>
               <button
                 onClick={handleNicknameChange}
-                className="w-1/2 ml-2 px-4 py-2 bg-purple-600 text-white rounded-md shadow hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                className="w-40 px-4 py-2 bg-purple-600 text-white rounded-md shadow hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                 완료
               </button>
             </div>
