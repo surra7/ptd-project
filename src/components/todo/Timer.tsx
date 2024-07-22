@@ -30,20 +30,13 @@ function Timer({ postId }: Props) {
   }, [postId]);
 
   useEffect(() => {
-    let interval: NodeJS.Timer;
-
     if (isActive) {
-      interval = setInterval(async () => {
-        // setSeconds(seconds => seconds + 1);
-        const res = await axios.get(`posts/timer/${postId}`);
-        console.log(res.data);
-        setSeconds(res.data.formatted_duration);
+      const interval = setInterval(async () => {
+        setSeconds(seconds => seconds + 1);
       }, 1000);
-    } else if (!isActive && seconds !== 0) {
-      clearInterval(interval! as NodeJS.Timeout);
+      return () => clearInterval(interval);
     }
-    return () => clearInterval(interval as NodeJS.Timeout);
-  }, [isActive, postId, seconds]);
+  }, [isActive, seconds]);
 
   const handleStart = async (): Promise<void> => {
     setIsActive(prev => !prev);
@@ -101,9 +94,9 @@ function Timer({ postId }: Props) {
           <button type="button" onClick={handleStart}>
             <BsSkipStartCircle className="w-[1.625rem] h-[1.625rem] text-black-200" />
           </button>
-          <button type="button" onClick={handleReset}>
+          {/* <button type="button" onClick={handleReset}>
             <BiReset className="w-[1.625rem] h-[1.625rem] text-red-400" />
-          </button>
+          </button> */}
         </>
       )}
     </>
