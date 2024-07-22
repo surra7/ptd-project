@@ -106,25 +106,25 @@ export default function Page() {
             <hr className="border-purple-600 w-full mb-4" />
             <ul className="space-y-4">
               <li>
-                <button onClick={() => router.push('/nickname')} className="hover:underline">
+                <button onClick={() => router.push('/nickname')} className="w-72 text-start hover:underline">
                   닉네임 변경하기
                 </button>
               </li>
               <li>
-                <button onClick={() => router.push('/goal')} className="hover:underline">
+                <button onClick={() => router.push('/goal')} className="w-72 text-start hover:underline">
                   목표 설정하기
                 </button>
               </li>
               <li>
-                <button onClick={() => router.push('/introduce')} className="hover:underline">
+                <button onClick={() => router.push('/introduce')} className="w-72 text-start hover:underline">
                   Petodo 가이드 보기
                 </button>
               </li>
               <li>
-                <button className="hover:underline">문의하기</button>
+                <button className="w-72 text-start hover:underline">문의하기</button>
               </li>
               <li>
-                <button onClick={handleLogout} className="text-red-600 hover:underline">
+                <button onClick={handleLogout} className="w-72 text-start text-red-600 hover:underline">
                   로그아웃
                 </button>
               </li>

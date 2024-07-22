@@ -105,7 +105,7 @@ const Nickname = () => {
             <div className="flex justify-between mt-4 w-full">
               <button
                 onClick={() => router.push('/profile')}
-                className="w-40 ml-2 px-4 py-2 rounded-md shadow hover:bg-black-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                className="w-40 ml-2 px-4 py-2 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                 취소
               </button>
               <button
