@@ -91,12 +91,12 @@ const Nickname = () => {
   };
 
   return (
-    <div className="h-full p-4 pt-40 flex flex-col items-center justify-center">
+    <div className="w-full h-full">
       {userInfo ? (
-        <div className="h-full w-full flex flex-col items-center justify-center">
-          <section className="wrap-section w-full max-w-md">
+        <div className="h-full w-full px-4 pt-40 flex flex-col items-center justify-center">
+          <section className="wrap-section">
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-purple-600 mb-4">닉네임을 입력해 주세요</h1>
+              <div className="text-2xl font-bold text-purple-600 mb-4">닉네임을 입력해 주세요</div>
               <div className="mb-4">
                 <p id="msg">{msg}</p>
               </div>
@@ -110,13 +110,13 @@ const Nickname = () => {
             />
             <div className="flex justify-between mt-4 w-full">
               <Link href="/profile">
-                <button className="w-full ml-2 mr-2 px-4 py-2  text-black rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                <button className="w-1/2 mr-2 px-4 py-2 rounded-md shadow hover:bg-black-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                   취소
                 </button>
               </Link>
               <button
                 onClick={handleNicknameChange}
-                className="w-1/2 ml-2 px-4 py-2 bg-purple-600 text-white rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                className="w-1/2 ml-2 px-4 py-2 bg-purple-600 text-white rounded-md shadow hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                 완료
               </button>
             </div>
@@ -124,7 +124,9 @@ const Nickname = () => {
           <NavBottom />
         </div>
       ) : (
-        <p className="text-lg text-purple-600">로딩 중...</p>
+        <div className="w-full h-full flex items-center justify-center">
+          <p className="text-lg text-purple-600">로딩 중...</p>
+        </div>
       )}
     </div>
   );
