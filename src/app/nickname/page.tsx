@@ -5,13 +5,6 @@ import { userAtom } from '@/atoms/atoms';
 import { useAtom } from 'jotai';
 import NavBottom from '@/components/NavBottom';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-
-interface User {
-  id?: number;
-  계정?: string;
-  닉네임: string;
-}
 
 const getCookieValue = (name: any) => {
   const value = `; ${document.cookie}`;
@@ -94,7 +87,7 @@ const Nickname = () => {
     <div className="w-full h-full">
       {userInfo ? (
         <div className="h-full w-full">
-          <section className="wrap-section px-4 pt-40 flex flex-col items-center justify-center">
+          <section className="wrap-section px-4 pt-40 flex flex-col items-center">
             <div className="text-center">
               <div className="text-2xl font-bold text-purple-600 mb-4">닉네임을 입력해 주세요</div>
               <div className="mb-4">
@@ -106,17 +99,18 @@ const Nickname = () => {
               value={newNickname}
               onChange={e => setNewNickname(e.target.value)}
               placeholder="새 닉네임 입력"
+              maxLength={10}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
             />
             <div className="flex justify-between mt-4 w-full">
-              <Link href="/profile">
-                <button className="w-40 px-4 py-2 rounded-md shadow hover:bg-black-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                  취소
-                </button>
-              </Link>
+              <button
+                onClick={() => router.push('/profile')}
+                className="w-40 ml-2 px-4 py-2 rounded-md shadow hover:bg-black-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                취소
+              </button>
               <button
                 onClick={handleNicknameChange}
-                className="w-40 px-4 py-2 bg-purple-600 text-white rounded-md shadow hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                className="w-40 mr-2 px-4 py-2 bg-purple-600 text-white rounded-md shadow hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                 완료
               </button>
             </div>
