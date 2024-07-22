@@ -2,10 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAtom } from 'jotai';
-import { userAtom, accessTokenAtom, csrfTokenAtom, nicknameAtom } from '@/atoms/atoms';
+import { userAtom, accessTokenAtom, csrfTokenAtom } from '@/atoms/atoms';
 import Image from 'next/image';
 import NavBottom from '@/components/NavBottom';
-import Link from 'next/link';
 import { getCookieValue } from '@/libs/getCookieValue';
 import { deleteCookie } from '@/libs/deleteCookieValue';
 import { useRouter } from 'next/navigation';
@@ -20,7 +19,6 @@ export default function Page() {
   const [accessToken, setAccessToken] = useAtom<string | null>(accessTokenAtom);
   const [csrf, setCsrf] = useAtom<string | null>(csrfTokenAtom);
   const [isLoading, setIsLoading] = useState(true);
-  const [nickname, setNickname] = useAtom(nicknameAtom);
   const router = useRouter();
   useEffect(() => {
     const fetchTokens = async () => {
@@ -38,7 +36,7 @@ export default function Page() {
       }
     };
     fetchTokens();
-  }, [setAccessToken]);
+  }, [setAccessToken, setCsrf]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -99,52 +97,51 @@ export default function Page() {
   return (
     <div className="h-full w-full">
       {user ? (
-        <div className="h-full w-full">
-          <section className="wrap-section px-4 pt-40 flex flex-col ">
+        <>
+          <section className="wrap-section px-4 pt-40 flex flex-col">
             <div className="flex items-baseline">
-              <span className="text-2xl font-bold text-purple-600 mb-4"> {user.닉네임}</span>
-              <span>님 반가워요!</span>{' '}
+              <span className="text-2xl font-bold text-purple-600 mb-4">{user.닉네임}</span>
+              <span>님 반가워요!</span>
             </div>
             <hr className="border-purple-600 w-full mb-4" />
             <ul className="space-y-4">
               <li>
-                <Link href="/nickname">
-                  <p className=" hover:underline">닉네임 변경하기</p>
-                </Link>
+                <button onClick={() => router.push('/nickname')} className="hover:underline">
+                  닉네임 변경하기
+                </button>
               </li>
               <li>
-                <Link href="/goal">
-                  <p className=" hover:underline">목표 설정하기</p>
-                </Link>
+                <button onClick={() => router.push('/goal')} className="hover:underline">
+                  목표 설정하기
+                </button>
               </li>
               <li>
-                {' '}
-                <Link href="/introduce">
-                  <p className=" hover:underline">Petodo 가이드 보기</p>
-                </Link>{' '}
+                <button onClick={() => router.push('/introduce')} className="hover:underline">
+                  Petodo 가이드 보기
+                </button>
               </li>
               <li>
-                <a onClick={handleLogout} className="text-red-600 hover:underline">
+                <button className="hover:underline">문의하기</button>
+              </li>
+              <li>
+                <button onClick={handleLogout} className="text-red-600 hover:underline">
                   로그아웃
-                </a>
+                </button>
               </li>
             </ul>
             <hr className="border-purple-600 w-full my-4" />
           </section>
           <NavBottom />
-        </div>
+        </>
       ) : (
-        <div className="h-full w-full">
-          <section
-            className="wrap-section
+        <section
+          className="wrap-section
            flex items-center flex-col justify-center">
-            <p className="text-2xl font-bold text-purple-600 mb-4">로그인 해주세요.</p>
-            <button onClick={handleKakaoLogin}>
-              <Image src={'/images/kakaoLogin.png'} alt="kakao-login" width={200} height={200} />
-            </button>
-          </section>
-          <div className="mb-10">{/* <NavBottom /> */}</div>
-        </div>
+          <p className="text-2xl font-bold text-purple-600 mb-4">로그인 해주세요.</p>
+          <button onClick={handleKakaoLogin}>
+            <Image src={'/images/kakaoLogin.png'} alt="kakao-login" width={200} height={200} />
+          </button>
+        </section>
       )}
     </div>
   );

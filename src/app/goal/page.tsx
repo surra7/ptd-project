@@ -121,8 +121,8 @@ function Goal() {
   const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0'));
 
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center min-h-screen p-4 pt-40">
-      <section className="wrap-section w-full max-w-md">
+    <div className="h-full w-full">
+      <section className="wrap-section flex flex-col items-center p-4 pt-40">
         <h1 className="text-center text-2xl font-bold text-purple-600 mb-4">목표/디데이를 입력해 주세요.</h1>
         <div className="w-full">
           <label htmlFor="goal" className="block text-sm font-medium text-gray-700">
