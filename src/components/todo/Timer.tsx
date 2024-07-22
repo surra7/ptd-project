@@ -41,7 +41,7 @@ function Timer({ postId }: Props) {
       clearInterval(interval! as NodeJS.Timeout);
     }
     return () => clearInterval(interval as NodeJS.Timeout);
-  }, [isActive, seconds]);
+  }, [isActive, postId, seconds]);
 
   const handleStart = async (): Promise<void> => {
     setIsActive(prev => !prev);

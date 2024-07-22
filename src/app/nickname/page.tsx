@@ -56,7 +56,7 @@ const Nickname = () => {
     };
 
     fetchUserInfo();
-  }, [accessToken, csrfToken]);
+  }, [accessToken, csrfToken, setUserInfo]);
 
   const handleNicknameChange = async () => {
     if (!newNickname) {
@@ -91,7 +91,7 @@ const Nickname = () => {
   };
 
   return (
-    <div className="h-full min-h-screen p-4 pt-40 flex flex-col items-center justify-center">
+    <div className="h-full p-4 pt-40 flex flex-col items-center justify-center">
       {userInfo ? (
         <div className="h-full w-full flex flex-col items-center justify-center">
           <section className="wrap-section w-full max-w-md">
