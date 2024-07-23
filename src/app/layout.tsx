@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <ReactQueryClientProvider>
       <html lang="en">
-        <link rel="icon" href="/PTDLogo.png" sizes="any" />
+        <link rel="shortcut icon" href="/PTDLogo.png" sizes="any" />
         <Provider>
           <body className={notoSansKR.className}>
             <div id="modal-root"></div>

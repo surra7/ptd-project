@@ -9,9 +9,10 @@ interface Props {
 }
 
 function Timer({ postId }: Props) {
-  const [formattedSeconds, setFormattedSeconds] = useState<string>('');
+  const [formattedTime, setFormattedTime] = useState<string>('');
   const [isActive, setIsActive] = useState<boolean>(false); // 활성화 여부
   const countSeconds = useRef(0);
+  const duration = useRef('');
 
   const setTotalSeconds = (formattedSeconds: string) => {
     const [hours, minutes, seconds] = formattedSeconds.split(':').map(Number);
@@ -33,27 +34,28 @@ function Timer({ postId }: Props) {
 
   useEffect(() => {
     const getTime = async () => {
-      try {
-        if (postId) {
-          const res = await axios.get(`posts/timer/${postId}`);
-          console.log(res);
-          setFormattedSeconds(res.data.formatted_duration);
-          countSeconds.current = setTotalSeconds(formattedSeconds);
-          if (res.data.on_btn) setIsActive(true);
-          else setIsActive(false);
-        } else return;
-      } catch {
-        return;
-      }
+      if (postId) {
+        const res = await axios.get(`posts/timer/${postId}`);
+        console.log(res);
+        duration.current = res.data.formatted_duration;
+        // countSeconds.current = setTotalSeconds(formattedSeconds);
+        if (res.data.on_btn) setIsActive(true);
+        else setIsActive(false);
+      } else return;
     };
     getTime();
-  }, [formattedSeconds, postId]);
+  }, [postId]);
+
+  useEffect(() => {
+    setFormattedTime(duration.current);
+    countSeconds.current = setTotalSeconds(formattedTime);
+  }, [formattedTime]);
 
   useEffect(() => {
     if (isActive) {
       const interval = setInterval(async () => {
         countSeconds.current += 1;
-        setFormattedSeconds(secondsToTime(countSeconds.current));
+        setFormattedTime(secondsToTime(countSeconds.current));
       }, 1000);
       return () => clearInterval(interval);
     }
@@ -73,10 +75,6 @@ function Timer({ postId }: Props) {
 
   const handleStop = async () => {
     setIsActive(prev => !prev);
-    // if (!isActive) {
-    //   const nowTimes = formatTime(seconds);
-    //   console.log(nowTimes);
-    // }
     await axios.patch(`posts/timer/${postId}`, { action: 'pause' });
   };
 
@@ -86,7 +84,7 @@ function Timer({ postId }: Props) {
         <LuTimer className="w-[1.3125rem] h-[1.3125rem] text-black-900" />
       </div>
       <div className="flex items-center w-[19rem] h-[2rem] font-medium text-[0.875rem] text-textGray">
-        {formattedSeconds ? formattedSeconds : '타이머를 이용해 공부 시간을 알아보세요!'}
+        {formattedTime ? formattedTime : '타이머를 이용해 공부 시간을 알아보세요!'}
       </div>
       {isActive ? (
         <button type="button" onClick={handleStop}>
