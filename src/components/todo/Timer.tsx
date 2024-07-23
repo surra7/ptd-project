@@ -48,8 +48,9 @@ function Timer({ postId }: Props) {
 
   useEffect(() => {
     setFormattedTime(duration.current);
+    console.log(formattedTime);
     countSeconds.current = setTotalSeconds(formattedTime);
-  }, [formattedTime]);
+  }, [formattedTime, duration]);
 
   useEffect(() => {
     if (isActive) {
