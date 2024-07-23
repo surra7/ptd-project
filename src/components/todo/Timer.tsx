@@ -12,7 +12,6 @@ function Timer({ postId }: Props) {
   const [formattedTime, setFormattedTime] = useState<string>('');
   const [isActive, setIsActive] = useState<boolean>(false); // 활성화 여부
   const countSeconds = useRef(0);
-  const duration = useRef('');
 
   const setTotalSeconds = (formattedSeconds: string) => {
     const [hours, minutes, seconds] = formattedSeconds.split(':').map(Number);
@@ -36,21 +35,13 @@ function Timer({ postId }: Props) {
     const getTime = async () => {
       if (postId) {
         const res = await axios.get(`posts/timer/${postId}`);
-        console.log(res);
         setFormattedTime(res.data.formatted_duration);
-        // countSeconds.current = setTotalSeconds(formattedSeconds);
         if (res.data.on_btn) setIsActive(true);
         else setIsActive(false);
       } else return;
     };
     getTime();
   }, [postId]);
-
-  // useEffect(() => {
-  //   setFormattedTime(duration.current);
-  //   console.log(formattedTime);
-  //   countSeconds.current = setTotalSeconds(formattedTime);
-  // }, [formattedTime, duration]);
 
   useEffect(() => {
     if (isActive) {

@@ -186,7 +186,7 @@ function Main() {
                 ) : (
                   accessoryImageURL && (
                     <Image
-                      src={`https://api.petodo.today.xyz${accessoryImageURL}`}
+                      src={`https://api.petodo.today${accessoryImageURL}`}
                       alt="accessory"
                       width={50}
                       height={50}
@@ -243,7 +243,7 @@ function Main() {
         </div>
       ) : (
         <div className="wrap-section text-center flex">
-          <div className="m-auto text-primary-500">Loding...</div>
+          <div className="m-auto text-primary-500">Loading...</div>
         </div>
       )}
       <NavBottom />
