@@ -37,7 +37,7 @@ function Timer({ postId }: Props) {
       if (postId) {
         const res = await axios.get(`posts/timer/${postId}`);
         console.log(res);
-        duration.current = res.data.formatted_duration;
+        setFormattedTime(res.data.formatted_duration);
         // countSeconds.current = setTotalSeconds(formattedSeconds);
         if (res.data.on_btn) setIsActive(true);
         else setIsActive(false);
@@ -46,21 +46,22 @@ function Timer({ postId }: Props) {
     getTime();
   }, [postId]);
 
-  useEffect(() => {
-    setFormattedTime(duration.current);
-    console.log(formattedTime);
-    countSeconds.current = setTotalSeconds(formattedTime);
-  }, [formattedTime, duration]);
+  // useEffect(() => {
+  //   setFormattedTime(duration.current);
+  //   console.log(formattedTime);
+  //   countSeconds.current = setTotalSeconds(formattedTime);
+  // }, [formattedTime, duration]);
 
   useEffect(() => {
     if (isActive) {
+      countSeconds.current = setTotalSeconds(formattedTime);
       const interval = setInterval(async () => {
         countSeconds.current += 1;
         setFormattedTime(secondsToTime(countSeconds.current));
       }, 1000);
       return () => clearInterval(interval);
     }
-  }, [isActive]);
+  }, [formattedTime, isActive]);
 
   const handleStart = async (): Promise<void> => {
     setIsActive(prev => !prev);
