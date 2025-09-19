@@ -1,46 +1,119 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+<div align="center">
+  <img width="128" height="128" alt="Image" src="https://github.com/user-attachments/assets/2cb616a7-49ad-4fd6-99c3-42da0b86b4f1" />
+  
+  ### 🐣 PeTodo 🐣
+  **나만의 펫**을 키우며 편하게 **할일을 관리**하는 모바일 웹 서비스
+</div>
 
-First, run the development server:
+## 📌  서비스 소개
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+해야 할 일은 많은데 무엇부터 시작해야 할지 막막하거나, 중요한 일을 잊어버린 적 많으신가요?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+이제 매일 **할 일을 기록하고 달성률을 올려 나만의 펫**을 키워보세요!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+펫이 성장하는 모습을 보며 **성취감과 동기부여**를 동시에 얻을 수 있습니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## 🎪 주요 기능
 
-To learn more about Next.js, take a look at the following resources:
+<table>
+  <tr>
+    <th>
+      Home
+    </th>
+    <th>
+      TodoList
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/4f022de7-9bd0-4176-a464-c812f8d7223b" />
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/76f0fad8-2b57-409b-b180-7cf63a82b041" />
+    </td>
+  </tr>
+   <tr>
+    <th>
+      방명록
+    </th>
+    <th>
+      랜덤박스
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/1e5c37a3-522f-4df9-914e-1db13bd049ed" />
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/e9315402-6eca-4cf6-b9a5-b3bfcb748599" />
+    </td>
+  </tr>
+</table>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### 🐣 펫 키우기
+- 펫에게 밥이나 간식을 주면 **경험치 상승**
+- **레벨**이 올라가면 펫이 성장
+- 대표 펫을 지정하여 홈 꾸미기
 
-## Deploy on Vercel
+### 📆 달성률 달력
+- 달력에서 한 눈에 **달성률 파악**
+- TodoList 작성 기록이 있는 달만 달력 활성화
+- 하루에 TodoList **80% 이상** 달성 시 밥 제공
+- **연속 5일** 80% 이상 달성 시 랜덤박스 제공
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### ✔ 오늘의 TodoList
+- Todo Item 추가, 수정, 삭제
+- 오늘의 기분을 **음악**으로 표현
+- 실시간 **활동 시간 기록**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 💌 방명록 방문
+- 방명록으로 친구와 소통
+- **친구 검색** 기능
 
-# oz_02_main-004-FE
+### 🎁 랜덤박스 열기
+- 악세사리, 배경, 간식 **랜덤 뽑기**
+- **도감** 형식의 보관함
+- 원하는 아이템 선택 및 적용
 
-### 폴더
+## 🛠️ 기술 스택
 
-- stories 폴더에는 \*.stories.ts 파일만 넣어주세요
-- 컴포넌트는 components 폴더에 넣어 주세요
-- stories로 만든 스토리와 사용하고자 하는 컴포넌트 파일의 이름은 같아야 합니다
-- tailwind를 쓸 거지만 혹시라도 따로 css 파일을 만드신다면 styles 폴더에 넣어주세요
-- 컴포넌트보다 큰 단위는 containers 폴더에 넣어주세요
+### CI/CD
+- GitHub Actions
+- EC2
+
+### Frontend
+- Next.js + TypeScript
+- Tailwind css
+- Jotai
+- Storybook
+
+### Backend
+- Django
+- Django REST
+- Python
+- Ubuntu
+- Linux
+- NGINX
+- OAuth2.0 (카카오)
+
+## 🤠 팀원
+
+<table>
+   <tr>
+    <th colspan="4">Frontend</th>
+    <th colspan="4">Backend</th>
+  </tr>
+  <tr>
+    <td>박세미</br> <a href="https://github.com/eoekstpal">GitHub</a><br/> </td>
+    <td>윤찬영</br> <a href="https://github.com/seyoi">GitHub</a><br/> </td>
+    <td>정귀성</br> <a href="https://github.com/TOmato-GOM">GitHub</a><br/> </td>
+    <td>황수빈</br> <a href="https://github.com/surra7">GitHub</a><br/> </td>
+    <td>박민호</br> <a href="https://github.com/kyoorochi">GitHub</a><br/> </td>
+    <td>고아라</br> <a href="https://github.com/ark0723">GitHub</a><br/> </td>
+    <td>김범준</br> <a href="https://github.com/bamjun">GitHub</a><br/> </td>
+    <td>박대성</br> <a href="https://github.com/haunpapa">GitHub</a><br/> </td>
+  </tr>
+</table>
